@@ -1,0 +1,725 @@
+<!doctype html>
+<html lang="id">
+ <head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260918-05-13efa67","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YACgEZulLoA,0","Arial Narrow":"YAGyDvJ_4Ts,0","Arial Rounded MT Bold":"YAFcfoaHu-s,0","Arial":"YAGyDvJ_4Ts,0","Avenir Next":"YAFcfmNq6UY,0","Baloo 2":"YADK30bC6HQ,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Broken Glyph":"YADZ-exUkv0,0","Canva Sans":"YAFdJjTk5UU,1","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAFcfvtOAUY,1","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","Courier Prime":"YAD1aFjegN8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAFdJpU7Kkk,0","Georgia":"YAGzXkO0pEM,0","Ghost Mono":"YAHQutsX00Q,0","Hanken Grotesk":"YAFcfhwp99E,0","Helvetica Neue":"YAFcf6CtJfI,0","Helvetica":"YAFcf6CtJfI,0","IBM Plex Mono":"YAFdJkmvhGI,0","Impact":"YAFcfnjI7Vk,0","Instrument Serif":"YAHFeOnZNEk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YADK3zbC6RM,0","JetBrains Mono":"YAFdJksXcAk,0","Josefin Sans":"YAFdJjvw9Ps,0","Lato":"YAFdJuFCnaw,0","Libre Baskerville":"YACgEUFdPdA,0","Lobster":"YAD8SnSjSFI,0","Lora":"YACgEXvxf8Q,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YAFdtQi73Xs,0","Nunito":"YAFdJoNRMmU,1","Oleo Script":"YACgEQQ14jI,0","Oswald":"YACgEQY10lw,0","Pacifico":"YADLjORQ1u4,0","Phantom Sans":"YAFdJvgJ5TU,0","Playfair Display":"YAFdJhem5V8,1","Plus Jakarta Sans":"YAGvf3_u0_Q,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YAFdJpYtCxE,1","Raleway":"YAFdJhmxbVQ,1","Roboto Slab":"YAFdJswIKAg,0","Rockwell":"YAFcfyVZnN0,0","Rye":"YACgEdQP21k,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Source Serif 4":"YACgEfdj394,0","Space Grotesk":"YADZ-dYEmhg,0","Space Mono":"YADW1-vpsoc,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Trebuchet MS":"YAFcfrglpVA,0","UV Display":"YAEdVfSSpYo,0","UV Sans":"YAFdJvgJ5TU,0","Ubuntu":"YACgERDU--Q,0","Verdana":"YAGzXTctYtQ,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YAD1aFjegN8,0","ui-sans-serif":"YACkoD1yZN0,0"}}');</script><script src="/_sdk/83d6dfdadcd4750a.telemetry_sdk.js" integrity="sha512-XS4Dvzp6vbagZS9vFErihvr8aO3S0tH78KWUefn06fmL4WYqryBtZj/IOLITYj7dFA4gPVvPg1W/JB1DK3uLNQ=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Penguatan Literasi &amp; Numerasi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&amp;family=Work+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #17395f;
+      --navy-deep: #0d2747;
+      --teal: #13877f;
+      --gold: #e3a82b;
+      --paper: #f7f5ee;
+      --ink: #203245;
+      --muted: #637080;
+      --line: #d8e0e4;
+      --card: #ffffff;
+      --soft-blue: #e9f1f8;
+      --soft-teal: #e5f4f0;
+      --soft-gold: #fff5da;
+      --soft-red: #fff0f0;
+    }
+
+    body.dark {
+      --paper: #122031;
+      --ink: #edf3f5;
+      --muted: #b3c0c9;
+      --line: #31475b;
+      --card: #192c3f;
+      --soft-blue: #203a53;
+      --soft-teal: #173e3d;
+      --soft-gold: #42391d;
+      --soft-red: #482c32;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
+      font-family: "Work Sans", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      transition: background .25s ease, color .25s ease;
+    }
+
+    .app-shell { width: 100%; min-height: 100%; }
+    .display-font { font-family: "Fraunces", serif; }
+    .site-nav { background: rgba(247,245,238,.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+    body.dark .site-nav { background: rgba(18,32,49,.92); }
+
+    .nav-link {
+      color: var(--muted); font-size: .84rem; font-weight: 700; white-space: nowrap;
+      padding: .5rem .15rem; border-bottom: 2px solid transparent; transition: .2s;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--teal); border-color: var(--gold); }
+
+    .page { display: none; animation: rise .38s ease both; }
+    .page.active { display: block; }
+    @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+    .hero {
+      overflow: hidden; position: relative;
+      background: linear-gradient(125deg, var(--navy-deep), var(--navy) 60%, #176d72);
+      color: #fff;
+    }
+    .hero::after {
+      content: ""; position: absolute; inset: 0; opacity: .22; pointer-events: none;
+      background-image: linear-gradient(90deg, rgba(255,255,255,.14) 1px, transparent 1px), linear-gradient(rgba(255,255,255,.14) 1px, transparent 1px);
+      background-size: 30px 30px;
+      mask-image: linear-gradient(to left, black, transparent 72%);
+    }
+    .hero-inner { position: relative; z-index: 1; }
+    .hero-orbit {
+      width: 310px; height: 310px; border: 1px solid rgba(255,255,255,.28); border-radius: 50%;
+      position: absolute; right: 6%; top: 50%; transform: translateY(-50%);
+    }
+    .hero-orbit::before, .hero-orbit::after {
+      content: ""; position: absolute; border-radius: 50%; background: var(--gold);
+    }
+    .hero-orbit::before { width: 56px; height: 56px; left: 20px; top: 54px; }
+    .hero-orbit::after { width: 20px; height: 20px; right: 30px; bottom: 68px; }
+
+    .content-wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    .material-head { border-bottom: 2px solid var(--line); padding-bottom: 1.4rem; margin-bottom: 1.8rem; }
+    .eyebrow { color: var(--teal); text-transform: uppercase; letter-spacing: .15em; font-size: .75rem; font-weight: 800; }
+    h1,h2,h3,h4 { color: var(--ink); }
+    .hero h1, .hero h2 { color: #fff; }
+    .prose p { line-height: 1.78; margin: .7rem 0; }
+    .prose li { margin: .55rem 0; line-height: 1.65; }
+
+    .edu-card {
+      background: var(--card); border: 1px solid var(--line); border-radius: 1rem; padding: 1.25rem;
+      box-shadow: 0 10px 26px rgba(14, 38, 60, .06); transition: transform .22s, box-shadow .22s;
+    }
+    .edu-card:hover { transform: translateY(-4px); box-shadow: 0 16px 35px rgba(14, 38, 60, .12); }
+    .accent-top { border-top: 5px solid var(--teal); }
+    .callout { border-left: 5px solid var(--gold); background: var(--soft-gold); padding: 1rem 1.1rem; border-radius: .2rem .75rem .75rem .2rem; }
+    .note { border-left-color: var(--teal); background: var(--soft-teal); }
+    .danger { border-left-color: #c94d55; background: var(--soft-red); }
+
+    .table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: .8rem; }
+    table { min-width: 650px; width: 100%; border-collapse: collapse; }
+    th { background: var(--navy); color: #fff; text-align: left; }
+    th,td { padding: .85rem; border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.5; }
+    tr:last-child td { border-bottom: 0; }
+    .badge { display: inline-flex; align-items: center; gap: .35rem; font-size: .76rem; font-weight: 800; border-radius: 999px; padding: .35rem .6rem; }
+    .green { background: #dff4df; color: #22612b; } .yellow { background: #fff1c7; color: #885f00; } .red { background: #ffe0e0; color: #9d252b; }
+
+    .action-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: .5rem; font-weight: 800;
+      border-radius: .7rem; padding: .75rem 1rem; background: var(--teal); color: #fff; transition: .2s;
+    }
+    .action-btn:hover { background: #0c6b65; transform: translateY(-1px); }
+    .outline-btn { background: transparent; color: var(--teal); border: 1px solid var(--teal); }
+    .outline-btn:hover { color: #fff; }
+
+    .accordion { border: 1px solid var(--line); border-radius: .8rem; overflow: hidden; background: var(--card); }
+    .accordion button { width: 100%; display: flex; justify-content: space-between; gap: 1rem; padding: 1rem; text-align: left; font-weight: 800; color: var(--ink); }
+    .accordion-content { display: none; padding: 0 1rem 1rem; color: var(--muted); line-height: 1.7; }
+    .accordion.open .accordion-content { display: block; }
+    .accordion.open svg { transform: rotate(180deg); }
+
+    .question { border: 1px solid var(--line); background: var(--card); border-radius: .9rem; padding: 1rem; }
+    .option { display: flex; gap: .65rem; align-items: flex-start; padding: .55rem .65rem; border-radius: .5rem; cursor: pointer; }
+    .option:hover { background: var(--soft-blue); }
+    .question input { margin-top: .25rem; accent-color: var(--teal); }
+    .feedback-item { border-left: 4px solid var(--teal); background: var(--soft-blue); padding: .8rem; border-radius: .2rem .6rem .6rem .2rem; }
+
+    #backTop { display: none; position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 30; width: 48px; height: 48px; border-radius: 50%; background: var(--gold); color: var(--navy-deep); box-shadow: 0 8px 22px rgba(0,0,0,.22); }
+    #backTop.show { display: grid; place-items: center; animation: rise .2s ease both; }
+
+    @media (max-width: 760px) {
+      .hero-orbit { opacity: .25; right: -120px; }
+      #desktopLinks { display: none; }
+      #mobileMenu.open { display: grid; }
+    }
+  </style>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.577.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="/_sdk/8de366929c5f3b48.data_sdk.js" type="text/javascript" integrity="sha512-TyQ8k8cZj66xe/aENmn6RyZpdOFZXbAo5+KBG3PeFM+Q4qMTHU8xAqmq4ADClNfPrstgQYV6OzZHwLTnElzB2g=="></script>
+  <script src="/_sdk/0ddbbee1c66b1212.editing_sdk.js" type="text/javascript" integrity="sha512-HQn5LM1yruQSbY78ATUril6QeOJ9xj7KqO64ltLtb4vBwI5Qv3/tloFFOndBPZTNZoeV5xKzuth5y6FTi9crsg=="></script>
+  <script src="/_sdk/765e1fea0cec97ce.resizing_sdk.js" type="text/javascript" integrity="sha512-IRTJnqww0+HQ5V/LlWEQrlD5SrYHaVvaeVoNe8HYQXoaguzUGheSd9+n9s6WOgaTcEH0g37DuINHZ9aqfzWjlw=="></script>
+ </head>
+ <body data-template-id="__page-root">
+  <div class="app-shell">
+   <header class="site-nav sticky top-0 z-40">
+    <nav class="w-full max-w-[1180px] mx-auto px-5 py-3 flex items-center justify-between gap-4" aria-label="Navigasi utama"><a href="#beranda" class="flex items-center gap-2 text-[var(--navy)] dark:text-white font-extrabold"> <span class="w-9 h-9 grid place-items-center rounded-lg bg-[var(--navy)] text-[var(--gold)]"><i data-lucide="book-open-check" class="w-5"></i></span> <span class="hidden sm:inline">LitNum <span class="text-[var(--teal)]">Bimtek</span></span> </a>
+     <div id="desktopLinks" class="flex items-center gap-4 overflow-x-auto"><a class="nav-link" href="#beranda">Beranda</a> <a class="nav-link" href="#materi1">M1</a><a class="nav-link" href="#materi2">M2</a> <a class="nav-link" href="#materi3">M3</a><a class="nav-link" href="#materi4">M4</a> <a class="nav-link" href="#materi5">M5</a><a class="nav-link" href="#materi6">M6</a> <a class="nav-link" href="#latihan">Latihan</a><a class="nav-link" href="#evaluasi">Evaluasi</a>
+     </div>
+     <div class="flex gap-2"><button id="themeToggle" type="button" class="w-9 h-9 rounded-lg border border-[var(--line)] grid place-items-center" aria-label="Ubah mode terang atau gelap"><i data-lucide="moon" class="w-4"></i></button> <button id="menuToggle" type="button" class="sm:hidden w-9 h-9 rounded-lg border border-[var(--line)] grid place-items-center" aria-label="Buka menu"><i data-lucide="menu" class="w-4"></i></button>
+     </div>
+    </nav>
+    <div id="mobileMenu" class="hidden px-5 pb-4 grid grid-cols-2 gap-2 border-t border-[var(--line)]"><a class="nav-link" href="#materi1">Materi 1</a><a class="nav-link" href="#materi2">Materi 2</a> <a class="nav-link" href="#materi3">Materi 3</a><a class="nav-link" href="#materi4">Materi 4</a> <a class="nav-link" href="#materi5">Materi 5</a><a class="nav-link" href="#materi6">Materi 6</a> <a class="nav-link" href="#latihan">Latihan</a><a class="nav-link" href="#evaluasi">Evaluasi</a> <a class="nav-link" href="#fasilitator">Fasilitator</a>
+    </div>
+   </header>
+   <main>
+    <section id="beranda" class="page">
+     <div class="hero">
+      <div class="hero-orbit"></div>
+      <div class="hero-inner max-w-[1180px] mx-auto px-5 py-20 md:py-28">
+       <div class="max-w-3xl">
+        <p data-template-id="hero-label" class="canva-tag uppercase tracking-[.2em] font-bold text-[var(--gold)] text-sm"></p>
+        <h1 data-template-id="hero-title" class="canva-text display-font text-4xl md:text-6xl leading-tight mt-4"></h1>
+        <p data-template-id="hero-subtitle" class="canva-text text-lg md:text-xl text-slate-200 mt-5 max-w-2xl"></p>
+        <div class="flex flex-wrap gap-3 mt-8"><a href="#materi1" class="action-btn"><i data-lucide="compass"></i> Mulai Belajar</a> <a href="#evaluasi" class="action-btn outline-btn border-white text-white"><i data-lucide="clipboard-check"></i> Evaluasi Formatif</a>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="content-wrap">
+      <div class="grid md:grid-cols-[1.2fr_.8fr] gap-6 mb-10">
+       <article class="edu-card accent-top prose">
+        <p class="eyebrow">Tentang Modul</p>
+        <h2 data-template-id="home-intro-title" class="canva-text display-font text-3xl mt-2"></h2>
+        <p data-template-id="home-intro-text" class="canva-text"></p>
+       </article>
+       <aside class="edu-card bg-[var(--soft-gold)]"><i data-lucide="lightbulb" class="w-8 h-8 text-[var(--gold)]"></i>
+        <h2 data-template-id="home-goal-title" class="canva-text font-bold text-xl mt-3"></h2>
+        <p data-template-id="home-goal-text" class="canva-text text-[var(--muted)] leading-relaxed mt-2"></p>
+       </aside>
+      </div>
+      <h2 data-template-id="home-material-title" class="canva-text display-font text-3xl mb-5"></h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"><a href="#materi1" class="edu-card"><i data-lucide="chart-no-axes-combined" class="text-[var(--teal)]"></i><h3 class="font-bold text-lg mt-3">Materi 1</h3><p class="text-[var(--muted)] mt-2">Analisis capaian Rapor Pendidikan dan TKA.</p></a> <a href="#materi2" class="edu-card"><i data-lucide="scan-text" class="text-[var(--gold)]"></i><h3 class="font-bold text-lg mt-3">Materi 2</h3><p class="text-[var(--muted)] mt-2">Miskonsepsi dan paradigma lintas kurikulum.</p></a> <a href="#materi3" class="edu-card"><i data-lucide="book-marked" class="text-[var(--teal)]"></i><h3 class="font-bold text-lg mt-3">Materi 3</h3><p class="text-[var(--muted)] mt-2">Strategi penguatan literasi di sekolah.</p></a> <a href="#materi4" class="edu-card"><i data-lucide="calculator" class="text-[var(--gold)]"></i><h3 class="font-bold text-lg mt-3">Materi 4</h3><p class="text-[var(--muted)] mt-2">Strategi penguatan numerasi di sekolah.</p></a> <a href="#materi5" class="edu-card"><i data-lucide="file-chart-column" class="text-[var(--teal)]"></i><h3 class="font-bold text-lg mt-3">Materi 5</h3><p class="text-[var(--muted)] mt-2">Capaian dan kerangka asesmen TKA.</p></a> <a href="#materi6" class="edu-card"><i data-lucide="notebook-pen" class="text-[var(--gold)]"></i><h3 class="font-bold text-lg mt-3">Materi 6</h3><p class="text-[var(--muted)] mt-2">Perencanaan pembelajaran tindak lanjut TKA.</p></a>
+      </div>
+     </div>
+    </section>
+    <section id="materi1" class="page">
+     <div class="content-wrap prose">
+      <div class="material-head">
+       <p class="eyebrow">Sub Materi 1</p>
+       <h1 class="display-font text-4xl mt-2">Menganalisis Capaian Literasi Numerasi Berdasarkan Rapor Pendidikan dan Hasil TKA</h1>
+      </div>
+      <div class="callout note">
+       <strong>Definisi AN.</strong> Literasi adalah kemampuan memahami, menggunakan, mengevaluasi, dan merefleksikan berbagai jenis teks untuk mencapai tujuan tertentu. Numerasi adalah kemampuan berpikir menggunakan konsep, prosedur, fakta, dan alat matematika untuk menyelesaikan masalah dalam berbagai konteks kehidupan.
+      </div>
+      <h2 class="display-font text-3xl mt-9">Profil mutu dalam Rapor Pendidikan</h2>
+      <p>Rapor Pendidikan menampilkan persentase murid yang mencapai kompetensi minimum, nilai delta sebagai perubahan capaian dibandingkan tahun sebelumnya, serta peringkat relatif sekolah. Informasi tersebut menjadi dasar penyusunan program peningkatan mutu pembelajaran berbasis data.</p>
+      <div class="table-scroll">
+       <table>
+        <thead>
+         <tr>
+          <th>Warna</th>
+          <th>Label</th>
+          <th>Interpretasi</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td><span class="badge green">Hijau</span></td>
+          <td>Baik</td>
+          <td>Capaian indikator sudah tinggi, mencapai kompetensi minimum atau di atas yang ditetapkan.</td>
+         </tr>
+         <tr>
+          <td><span class="badge yellow">Kuning</span></td>
+          <td>Sedang</td>
+          <td>Capaian berada pada tingkat menengah dan masih memerlukan peningkatan.</td>
+         </tr>
+         <tr>
+          <td><span class="badge red">Merah</span></td>
+          <td>Kurang</td>
+          <td>Capaian masih rendah, memerlukan perhatian khusus dan intervensi lebih intensif.</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+      <h2 class="display-font text-3xl mt-9">Identifikasi akar masalah</h2>
+      <div class="grid md:grid-cols-2 gap-5">
+       <article class="edu-card">
+        <h3 class="font-bold text-xl">Sub-indikator literasi</h3>
+        <ul>
+         <li><strong>Teks informasi:</strong> memahami teks faktual, artikel, infografis, grafik, dan tabel; menyaring informasi eksplisit serta menilai validitas data.</li>
+         <li><strong>Teks sastra:</strong> memahami narasi, puisi, novel, dan drama; menginterpretasikan makna serta merefleksikan nilai dan bentuk estetika.</li>
+        </ul>
+       </article>
+       <article class="edu-card">
+        <h3 class="font-bold text-xl">Sub-indikator numerasi</h3>
+        <p>Domain Bilangan, Aljabar, Geometri dan Pengukuran, serta Data dan Ketidakpastian melalui proses <em>knowing</em>, <em>applying</em>, dan <em>reasoning</em>.</p>
+        <p>Soal AN dan TKA menuntut kelancaran numerasi dasar, penalaran lintas konsep, dan berpikir kritis dalam batasan waktu.</p>
+       </article>
+      </div>
+      <div class="table-scroll mt-5">
+       <table>
+        <thead>
+         <tr>
+          <th>Faktor Pendukung</th>
+          <th>Pengaruh</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td>Kualitas pembelajaran</td>
+          <td>Menentukan efektivitas proses belajar, termasuk pembelajaran terdiferensiasi untuk kemampuan membaca dan konsep matematika dasar.</td>
+         </tr>
+         <tr>
+          <td>Refleksi dan perbaikan guru</td>
+          <td>Membantu guru mengadaptasi strategi pengajaran berdasarkan kebutuhan murid.</td>
+         </tr>
+         <tr>
+          <td>Kepemimpinan instruksional</td>
+          <td>Memastikan kebijakan, anggaran, dan program penguatan kompetensi guru berjalan terarah serta berkelanjutan.</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+    </section>
+    <section id="materi2" class="page">
+     <div class="content-wrap prose">
+      <div class="material-head">
+       <p class="eyebrow">Sub Materi 2</p>
+       <h1 class="display-font text-4xl mt-2">Mengenal Miskonsepsi dan Fakta Esensial Seputar Literasi &amp; Numerasi</h1>
+      </div>
+      <div class="grid lg:grid-cols-2 gap-6">
+       <article class="edu-card accent-top">
+        <h2 class="display-font text-3xl">Literasi</h2>
+        <ol>
+         <li><strong>Miskonsepsi:</strong> Literasi hanya membaca dan menulis.<br><strong>Fakta:</strong> Literasi meliputi memahami, menginterpretasikan, mengevaluasi, serta menggunakan informasi untuk memecahkan masalah dan mengambil keputusan.</li>
+         <li><strong>Miskonsepsi:</strong> Hanya tugas guru Bahasa Indonesia.<br><strong>Fakta:</strong> Semua guru mengembangkan literasi sesuai teks dalam bidang ilmunya.</li>
+         <li><strong>Miskonsepsi:</strong> Hanya berkaitan dengan buku.<br><strong>Fakta:</strong> Literasi juga mencakup teks multimodal seperti grafik, video, infografis, gambar, dan media digital.</li>
+        </ol>
+       </article>
+       <article class="edu-card accent-top" style="border-top-color:var(--gold)">
+        <h2 class="display-font text-3xl">Numerasi</h2>
+        <ol>
+         <li><strong>Miskonsepsi:</strong> Numerasi sama dengan matematika.<br><strong>Fakta:</strong> Numerasi menggunakan pengetahuan matematika untuk masalah kehidupan nyata.</li>
+         <li><strong>Miskonsepsi:</strong> Hanya kemampuan berhitung.<br><strong>Fakta:</strong> Numerasi meliputi menafsirkan data, membaca grafik/tabel, estimasi, membandingkan besaran, dan mengambil keputusan.</li>
+         <li><strong>Miskonsepsi:</strong> Hanya tugas guru Matematika.<br><strong>Fakta:</strong> Numerasi merupakan tanggung jawab seluruh guru dalam konteks bidang ilmu masing-masing.</li>
+        </ol>
+       </article>
+      </div>
+      <h2 class="display-font text-3xl mt-9">Paradigma lintas kurikulum</h2>
+      <div class="grid md:grid-cols-2 gap-5">
+       <div class="callout note">
+        <strong>Literasi:</strong> setiap guru adalah guru literasi. Karakteristik pembelajaran: berbasis teks, pertanyaan, bukti, dan refleksi.
+       </div>
+       <div class="callout">
+        <strong>Numerasi:</strong> setiap guru adalah guru numerasi. Karakteristik: konteks nyata, data dan informasi, penalaran, pengambilan keputusan, serta representasi beragam.
+       </div>
+      </div>
+      <div class="table-scroll mt-5">
+       <table>
+        <thead>
+         <tr>
+          <th>Mata Pelajaran</th>
+          <th>Contoh Literasi</th>
+          <th>Contoh Numerasi</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td>IPA</td>
+          <td>Membaca laporan penelitian dan grafik.</td>
+          <td>Mengukur, mengolah data percobaan, membuat grafik.</td>
+         </tr>
+         <tr>
+          <td>IPS</td>
+          <td>Menafsirkan peta dan data sosial.</td>
+          <td>Menganalisis data kependudukan, ekonomi, dan sosial.</td>
+         </tr>
+         <tr>
+          <td>Geografi</td>
+          <td>Menganalisis peta dan infografis.</td>
+          <td>Membaca peta, menghitung skala, menganalisis curah hujan.</td>
+         </tr>
+         <tr>
+          <td>Ekonomi</td>
+          <td>Membaca statistik dan tren ekonomi.</td>
+          <td>Menghitung keuntungan, persentase, inflasi, dan pajak.</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+    </section>
+    <section id="materi3" class="page">
+     <div class="content-wrap prose">
+      <div class="material-head">
+       <p class="eyebrow">Sub Materi 3</p>
+       <h1 class="display-font text-4xl mt-2">Strategi Penguatan Literasi</h1>
+      </div>
+      <p>Penguatan budaya literasi berlangsung optimal apabila lingkungan fisik, sosio-afektif, dan akademik dikembangkan secara bersamaan.</p>
+      <div class="grid lg:grid-cols-3 gap-5">
+       <article class="edu-card">
+        <i data-lucide="library" class="text-[var(--teal)]"></i>
+        <h2 class="font-bold text-xl mt-3">Lingkungan Fisik</h2>
+        <p><strong>SD:</strong> cerita dinding, dinding kata aktif, sudut baca berlabel warna, mural berlabel konkret.</p>
+        <p><strong>SMP:</strong> mading kaya data, pengatur grafis, labelisasi data fisik sekolah.</p>
+        <p><strong>SMA:</strong> papan isu global kontradiktif, pustaka digital/makerspace, student author corner.</p>
+       </article>
+       <article class="edu-card">
+        <i data-lucide="heart-handshake" class="text-[var(--teal)]"></i>
+        <h2 class="font-bold text-xl mt-3">Sosio-Afektif</h2>
+        <p><strong>Sosial:</strong> komunikasi terbuka, kemitraan guru-orang tua, pengambilan keputusan partisipatif, resolusi konflik suportif.</p>
+        <p><strong>Afektif:</strong> warga sekolah merasa dihargai, masukan ditanggapi serius, kepercayaan tinggi, pembicaraan konstruktif.</p>
+       </article>
+       <article class="edu-card">
+        <i data-lucide="graduation-cap" class="text-[var(--teal)]"></i>
+        <h2 class="font-bold text-xl mt-3">Akademik</h2>
+        <p>Menumbuhkan kecakapan reseptif dan produktif melalui pembelajaran berjenjang, pembelajaran kontekstual, asesmen awal, serta strategi membaca variatif.</p>
+        <p>SD berfokus pada <em>learning to read</em>, SMP pada <em>reading to learn</em>, dan SMA pada evaluasi serta refleksi kritis.</p>
+       </article>
+      </div>
+      <h2 class="display-font text-3xl mt-9">Strategi operasional berdasarkan capaian</h2>
+      <div class="grid md:grid-cols-3 gap-4">
+       <div class="edu-card">
+        <span class="badge red">Merah</span>
+        <h3 class="font-bold mt-3">Pemulihan fondasi</h3>
+        <p>Sudut baca berlabel, dinding kata aktif, membaca tanpa tagihan, mentoring sebaya, membaca nyaring interaktif, dan skrining kemampuan membaca dasar.</p>
+       </div>
+       <div class="edu-card">
+        <span class="badge yellow">Kuning</span>
+        <h3 class="font-bold mt-3">Transisi memahami</h3>
+        <p>Ragam teks multimodal, diagram Venn, karya murid, pertanyaan reflektif, guided reading, dan literasi lintas kurikulum.</p>
+       </div>
+       <div class="edu-card">
+        <span class="badge green">Hijau</span>
+        <h3 class="font-bold mt-3">Berpikir kritis</h3>
+        <p>Isu global kontradiktif, makerspace, klub debat, PBL/PjBL, serta asesmen berbasis stimulus kompleks berstandar TKA.</p>
+       </div>
+      </div>
+     </div>
+    </section>
+    <section id="materi4" class="page">
+     <div class="content-wrap prose">
+      <div class="material-head">
+       <p class="eyebrow">Sub Materi 4</p>
+       <h1 class="display-font text-4xl mt-2">Strategi Penguatan Numerasi</h1>
+      </div>
+      <div class="callout note">
+       <strong>Numerasi</strong> adalah kemampuan berpikir menggunakan konsep, prosedur, fakta, dan alat matematika untuk menyelesaikan masalah sehari-hari pada berbagai konteks.
+      </div>
+      <div class="grid lg:grid-cols-3 gap-5 mt-5">
+       <article class="edu-card">
+        <h2 class="font-bold text-xl">Lingkungan Fisik</h2>
+        <p>Stimulus numerasi melalui informasi ukuran, jumlah, pola, grafik peminjaman buku, alat ukur, garis bilangan, permainan di taman, serta ruang berkarya.</p>
+        <p>SD: engklek angka dan alat manipulatif. SMP: grafik perpustakaan dan data fasilitas. SMA: analisis tren, makerspace digital, dan numerasi finansial di kantin.</p>
+       </article>
+       <article class="edu-card">
+        <h2 class="font-bold text-xl">Sosio-Afektif</h2>
+        <p>Menumbuhkan <em>growth mindset</em>: semua murid memiliki kapasitas menjadi numerat melalui usaha dan strategi.</p>
+        <p>Guru dan orang tua konsisten membangun keyakinan positif, mengangkat figur publik, topik pekerjaan masa depan, dan tanggung jawab bersama.</p>
+       </article>
+       <article class="edu-card">
+        <h2 class="font-bold text-xl">Lingkungan Akademik</h2>
+        <p>Program sekolah menyediakan buku bertema numerasi, matematika dalam kehidupan nyata, permainan numerasi, dan permainan yang dapat dibawa pulang.</p>
+        <p>Lima prinsip Matematika: konteks nyata, penerapan pengetahuan, sikap positif, alat fisik/representasi/digital, serta interpretasi kritis berbasis bukti.</p>
+       </article>
+      </div>
+      <h2 class="display-font text-3xl mt-9">Diferensiasi capaian Rapor Pendidikan</h2>
+      <div class="table-scroll">
+       <table>
+        <thead>
+         <tr>
+          <th>Kategori</th>
+          <th>Fokus</th>
+          <th>Contoh strategi</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td><span class="badge red">Merah</span></td>
+          <td>Konsep dasar dan estimasi</td>
+          <td>Tangga/lantai numerasi, alat manipulatif, game numerasi, apresiasi proses, CPA, dan latihan estimasi cepat.</td>
+         </tr>
+         <tr>
+          <td><span class="badge yellow">Kuning</span></td>
+          <td>Aplikasi prosedur dan data</td>
+          <td>Mading grafik, label data fasilitas, “Data Hari Ini”, projek kelas berbasis data, numerasi lintas kurikulum, dan strategi soal cerita.</td>
+         </tr>
+         <tr>
+          <td><span class="badge green">Hijau</span></td>
+          <td>Penalaran dan keputusan</td>
+          <td>Makerspace, model matematika dunia nyata, math hackathon, klub sains data, PBL/PjBL, dan asesmen keputusan berstandar TKA.</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+    </section>
+    <section id="materi5" class="page">
+     <div class="content-wrap prose">
+      <div class="material-head">
+       <p class="eyebrow">Sub Materi 5</p>
+       <h1 class="display-font text-4xl mt-2">Analisis Capaian dan Kerangka Asesmen TKA</h1>
+      </div>
+      <div class="edu-card border-l-4 border-[var(--gold)]">
+       <h2 class="font-bold text-2xl">Ayo Coba TKA</h2>
+       <p>Pengalaman mengerjakan contoh soal Tes Kemampuan Akademik tersedia melalui laman resmi.</p><a href="https://pusmendik.kemendikdasmen.go.id/tka/simulasi_tka" target="_blank" rel="noopener noreferrer" class="action-btn mt-3"><i data-lucide="external-link"></i> Buka Simulasi TKA</a>
+      </div>
+      <h2 class="display-font text-3xl mt-9">Kerangka asesmen</h2>
+      <div class="grid md:grid-cols-3 gap-5">
+       <article class="edu-card">
+        <span class="text-3xl font-extrabold text-[var(--teal)]">01</span>
+        <h3 class="font-bold text-xl mt-2">Menemukan informasi</h3>
+        <p>Mencari, mengakses, dan memilih informasi tersurat yang relevan di dalam teks.</p>
+       </article>
+       <article class="edu-card">
+        <span class="text-3xl font-extrabold text-[var(--teal)]">02</span>
+        <h3 class="font-bold text-xl mt-2">Memahami isi teks</h3>
+        <p>Mengolah informasi, membuat simpulan logis, dan memadukan hubungan antarbagian teks.</p>
+       </article>
+       <article class="edu-card">
+        <span class="text-3xl font-extrabold text-[var(--teal)]">03</span>
+        <h3 class="font-bold text-xl mt-2">Mengevaluasi &amp; merefleksikan</h3>
+        <p>Menilai validitas gagasan, mendeteksi bias atau kontradiksi, serta mengaitkan isi dengan konteks kehidupan.</p>
+       </article>
+      </div>
+      <p class="mt-6">TKA menggunakan stimulus multimodal dan teks jamak, serta bentuk pilihan ganda sederhana, pilihan ganda kompleks MCMA, dan pilihan ganda kompleks kategori. Data capaian dapat dianalisis melalui laman TKA sebagai dasar penguatan lingkungan fisik, sosio-afektif, dan akademik.</p>
+      <div class="callout">
+       <strong>Refleksi TKA:</strong> hasil analisis tidak digunakan untuk drilling semata, tetapi untuk merancang pembelajaran mendalam yang melatih berpikir kritis, komunikasi, serta pemecahan masalah kontekstual.
+      </div>
+     </div>
+    </section>
+    <section id="materi6" class="page">
+     <div class="content-wrap prose">
+      <div class="material-head">
+       <p class="eyebrow">Sub Materi 6</p>
+       <h1 class="display-font text-4xl mt-2">Perencanaan Pembelajaran: Tindak Lanjut Hasil Analisis Capaian TKA</h1>
+      </div>
+      <div class="grid md:grid-cols-3 gap-5">
+       <article class="edu-card accent-top">
+        <i data-lucide="target" class="text-[var(--teal)]"></i>
+        <h2 class="font-bold text-xl mt-3">Asesmen awal &amp; tujuan</h2>
+        <p>Memetakan kesiapan literasi dan numerasi murid secara personal. Data AN, TKA, dan asesmen awal digunakan untuk merumuskan tujuan pembelajaran yang menantang namun realistis.</p>
+       </article>
+       <article class="edu-card accent-top">
+        <i data-lucide="workflow" class="text-[var(--teal)]"></i>
+        <h2 class="font-bold text-xl mt-3">Langkah tingkat tinggi</h2>
+        <p>Membangun kemitraan pembelajaran melalui kolaborasi, dialog kritis, refleksi, lingkungan yang aman secara psikologis, dan stimulasi intelektual.</p>
+       </article>
+       <article class="edu-card accent-top">
+        <i data-lucide="monitor-smartphone" class="text-[var(--teal)]"></i>
+        <h2 class="font-bold text-xl mt-3">Teknologi digital</h2>
+        <p>Memanfaatkan video, infografis interaktif, pustaka digital, simulasi pemodelan matematika, dan asesmen formatif digital dengan umpan balik cepat.</p>
+       </article>
+      </div>
+      <h2 class="display-font text-3xl mt-9">Materi pengayaan: asesmen berbasis kerangka TKA</h2>
+      <p>Peserta menyusun stimulus kontekstual, memilih bentuk soal sesuai kompetensi, mengembangkan butir yang mengukur literasi, numerasi, dan penalaran, lalu melakukan telaah sejawat untuk memastikan keselarasan tujuan pembelajaran, indikator, stimulus, dan proses kognitif.</p>
+      <div class="table-scroll">
+       <table>
+        <thead>
+         <tr>
+          <th>Komponen rubrik produk asesmen</th>
+          <th>Indikator kualitas</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td>Kualitas stimulus</td>
+          <td>Kontekstual, relevan, menarik, serta menyediakan data/informasi cukup untuk menjawab soal.</td>
+         </tr>
+         <tr>
+          <td>Kualitas soal</td>
+          <td>Selaras dengan tujuan, mengukur kompetensi dan penalaran, berbahasa jelas, tidak bias.</td>
+         </tr>
+         <tr>
+          <td>Ketepatan bentuk soal</td>
+          <td>Bentuk soal dipilih secara tepat untuk mengeksplorasi kompetensi dan penalaran yang ditargetkan.</td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+    </section>
+    <section id="latihan" class="page">
+     <div class="content-wrap">
+      <div class="material-head">
+       <p class="eyebrow">Latihan</p>
+       <h1 class="display-font text-4xl mt-2">Aktivitas Penguatan</h1>
+       <p class="text-[var(--muted)] mt-2">Latihan berikut diambil dari aktivitas yang tersedia dalam modul.</p>
+      </div>
+      <div class="space-y-3">
+       <div class="accordion">
+        <button type="button"><span>Materi 1 — Analisis capaian</span><i data-lucide="chevron-down"></i></button>
+        <div class="accordion-content">
+         <ol>
+          <li>Bagaimana kategori dan posisi capaian literasi dan numerasi satuan pendidikan Anda?</li>
+          <li>Indikator mana yang menunjukkan kondisi paling memerlukan perhatian?</li>
+          <li>Apa dugaan faktor penyebab capaian tersebut?</li>
+          <li>Jika memilih satu prioritas perbaikan, indikator apa yang dipilih? Jelaskan alasannya.</li>
+         </ol>
+        </div>
+       </div>
+       <div class="accordion">
+        <button type="button"><span>Materi 2 — Miskonsepsi dan paradigma</span><i data-lucide="chevron-down"></i></button>
+        <div class="accordion-content">
+         <ol>
+          <li>Sebutkan tiga miskonsepsi literasi dan fakta sebenarnya.</li>
+          <li>Jelaskan perbedaan matematika dan numerasi.</li>
+          <li>Jelaskan prinsip “Setiap guru adalah guru literasi” dan “Setiap guru adalah guru numerasi”.</li>
+          <li>Sebutkan karakteristik pembelajaran literasi dan numerasi lintas kurikulum.</li>
+         </ol>
+        </div>
+       </div>
+       <div class="accordion">
+        <button type="button"><span>Materi 3 — Strategi literasi</span><i data-lucide="chevron-down"></i></button>
+        <div class="accordion-content">
+         <p><strong>Studi Kasus Kelas Pak Budi:</strong> Dinding kelas penuh hiasan dan poster motivasi, tetapi tidak ada sudut baca atau bagan fungsional. Nilai literasi membaca rendah. Analisis apa yang kurang dari lingkungan fisik kelas tersebut dan berikan tiga rekomendasi konkret tanpa biaya besar.</p>
+         <p>Rancang pula kegiatan membaca terbimbing 10–15 menit menggunakan salah satu strategi: memprediksi, memvisualkan, menghubungkan, menanya, mengklarifikasi, atau mengevaluasi.</p>
+        </div>
+       </div>
+       <div class="accordion">
+        <button type="button"><span>Materi 4 — Strategi numerasi</span><i data-lucide="chevron-down"></i></button>
+        <div class="accordion-content">
+         <p><strong>Kasus SD Harapan Bangsa:</strong> Murid kelas 5 kesulitan membaca dan menafsirkan grafik pada domain Data dan Ketidakpastian. Rancang dua strategi penguatan: satu pada lingkungan akademik dan satu pada lingkungan fisik.</p>
+         <p>Identifikasi peluang numerasi lintas kurikulum pada modul ajar nonmatematika dan rancang permainan numerasi sederhana menggunakan bahan lokal atau permainan tradisional.</p>
+        </div>
+       </div>
+       <div class="accordion">
+        <button type="button"><span>Materi 5 — Latihan TKA</span><i data-lucide="chevron-down"></i></button>
+        <div class="accordion-content">
+         <p>Kerjakan contoh soal TKA, identifikasi kompetensi yang diukur serta proses penalarannya. Analisis domain kompetensi, konten, konteks, proses kognitif, dan rumuskan rekomendasi tindak lanjut pembelajaran.</p>
+        </div>
+       </div>
+       <div class="accordion">
+        <button type="button"><span>Materi 6 — Perencanaan pembelajaran</span><i data-lucide="chevron-down"></i></button>
+        <div class="accordion-content">
+         <p>Identifikasi kompetensi prioritas dari hasil TKA, rumuskan tujuan pembelajaran, pilih strategi dan aktivitas, lalu rancang pengalaman belajar berbasis data yang menguatkan literasi dan numerasi. Susun stimulus kontekstual, butir soal, dan lakukan telaah sejawat.</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+    <section id="evaluasi" class="page">
+     <div class="content-wrap">
+      <div class="material-head">
+       <p class="eyebrow">Evaluasi Formatif</p>
+       <h1 class="display-font text-4xl mt-2">Uji Pemahaman</h1>
+       <p class="text-[var(--muted)] mt-2">Pilih jawaban terbaik, kemudian gunakan tombol hitung skor. Soal objektif berikut berasal dari evaluasi formatif Bab 1–4 modul.</p>
+      </div>
+      <form id="quizForm" class="space-y-5" novalidate>
+       <div id="quizList" class="grid lg:grid-cols-2 gap-5"></div><button data-template-id="quiz-submit" class="canva-button action-btn" type="submit"><i data-lucide="calculator"></i> Hitung Skor</button>
+      </form>
+      <div id="quizResult" class="hidden mt-7 edu-card accent-top" aria-live="polite"></div>
+     </div>
+    </section>
+    <section id="fasilitator" class="page">
+     <div class="content-wrap">
+      <div class="material-head">
+       <p class="eyebrow">Fasilitator</p>
+       <h1 class="display-font text-4xl mt-2">Profil Fasilitator</h1>
+      </div>
+      <article class="edu-card max-w-3xl mx-auto p-7 md:p-10">
+       <div class="flex flex-col md:flex-row gap-7 items-start">
+        <div class="w-24 h-24 shrink-0 rounded-2xl bg-[var(--navy)] text-[var(--gold)] grid place-items-center display-font text-4xl">
+         MF
+        </div>
+        <div>
+         <h2 data-template-id="facilitator-name" class="canva-text display-font text-3xl"></h2>
+         <p data-template-id="facilitator-role" class="canva-text text-[var(--teal)] font-bold mt-1"></p>
+         <dl class="grid sm:grid-cols-2 gap-x-8 gap-y-4 mt-6 text-[var(--muted)]">
+          <div>
+           <dt class="text-xs uppercase tracking-wider font-bold">
+            Jabatan
+           </dt>
+           <dd>
+            Guru Matematika, SMA Negeri 1 Kersana
+           </dd>
+          </div>
+          <div>
+           <dt class="text-xs uppercase tracking-wider font-bold">
+            NIP
+           </dt>
+           <dd>
+            199206142022212009
+           </dd>
+          </div>
+         </dl><a data-template-id="facilitator-cv" class="canva-button action-btn mt-7" href="https://gurufa119.github.io/cv" target="_blank" rel="noopener noreferrer"><i data-lucide="external-link"></i></a>
+        </div>
+       </div>
+      </article>
+     </div>
+    </section>
+   </main>
+   <footer class="border-t border-[var(--line)]">
+    <div class="max-w-[1180px] mx-auto px-5 py-7 text-sm text-[var(--muted)] flex flex-col md:flex-row justify-between gap-2"><span>Modul Bahan Ajar Bimbingan Teknis Penguatan Literasi dan Numerasi</span> <a href="#beranda" class="font-bold text-[var(--teal)]">Kembali ke beranda</a>
+    </div>
+   </footer><button id="backTop" data-template-id="back-top-button" class="canva-button" type="button" aria-label="Naik ke atas"><i data-lucide="arrow-up"></i></button>
+  </div>
+  <script>
+  const quizData = [
+    { bab: "Bab 1", q: "Apa yang dimaksud dengan literasi dalam Asesmen Nasional?", a: ["Kemampuan menghafal isi buku pelajaran", "Kemampuan memahami, menggunakan, mengevaluasi, dan merefleksikan teks untuk berbagai tujuan", "Kemampuan membaca dengan cepat", "Kemampuan menulis karya ilmiah"], correct: 1, explain: "Literasi adalah kemampuan memahami, menggunakan, mengevaluasi, dan merefleksikan berbagai jenis teks untuk mencapai tujuan tertentu." },
+    { bab: "Bab 1", q: "Nilai delta pada Rapor Pendidikan digunakan untuk mengetahui ....", a: ["Jumlah murid yang mengikuti Asesmen Nasional", "Perubahan capaian dibandingkan tahun sebelumnya", "Jumlah indikator yang dinilai", "Peringkat sekolah nasional"], correct: 1, explain: "Nilai delta menunjukkan perubahan atau perkembangan capaian dibandingkan tahun sebelumnya." },
+    { bab: "Bab 1", q: "Jika indikator literasi berada pada kategori merah, langkah paling tepat adalah ....", a: ["Mengabaikan hasil", "Menunggu hasil tahun berikutnya", "Menganalisis akar masalah dan menyusun program perbaikan", "Mengganti seluruh buku pelajaran"], correct: 2, explain: "Capaian rendah perlu ditindaklanjuti melalui analisis akar masalah dan program perbaikan yang tepat sasaran." },
+    { bab: "Bab 2", q: "Pernyataan yang tepat tentang literasi adalah ....", a: ["Kemampuan membaca dan menulis saja", "Kemampuan memahami, mengevaluasi, dan menggunakan informasi untuk berbagai tujuan", "Kemampuan menghafal isi bacaan", "Kemampuan berbicara di depan kelas"], correct: 1, explain: "Literasi mencakup memahami, mengevaluasi, dan menggunakan informasi; bukan sekadar membaca dan menulis." },
+    { bab: "Bab 2", q: "Teks yang menggabungkan gambar, suara, video, dan tulisan disebut ....", a: ["Teks naratif", "Teks sastra", "Teks eksposisi", "Teks multimodal"], correct: 3, explain: "Teks multimodal menggabungkan berbagai mode komunikasi, seperti teks, gambar, suara, video, dan grafik." },
+    { bab: "Bab 2", q: "Prinsip utama numerasi lintas kurikulum adalah ....", a: ["Semua guru mengajarkan matematika", "Hanya guru matematika bertanggung jawab", "Setiap guru membantu mengembangkan numerasi sesuai bidang ilmunya", "Numerasi hanya melalui latihan hitung"], correct: 2, explain: "Setiap guru berperan mengembangkan numerasi sesuai konteks bidang ilmunya." },
+    { bab: "Bab 3", q: "Fungsi utama bagan atau grafik di dinding kelas adalah ....", a: ["Media pembelajaran yang mendukung tujuan pembelajaran", "Sekadar mempercantik kelas", "Mengisi waktu luang guru", "Memenuhi akreditasi semata"], correct: 0, explain: "Bagan dan grafik merupakan media pembelajaran yang dapat dirujuk saat belajar, bukan dekorasi semata." },
+    { bab: "Bab 3", q: "Lingkungan sosio-afektif sekolah dibentuk oleh ....", a: ["Jumlah fasilitas fisik", "Banyaknya prestasi", "Jenis komunikasi dan interaksi di sekolah", "Luas lahan sekolah"], correct: 2, explain: "Lingkungan sosio-afektif dibentuk oleh komunikasi dan interaksi antarwarga sekolah." },
+    { bab: "Bab 3", q: "Teaching at the Right Level berkaitan dengan ....", a: ["Materi sama untuk semua murid", "Kelas berdasarkan usia", "Memetakan kecakapan melalui asesmen agar pendampingan sesuai kebutuhan", "Materi sama seperti tahun lalu"], correct: 2, explain: "Pendekatan ini menyesuaikan pembelajaran dengan tingkat kompetensi aktual murid." },
+    { bab: "Bab 4", q: "Numerasi didefinisikan sebagai kemampuan untuk ....", a: ["Berpikir menggunakan konsep, prosedur, fakta, dan alat matematika untuk menyelesaikan masalah sehari-hari", "Menghafal rumus cepat", "Nilai matematika sempurna", "Mengingat tabel perkalian"], correct: 0, explain: "Numerasi menggunakan konsep, prosedur, fakta, dan alat matematika dalam masalah sehari-hari." },
+    { bab: "Bab 4", q: "Growth mindset dalam numerasi berarti ....", a: ["Hanya murid berbakat dapat menguasai matematika", "Semua murid dapat menjadi numerat melalui usaha dan latihan", "Kemampuan numerasi tidak dapat dikembangkan", "Matematika hanya penting bagi jurusan sains"], correct: 1, explain: "Growth mindset menekankan kemampuan dapat berkembang melalui usaha, strategi, dan masukan." },
+    { bab: "Bab 4", q: "Pembelajaran remedial yang tepat adalah ....", a: ["Mengulang tes sama persis", "Menaikkan nilai otomatis", "Memperbaiki pembelajaran dengan pendekatan berbeda", "Memindahkan murid ke kelas lebih rendah"], correct: 2, explain: "Remedial adalah perbaikan pembelajaran pada kompetensi yang belum dikuasai melalui pendekatan yang berbeda." }
+  ];
+
+  const quizList = document.getElementById("quizList");
+  quizData.forEach((item, index) => {
+    const choices = item.a.map((choice, optIndex) => `
+      <label class="option">
+        <input type="radio" name="q${index}" value="${optIndex}">
+        <span><strong>${String.fromCharCode(65 + optIndex)}.</strong> ${choice}</span>
+      </label>`).join("");
+    quizList.insertAdjacentHTML("beforeend", `
+      <fieldset class="question">
+        <legend class="text-xs font-extrabold text-[var(--teal)] uppercase tracking-wider">${item.bab} · Soal ${index + 1}</legend>
+        <p class="font-bold mt-2 mb-3">${item.q}</p>${choices}
+      </fieldset>`);
+  });
+
+  document.getElementById("quizForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+    let correct = 0;
+    const details = quizData.map((item, index) => {
+      const picked = document.querySelector(`input[name="q${index}"]:checked`);
+      const isCorrect = picked && Number(picked.value) === item.correct;
+      if (isCorrect) correct++;
+      return `<div class="feedback-item"><strong>${index + 1}. ${isCorrect ? "Benar" : "Perlu ditinjau"}</strong><br><span>${item.explain}</span></div>`;
+    });
+    const score = Math.round((correct / quizData.length) * 100);
+    const label = score >= 80 ? "Sangat Baik" : score >= 60 ? "Baik" : "Perlu Belajar Lagi";
+    const result = document.getElementById("quizResult");
+    result.innerHTML = `<p class="eyebrow">Hasil Evaluasi</p><h2 class="display-font text-4xl mt-2">${score}/100 — ${label}</h2><p class="mt-2 text-[var(--muted)]">Jawaban benar: <strong>${correct}</strong> dari ${quizData.length} soal.</p><div class="grid md:grid-cols-2 gap-3 mt-6">${details.join("")}</div>`;
+    result.classList.remove("hidden");
+    result.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  function showPage() {
+    const current = (location.hash || "#beranda").slice(1);
+    const pages = document.querySelectorAll(".page");
+    const target = document.getElementById(current) || document.getElementById("beranda");
+    pages.forEach(page => page.classList.remove("active"));
+    target.classList.add("active");
+    document.querySelectorAll(".nav-link").forEach(link => link.classList.toggle("active", link.getAttribute("href") === "#" + target.id));
+    document.getElementById("mobileMenu").classList.remove("open");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  window.addEventListener("hashchange", showPage);
+  showPage();
+
+  document.querySelectorAll(".accordion button").forEach(button => {
+    button.addEventListener("click", () => button.parentElement.classList.toggle("open"));
+  });
+
+  document.getElementById("menuToggle").addEventListener("click", () => {
+    document.getElementById("mobileMenu").classList.toggle("open");
+  });
+
+  document.getElementById("themeToggle").addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    const dark = document.body.classList.contains("dark");
+    document.getElementById("themeToggle").setAttribute("aria-label", dark ? "Aktifkan mode terang" : "Aktifkan mode gelap");
+  });
+
+  const backTop = document.getElementById("backTop");
+  window.addEventListener("scroll", () => backTop.classList.toggle("show", window.scrollY > 300));
+  backTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+  lucide.createIcons();
+</script>
+ </body>
+</html>
