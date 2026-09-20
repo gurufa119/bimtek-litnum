@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS Penguatan Literasi & Numerasi - Bimtek Kemendikdasmen</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#1e40af',
+                            'blue-dark': '#1e3a8a',
+                            green: '#15803d',
+                            'green-dark': '#14532d',
+                            orange: '#c2410c',
+                            'orange-dark': '#7c2d12',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- KaTeX for Math Rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.5);
+            border-radius: 3px;
+        }
+        @media print {
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            body { background: white !important; color: black !important; }
+            .main-content { margin-left: 0 !important; width: 100% !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
+
+    <!-- TOP HEADER / NAVBAR -->
+    <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 no-print">
+        <div class="px-4 lg:px-6 py-3 flex items-center justify-between">
+            <!-- Left: Sidebar Toggle & Brand -->
+            <div class="flex items-center gap-3">
+                <button id="sidebar-toggle" onclick="toggleSidebar()" class="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg lg:hidden" aria-label="Menu">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <div class="flex items-center gap-2">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-green-600 to-orange-500 flex items-center justify-center text-white font-bold text-xl shadow-md">
+                        <i class="fa-solid fa-book-open-reader"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-base lg:text-lg text-slate-900 dark:text-white leading-tight">LitNum EduLab</h1>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 hidden sm:block">Bimtek Penguatan Literasi & Numerasi</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Middle: Search Bar -->
+            <div class="hidden md:flex items-center flex-1 max-w-md mx-6 relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 text-slate-400"></i>
+                <input type="text" id="global-search" oninput="handleSearch(this.value)" placeholder="Cari materi, konsep, atau kata kunci..." class="w-full pl-9 pr-4 py-2 bg-slate-100 dark:bg-slate-700/60 text-slate-800 dark:text-slate-100 text-sm rounded-xl border border-transparent focus:border-blue-500 focus:bg-white dark:focus:bg-slate-800 focus:outline-none transition">
+                <div id="search-results" class="hidden absolute top-full left-0 right-0 mt-2 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 max-h-80 overflow-y-auto z-50 p-2"></div>
+            </div>
+
+            <!-- Right: Actions & Tools -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- Progress Indicator -->
+                <div class="hidden xl:flex items-center gap-2 bg-slate-100 dark:bg-slate-700 px-3 py-1.5 rounded-lg">
+                    <i class="fa-solid fa-chart-line text-green-600 dark:text-green-400"></i>
+                    <span class="text-xs font-semibold">Progres: <span id="global-progress-text">0%</span></span>
+                    <div class="w-16 bg-slate-200 dark:bg-slate-600 h-2 rounded-full overflow-hidden">
+                        <div id="global-progress-bar" class="bg-green-600 h-full w-0 transition-all duration-500"></div>
+                    </div>
+                </div>
+
+                <!-- Fullscreen Toggle -->
+                <button onclick="toggleFullscreen()" title="Layar Penuh" class="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition">
+                    <i class="fa-solid fa-expand text-lg"></i>
+                </button>
+
+                <!-- Dark Mode Toggle -->
+                <button onclick="toggleDarkMode()" title="Ubah Mode Tampilan" class="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition">
+                    <i id="theme-icon" class="fa-solid fa-moon text-lg"></i>
+                </button>
+
+                <!-- Print Button -->
+                <button onclick="window.print()" title="Cetak Ke PDF" class="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition">
+                    <i class="fa-solid fa-print text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex flex-1 relative">
+
+        <!-- SIDEBAR NAVIGATION -->
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-30 w-72 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col no-print pt-16 lg:pt-0">
+            <div class="p-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center lg:hidden">
+                <span class="font-bold text-slate-700 dark:text-slate-200">Menu Navigasi</span>
+                <button onclick="toggleSidebar()" class="text-slate-500"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="flex-1 overflow-y-auto custom-scrollbar p-3 space-y-1">
+                <div class="px-3 py-2 text-xs font-bold text-slate-400 uppercase tracking-wider">Utama</div>
+                
+                <a href="#beranda" onclick="navigateTo('beranda')" class="nav-btn group flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-700/60 hover:text-blue-600 transition" id="nav-beranda">
+                    <i class="fa-solid fa-house w-5 text-center text-blue-600"></i>
+                    <span>Beranda</span>
+                </a>
+
+                <div class="px-3 py-2 mt-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Modul & Sub Materi</div>
+
+                <a href="#materi-1" onclick="navigateTo('materi-1')" class="nav-btn group flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-xs sm:text-sm text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-700/60 hover:text-blue-600 transition" id="nav-materi-1">
+                    <div class="w-6 h-6 rounded-lg bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-300 flex items-center justify-center font-bold text-xs shrink-0">1</div>
+                    <span class="truncate">1. Capaian RP & TKA</span>
+                </a>
+
+                <a href="#materi-2" onclick="navigateTo('materi-2')" class="nav-btn group flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-xs sm:text-sm text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-700/60 hover:text-blue-600 transition" id="nav-materi-2">
+                    <div class="w-6 h-6 rounded-lg bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-300 flex items-center justify-center font-bold text-xs shrink-0">2</div>
+                    <span class="truncate">2. Miskonsepsi & Fakta</span>
+                </a>
+
+                <a href="#materi-3" onclick="navigateTo('materi-3')" class="nav-btn group flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-xs sm:text-sm text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-700/60 hover:text-blue-600 transition" id="nav-materi-3">
+                    <div class="w-6 h-6 rounded-lg bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-300 flex items-center justify-center font-bold text-xs shrink-0">3</div>
+                    <span class="truncate">3. Strategi Literasi</span>
+                </a>
+
+                <a href="#materi-4" onclick="navigateTo('materi-4')" class="nav-btn group flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-xs sm:text-sm text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-700/60 hover:text-blue-600 transition" id="nav-materi-4">
+                    <div class="w-6 h-6 rounded-lg bg-orange-100 dark:bg-orange-900/50 text-orange-600 dark:text-orange-300 flex items-center justify-center font-bold text-xs shrink-0">4</div>
+                    <span class="truncate">4. Strategi Numerasi</span>
+                </a>
+
+                <a href="#materi-5" onclick="navigateTo('materi-5')" class="nav-btn group flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-xs sm:text-sm text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-700/60 hover:text-blue-600 transition" id="nav-materi-5">
+                    <div class="w-6 h-6 rounded-lg bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-300 flex items-center justify-center font-bold text-xs shrink-0">5</div>
+                    <span class="truncate">5. Kerangka Asesmen TKA</span>
+                </a>
+
+                <a href="#materi-6" onclick="navigateTo('materi-6')" class="nav-btn group flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-xs sm:text-sm text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-700/60 hover:text-blue-600 transition" id="nav-materi-6">
+                    <div class="w-6 h-6 rounded-lg bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-300 flex items-center justify-center font-bold text-xs shrink-0">6</div>
+                    <span class="truncate">6. Perencanaan & Asesmen</span>
+                </a>
+
+                <div class="px-3 py-2 mt-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Ujian & Evaluasi</div>
+
+                <a href="#latihan" onclick="navigateTo('latihan')" class="nav-btn group flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm text-slate-700 dark:text-slate-200 hover:bg-green-50 dark:hover:bg-slate-700/60 hover:text-green-600 transition" id="nav-latihan">
+                    <i class="fa-solid fa-pen-to-square w-5 text-center text-green-600"></i>
+                    <span>Latihan Per Bab</span>
+                </a>
+
+                <a href="#evaluasi" onclick="navigateTo('evaluasi')" class="nav-btn group flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm text-slate-700 dark:text-slate-200 hover:bg-orange-50 dark:hover:bg-slate-700/60 hover:text-orange-600 transition" id="nav-evaluasi">
+                    <i class="fa-solid fa-clipboard-check w-5 text-center text-orange-600"></i>
+                    <span>Evaluasi Formatif (30)</span>
+                </a>
+
+                <div class="px-3 py-2 mt-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Informasi</div>
+
+                <a href="#fasilitator" onclick="navigateTo('fasilitator')" class="nav-btn group flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-700/60 hover:text-blue-600 transition" id="nav-fasilitator">
+                    <i class="fa-solid fa-user-tie w-5 text-center text-blue-600"></i>
+                    <span>Profil Fasilitator</span>
+                </a>
+            </div>
+
+            <!-- Footer Small -->
+            <div class="p-4 border-t border-slate-200 dark:border-slate-700 text-xs text-slate-500 text-center">
+                BBPMP Jawa Tengah &copy; <span class="current-year"></span>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="flex-1 lg:ml-72 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full min-h-[calc(100vh-4rem)]">
+            
+            <!-- SECTION 1: BERANDA -->
+            <section id="beranda" class="content-section space-y-8">
+                <!-- Hero Banner -->
+                <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-900 via-slate-900 to-emerald-900 text-white p-8 sm:p-12 shadow-2xl">
+                    <div class="absolute -right-10 -bottom-10 w-80 h-80 bg-orange-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="relative z-10 max-w-3xl space-y-4">
+                        <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white/10 backdrop-blur-md border border-white/20 text-orange-300 uppercase tracking-widest">
+                            <i class="fa-solid fa-award"></i> Program Pembenahan Pembelajaran
+                        </span>
+                        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+                            Penguatan Literasi & Numerasi Satuan Pendidikan
+                        </h1>
+                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                            Media pembelajaran interaktif berbasis Dokumen Resmi Bimtek Kemendikdasmen. Dirancang untuk meningkatkan kapasitas pendidik dan kepala sekolah dalam menganalisis Rapor Pendidikan, mengatasi miskonsepsi, serta menerapkan strategi ekosistem fisik, sosio-afektif, dan akademik.
+                        </p>
+                        <div class="pt-4 flex flex-wrap gap-4">
+                            <button onclick="navigateTo('materi-1')" class="px-6 py-3 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white font-bold rounded-xl shadow-lg hover:shadow-orange-500/30 transition transform hover:-translate-y-0.5 flex items-center gap-2">
+                                <i class="fa-solid fa-play"></i> Mulai Belajar Sekarang
+                            </button>
+                            <button onclick="navigateTo('evaluasi')" class="px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-semibold rounded-xl border border-white/20 transition flex items-center gap-2">
+                                <i class="fa-solid fa-clipboard-check"></i> Uji Evaluasi Formatif
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modul Statistics Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-300 flex items-center justify-center text-xl shrink-0">
+                            <i class="fa-solid fa-book-journal-whills"></i>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold text-slate-900 dark:text-white">6 Bab</p>
+                            <p class="text-xs text-slate-500">Materi Pokok Tuntas</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-300 flex items-center justify-center text-xl shrink-0">
+                            <i class="fa-solid fa-clipboard-list"></i>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold text-slate-900 dark:text-white">12+ Kuis</p>
+                            <p class="text-xs text-slate-500">Latihan Mandiri</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-orange-100 dark:bg-orange-900/50 text-orange-600 dark:text-orange-300 flex items-center justify-center text-xl shrink-0">
+                            <i class="fa-solid fa-stopwatch"></i>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold text-slate-900 dark:text-white">30 Soal</p>
+                            <p class="text-xs text-slate-500">Evaluasi Formatif</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-300 flex items-center justify-center text-xl shrink-0">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold text-slate-900 dark:text-white">Andragogi</p>
+                            <p class="text-xs text-slate-500">Praktik Aplikasi Guru</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Objective & Ecosystem Approach Card -->
+                <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-6">
+                    <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                        <h2 class="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
+                            <i class="fa-solid fa-bullseye text-blue-600"></i> Tujuan & Pendekatan Ekosistem
+                        </h2>
+                        <p class="text-slate-500 text-sm mt-1">Mengapa penguatan literasi dan numerasi bersifat mendesak di seluruh jenjang pendidikan?</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="p-5 rounded-2xl bg-blue-50/50 dark:bg-slate-700/30 border border-blue-100 dark:border-slate-700 space-y-3">
+                            <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold">1</div>
+                            <h3 class="font-bold text-slate-900 dark:text-white">Lingkungan Fisik</h3>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                                Menyediakan sarana kaya teks dan numerasi (Sudut baca, Active Word Wall, bagan fungsional, label numerik, dan makerspace).
+                            </p>
+                        </div>
+
+                        <div class="p-5 rounded-2xl bg-emerald-50/50 dark:bg-slate-700/30 border border-emerald-100 dark:border-slate-700 space-y-3">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold">2</div>
+                            <h3 class="font-bold text-slate-900 dark:text-white">Lingkungan Sosio-Afektif</h3>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                                Membangun *growth mindset*, komunikasi hangat, mengikis kecemasan membaca dan *math anxiety*, serta pelibatan aktif orang tua.
+                            </p>
+                        </div>
+
+                        <div class="p-5 rounded-2xl bg-orange-50/50 dark:bg-slate-700/30 border border-orange-100 dark:border-slate-700 space-y-3">
+                            <div class="w-10 h-10 rounded-xl bg-orange-600 text-white flex items-center justify-center font-bold">3</div>
+                            <h3 class="font-bold text-slate-900 dark:text-white">Lingkungan Akademik</h3>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                                Pembelajaran lintas kurikulum, diferensiasi capaian (Merah/Kuning/Hijau), pengembangan HOTS, dan asesmen berbasis TKA.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sub Materi Preview Grid -->
+                <div class="space-y-4">
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Preview Modul Pembelajaran</h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                        <!-- Sub 1 -->
+                        <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 flex flex-col justify-between hover:shadow-xl transition group">
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-300">Bab 1</span>
+                                    <i class="fa-solid fa-chart-pie text-blue-500 text-xl group-hover:scale-110 transition"></i>
+                                </div>
+                                <h3 class="font-bold text-slate-900 dark:text-white text-base">Analisis Capaian RP & TKA</h3>
+                                <p class="text-xs text-slate-500 line-clamp-3 leading-relaxed">Profil mutu Rapor Pendidikan, AKM, PISA Reading Framework, KPM (Kata Per Menit), label Hijau/Kuning/Merah, dan bedah akar masalah.</p>
+                            </div>
+                            <button onclick="navigateTo('materi-1')" class="mt-6 w-full py-2 bg-slate-100 dark:bg-slate-700 hover:bg-blue-600 hover:text-white font-semibold text-xs rounded-xl transition flex items-center justify-center gap-2">
+                                Buka Materi <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+
+                        <!-- Sub 2 -->
+                        <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 flex flex-col justify-between hover:shadow-xl transition group">
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-300">Bab 2</span>
+                                    <i class="fa-solid fa-lightbulb text-emerald-500 text-xl group-hover:scale-110 transition"></i>
+                                </div>
+                                <h3 class="font-bold text-slate-900 dark:text-white text-base">Miskonsepsi vs Fakta Esensial</h3>
+                                <p class="text-xs text-slate-500 line-clamp-3 leading-relaxed">Membongkar miskonsepsi umum literasi-numerasi, teks multimodal, serta paradigma baru literasi dan numerasi lintas kurikulum.</p>
+                            </div>
+                            <button onclick="navigateTo('materi-2')" class="mt-6 w-full py-2 bg-slate-100 dark:bg-slate-700 hover:bg-emerald-600 hover:text-white font-semibold text-xs rounded-xl transition flex items-center justify-center gap-2">
+                                Buka Materi <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+
+                        <!-- Sub 3 -->
+                        <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 flex flex-col justify-between hover:shadow-xl transition group">
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-300">Bab 3</span>
+                                    <i class="fa-solid fa-book-open text-blue-500 text-xl group-hover:scale-110 transition"></i>
+                                </div>
+                                <h3 class="font-bold text-slate-900 dark:text-white text-base">Strategi Penguatan Literasi</h3>
+                                <p class="text-xs text-slate-500 line-clamp-3 leading-relaxed">Penerapan fisik berjenjang (SD/SMP/SMA), iklim sosio-afektif, strategi membaca terbimbing, dan program pemulihan kognitif.</p>
+                            </div>
+                            <button onclick="navigateTo('materi-3')" class="mt-6 w-full py-2 bg-slate-100 dark:bg-slate-700 hover:bg-blue-600 hover:text-white font-semibold text-xs rounded-xl transition flex items-center justify-center gap-2">
+                                Buka Materi <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+
+                        <!-- Sub 4 -->
+                        <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 flex flex-col justify-between hover:shadow-xl transition group">
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-orange-100 dark:bg-orange-900/50 text-orange-600 dark:text-orange-300">Bab 4</span>
+                                    <i class="fa-solid fa-calculator text-orange-500 text-xl group-hover:scale-110 transition"></i>
+                                </div>
+                                <h3 class="font-bold text-slate-900 dark:text-white text-base">Strategi Penguatan Numerasi</h3>
+                                <p class="text-xs text-slate-500 line-clamp-3 leading-relaxed">Makerspace numerasi, eliminasi math anxiety, metode CPA (Concrete-Pictorial-Abstract), dan numerasi pada pelajaran non-matematika.</p>
+                            </div>
+                            <button onclick="navigateTo('materi-4')" class="mt-6 w-full py-2 bg-slate-100 dark:bg-slate-700 hover:bg-orange-600 hover:text-white font-semibold text-xs rounded-xl transition flex items-center justify-center gap-2">
+                                Buka Materi <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+
+                        <!-- Sub 5 -->
+                        <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 flex flex-col justify-between hover:shadow-xl transition group">
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-300">Bab 5</span>
+                                    <i class="fa-solid fa-brain text-purple-500 text-xl group-hover:scale-110 transition"></i>
+                                </div>
+                                <h3 class="font-bold text-slate-900 dark:text-white text-base">Kerangka Asesmen TKA</h3>
+                                <p class="text-xs text-slate-500 line-clamp-3 leading-relaxed">Simulasi soal Tes Kemampuan Akademik (TKA), domain kognitif Knowing, Applying, Reasoning, dan analisis jawaban interaktif.</p>
+                            </div>
+                            <button onclick="navigateTo('materi-5')" class="mt-6 w-full py-2 bg-slate-100 dark:bg-slate-700 hover:bg-purple-600 hover:text-white font-semibold text-xs rounded-xl transition flex items-center justify-center gap-2">
+                                Buka Materi <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+
+                        <!-- Sub 6 -->
+                        <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 flex flex-col justify-between hover:shadow-xl transition group">
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-300">Bab 6</span>
+                                    <i class="fa-solid fa-diagram-project text-indigo-500 text-xl group-hover:scale-110 transition"></i>
+                                </div>
+                                <h3 class="font-bold text-slate-900 dark:text-white text-base">Perencanaan & Tindak Lanjut</h3>
+                                <p class="text-xs text-slate-500 line-clamp-3 leading-relaxed">Menyusun RPP/Modul Ajar berbasis stimulus TKA, template tindak lanjut, dan alur integrasi asesmen diagnostik hingga formatif.</p>
+                            </div>
+                            <button onclick="navigateTo('materi-6')" class="mt-6 w-full py-2 bg-slate-100 dark:bg-slate-700 hover:bg-indigo-600 hover:text-white font-semibold text-xs rounded-xl transition flex items-center justify-center gap-2">
+                                Buka Materi <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: SUB MATERI 1 -->
+            <section id="materi-1" class="content-section hidden space-y-8">
+                <!-- Header Card -->
+                <div class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white p-6 sm:p-8 rounded-3xl shadow-lg">
+                    <div class="flex items-center gap-3 text-blue-200 text-xs font-bold uppercase tracking-wider mb-2">
+                        <i class="fa-solid fa-chart-line"></i> Bab 1 Modul Bimtek
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold leading-tight">
+                        Menganalisis Capaian Literasi & Numerasi Berdasarkan Rapor Pendidikan & Relevansinya dengan TKA
+                    </h2>
+                    <p class="text-blue-100 text-sm mt-2">
+                        Memahami arsitektur kognitif membaca (PISA Framework), standar kecepatan membaca (KPM), label indikator, serta analisis akar masalah.
+                    </p>
+                </div>
+
+                <!-- Accordion Content -->
+                <div class="space-y-4">
+                    <!-- Topik 1.1 -->
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm">
+                        <button onclick="toggleAccordion('acc-1-1')" class="w-full p-5 text-left font-bold text-slate-900 dark:text-white flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/80 hover:bg-slate-100 transition">
+                            <span class="flex items-center gap-3">
+                                <i class="fa-solid fa-layer-group text-blue-600"></i>
+                                A. Profil Mutu Literasi & Numerasi dalam Rapor Pendidikan
+                            </span>
+                            <i id="icon-acc-1-1" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                        </button>
+                        <div id="acc-1-1" class="p-6 space-y-6 border-t border-slate-200 dark:border-slate-700">
+                            <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                                Rapor Pendidikan menyediakan data kualitatif dan kuantitatif mengenai hasil belajar kognitif dasar murid dari Asesmen Nasional (AN/AKM). AKM membaca dirancang mengacu pada <strong class="text-blue-600 dark:text-blue-400">PISA Reading Framework 2018</strong>.
+                            </p>
+
+                            <!-- Arsitektur Kognitif Diagram -->
+                            <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-4">
+                                <h4 class="font-bold text-center text-slate-900 dark:text-white text-base">Arsitektur Pemrosesan Teks & Manajemen Tugas</h4>
+                                <div class="grid md:grid-cols-3 gap-4">
+                                    <div class="p-4 rounded-xl bg-blue-100/60 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 text-center space-y-2">
+                                        <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold mx-auto text-xs">1</div>
+                                        <h5 class="font-bold text-sm text-blue-900 dark:text-blue-200">Fondasi Utama</h5>
+                                        <p class="text-xs text-slate-600 dark:text-slate-300"><strong>Membaca Fasih (Read Fluently):</strong> Akurasi, Otomatisasi, Prosodi (Intonasi & ekspresi).</p>
+                                    </div>
+                                    <div class="p-4 rounded-xl bg-purple-100/60 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800 text-center space-y-2">
+                                        <div class="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold mx-auto text-xs">2</div>
+                                        <h5 class="font-bold text-sm text-purple-900 dark:text-purple-200">Text Processing</h5>
+                                        <p class="text-xs text-slate-600 dark:text-slate-300">1. Locate Info (Eksplisit)<br>2. Understand (Literal & Inferensi)<br>3. Evaluate & Reflect (Kritis & Bias)</p>
+                                    </div>
+                                    <div class="p-4 rounded-xl bg-orange-100/60 dark:bg-orange-950/40 border border-orange-200 dark:border-orange-800 text-center space-y-2">
+                                        <div class="w-8 h-8 rounded-full bg-orange-600 text-white flex items-center justify-center font-bold mx-auto text-xs">3</div>
+                                        <h5 class="font-bold text-sm text-orange-900 dark:text-orange-200">Task Management</h5>
+                                        <p class="text-xs text-slate-600 dark:text-slate-300">Menentukan Tujuan, Membuat Rencana, Mengawasi & Mengatur Pemahaman Metakognitif.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Standar Kecepatan Membaca (KPM) Table -->
+                            <div class="space-y-3">
+                                <h4 class="font-bold text-slate-900 dark:text-white text-sm">Target Standar Kecepatan Membaca (Kata Per Menit - KPM):</h4>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-xs text-left border-collapse">
+                                        <thead>
+                                            <tr class="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200">
+                                                <th class="p-3 border border-slate-200 dark:border-slate-600">Jenjang Pendidikan</th>
+                                                <th class="p-3 border border-slate-200 dark:border-slate-600">Target KPM Ideal</th>
+                                                <th class="p-3 border border-slate-200 dark:border-slate-600">Dampak pada Tes Terstandar (AN & TKA)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+                                            <tr>
+                                                <td class="p-3 border border-slate-200 dark:border-slate-600 font-semibold">SD / MI</td>
+                                                <td class="p-3 border border-slate-200 dark:border-slate-600 text-blue-600 font-bold">$60 - 120\text{ KPM}$</td>
+                                                <td class="p-3 border border-slate-200 dark:border-slate-600">Penting untuk menuntaskan tahap *Learning to Read* ke *Reading to Learn*.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-3 border border-slate-200 dark:border-slate-600 font-semibold">SMP / MTs</td>
+                                                <td class="p-3 border border-slate-200 dark:border-slate-600 text-blue-600 font-bold">$150 - 180\text{ KPM}$</td>
+                                                <td class="p-3 border border-slate-200 dark:border-slate-600">Memungkinkan murid memproses wacana panjang & grafik multimodal tanpa kehabisan waktu.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-3 border border-slate-200 dark:border-slate-600 font-semibold">SMA / SMK / MA</td>
+                                                <td class="p-3 border border-slate-200 dark:border-slate-600 text-blue-600 font-bold">$200 - 250\text{ KPM}$</td>
+                                                <td class="p-3 border border-slate-200 dark:border-slate-600">Otomatisasi kognitif penuh untuk menganalisis stimulus TKA yang kompleks & kontradiktif.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Label Warna Capaian -->
+                            <div class="grid md:grid-cols-3 gap-4 pt-2">
+                                <div class="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 space-y-1">
+                                    <span class="px-2 py-0.5 rounded text-xs font-bold bg-emerald-600 text-white">HIJAU (Baik)</span>
+                                    <p class="text-xs font-semibold text-emerald-900 dark:text-emerald-200 pt-1">Melampaui / Mencapai Standar</p>
+                                    <p class="text-xs text-slate-600 dark:text-slate-300">Murid mampu melakukan inferensi tersirat, evaluasi kritis, & bernalar numerasi kontekstual.</p>
+                                </div>
+                                <div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 space-y-1">
+                                    <span class="px-2 py-0.5 rounded text-xs font-bold bg-amber-500 text-white">KUNING (Sedang)</span>
+                                    <p class="text-xs font-semibold text-amber-900 dark:text-amber-200 pt-1">Mencapai Sebagian</p>
+                                    <p class="text-xs text-slate-600 dark:text-slate-300">Murid mapan di level literal dasar, namun kesulitan pada teks jamak & masalah non-rutin.</p>
+                                </div>
+                                <div class="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800 space-y-1">
+                                    <span class="px-2 py-0.5 rounded text-xs font-bold bg-rose-600 text-white">MERAH (Kurang)</span>
+                                    <p class="text-xs font-semibold text-rose-900 dark:text-rose-200 pt-1">Alarm Darurat Sekolah</p>
+                                    <p class="text-xs text-slate-600 dark:text-slate-300">Energi kognitif tersita hanya untuk mengeja/dekode kata. Belum fasih membaca dasar.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Topik 1.2 -->
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm">
+                        <button onclick="toggleAccordion('acc-1-2')" class="w-full p-5 text-left font-bold text-slate-900 dark:text-white flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/80 hover:bg-slate-100 transition">
+                            <span class="flex items-center gap-3">
+                                <i class="fa-solid fa-magnifying-glass-chart text-emerald-600"></i>
+                                B. Identifikasi Akar Masalah Rendahnya Kompetensi (Sub-Indikator & Faktor Pendukung)
+                            </span>
+                            <i id="icon-acc-1-2" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                        </button>
+                        <div id="acc-1-2" class="p-6 space-y-6 border-t border-slate-200 dark:border-slate-700 hidden">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <!-- Sub Indikator Literasi -->
+                                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                                    <h4 class="font-bold text-sm text-blue-600 dark:text-blue-400 flex items-center gap-2">
+                                        <i class="fa-solid fa-book"></i> Sub-Indikator Literasi
+                                    </h4>
+                                    <ul class="text-xs text-slate-600 dark:text-slate-300 space-y-2">
+                                        <li><strong>1. Teks Informasi:</strong> Mengukur kemampuan memahami artikel ilmiah populer, laporan, infografis, tabel, dan mendeteksi validitas data.</li>
+                                        <li><strong>2. Teks Sastra:</strong> Mengukur kemampuan memahami cerita naratif, puisi, novel, serta menginterpretasikan makna alegoris/metafora.</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Sub Indikator Numerasi -->
+                                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                                    <h4 class="font-bold text-sm text-orange-600 dark:text-orange-400 flex items-center gap-2">
+                                        <i class="fa-solid fa-chart-bar"></i> Sub-Indikator Numerasi
+                                    </h4>
+                                    <ul class="text-xs text-slate-600 dark:text-slate-300 space-y-2">
+                                        <li><strong>Domain Konten:</strong> Bilangan, Aljabar, Geometri & Pengukuran, Data & Ketidakpastian.</li>
+                                        <li><strong>Level Kognitif:</strong> Pemahaman (*Knowing*), Penerapan (*Applying*), Penalaran (*Reasoning*).</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Faktor Pendukung Systemic Table -->
+                            <div class="space-y-3">
+                                <h4 class="font-bold text-slate-900 dark:text-white text-sm">Faktor Pendukung Tata Kelola (Penggerak Utama):</h4>
+                                <div class="p-4 rounded-xl bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 text-xs text-slate-700 dark:text-slate-300 space-y-2">
+                                    <p><strong>1. Kualitas Pembelajaran:</strong> Penggunaan strategi diferensiasi, variasi media, dan latihan strategi membaca taktis (skimming & scanning).</p>
+                                    <p><strong>2. Refleksi & Perbaikan Pembelajaran:</strong> Kemampuan guru mengadaptasi RPP dan menyusun bank soal HOTS berbasis analisis Rapor Pendidikan.</p>
+                                    <p><strong>3. Kepemimpinan Instruksional:</strong> Kebijakan Kepala Sekolah dalam alokasi anggaran buku berjenjang, ruang *makerspace*, dan pengembangan kapasitas guru.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Quiz Bab 1 -->
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+                    <h3 class="font-bold text-lg text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-circle-question text-blue-600"></i> Kuis Singkat Bab 1
+                    </h3>
+                    <div id="quiz-bab-1" class="space-y-4">
+                        <p class="text-sm font-medium text-slate-700 dark:text-slate-200">1. Berdasarkan PISA Reading Framework 2018, apa yang menjadi fondasi utama sebelum seorang siswa dapat melakukan pemrosesan teks tingkat tinggi (Text Processing)?</p>
+                        <div class="grid sm:grid-cols-2 gap-3 text-xs">
+                            <button onclick="checkBabQuiz(1, 'A', false)" class="p-3 rounded-xl border border-slate-200 dark:border-slate-700 text-left hover:bg-slate-50 dark:hover:bg-slate-700 transition btn-quiz-1">A. Menguasai rumus matematika</button>
+                            <button onclick="checkBabQuiz(1, 'B', true)" class="p-3 rounded-xl border border-slate-200 dark:border-slate-700 text-left hover:bg-slate-50 dark:hover:bg-slate-700 transition btn-quiz-1">B. Kefasihan membaca (Read Fluently)</button>
+                            <button onclick="checkBabQuiz(1, 'C', false)" class="p-3 rounded-xl border border-slate-200 dark:border-slate-700 text-left hover:bg-slate-50 dark:hover:bg-slate-700 transition btn-quiz-1">C. Menghafal seluruh isi buku</button>
+                            <button onclick="checkBabQuiz(1, 'D', false)" class="p-3 rounded-xl border border-slate-200 dark:border-slate-700 text-left hover:bg-slate-50 dark:hover:bg-slate-700 transition btn-quiz-1">D. Membuat kliping berita</button>
+                        </div>
+                        <div id="feedback-quiz-1" class="hidden p-3 rounded-xl text-xs font-semibold"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3: SUB MATERI 2 -->
+            <section id="materi-2" class="content-section hidden space-y-8">
+                <div class="bg-gradient-to-r from-emerald-700 to-teal-800 text-white p-6 sm:p-8 rounded-3xl shadow-lg">
+                    <div class="flex items-center gap-3 text-emerald-200 text-xs font-bold uppercase tracking-wider mb-2">
+                        <i class="fa-solid fa-lightbulb"></i> Bab 2 Modul Bimtek
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold leading-tight">
+                        Mengenal Miskonsepsi & Fakta Esensial Seputar Literasi dan Numerasi
+                    </h2>
+                    <p class="text-emerald-100 text-sm mt-2">
+                        Membongkar pemahaman yang kurang tepat, memahami teks multimodal, serta menerapkan paradigma baru lintas kurikulum.
+                    </p>
+                </div>
+
+                <!-- Comparison Table Card -->
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-6">
+                    <h3 class="font-bold text-xl text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-table-list text-emerald-600"></i> Tabel Perbandingan: Miskonsepsi vs Fakta Esensial
+                    </h3>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-xs text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-100">
+                                    <th class="p-3 border border-slate-200 dark:border-slate-600 w-1/4">Domain</th>
+                                    <th class="p-3 border border-slate-200 dark:border-slate-600 w-3/8 text-rose-600 dark:text-rose-400">Miskonsepsi Umum</th>
+                                    <th class="p-3 border border-slate-200 dark:border-slate-600 w-3/8 text-emerald-600 dark:text-emerald-400">Fakta Esensial (Paradigma Baru)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+                                <tr>
+                                    <td class="p-3 border border-slate-200 dark:border-slate-600 font-bold">Literasi 1</td>
+                                    <td class="p-3 border border-slate-200 dark:border-slate-600 bg-rose-50/40 dark:bg-rose-950/20">Literasi hanya sebatas kemampuan membaca dan menulis kata (dekode mekanis).</td>
+                                    <td class="p-3 border border-slate-200 dark:border-slate-600 bg-emerald-50/40 dark:bg-emerald-950/20">Literasi adalah kemampuan memahami, menginterpretasikan, mengevaluasi, dan merefleksikan informasi untuk memecahkan masalah kehidupan.</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 border border-slate-200 dark:border-slate-600 font-bold">Literasi 2</td>
+                                    <td class="p-3 border border-slate-200 dark:border-slate-600 bg-rose-50/40 dark:bg-rose-950/20">Literasi adalah tanggung jawab tunggal Guru Bahasa Indonesia.</td>
+                                    <td class="p-3 border border-slate-200 dark:border-slate-600 bg-emerald-50/40 dark:bg-emerald-950/20"><strong>Setiap guru adalah guru literasi.</strong> Setiap mata pelajaran memiliki jenis teks spesifik (misal: grafik di IPA/IPS).</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 border border-slate-200 dark:border-slate-600 font-bold">Literasi 3</td>
+                                    <td class="p-3 border border-slate-200 dark:border-slate-600 bg-rose-50/40 dark:bg-rose-950/20">Literasi hanya berkaitan dengan membaca buku cetak.</td>
+                                    <td class="p-3 border border-slate-200 dark:border-slate-600 bg-emerald-50/40 dark:bg-emerald-950/20">Literasi modern mencakup pemahaman <strong>Teks Multimodal</strong> (gambar, suara, video, grafik, digital).</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 border border-slate-200 dark:border-slate-600 font-bold">Numerasi 1</td>
+                                    <td class="p-3 border border-slate-200 dark:border-slate-600 bg-rose-50/40 dark:bg-rose-950/20">Numerasi sama persis dengan pelajaran Matematika abstrak.</td>
+                                    <td class="p-3 border border-slate-200 dark:border-slate-600 bg-emerald-50/40 dark:bg-emerald-950/20">Matematika adalah disiplin ilmu abstrak, sedangkan numerasi adalah kemampuan mengaplikasikan konsep matematika pada situasi nyata harian.</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 border border-slate-200 dark:border-slate-600 font-bold">Numerasi 2</td>
+                                    <td class="p-3 border border-slate-200 dark:border-slate-600 bg-rose-50/40 dark:bg-rose-950/20">Numerasi hanya kemampuan berhitung cepat tanpa alat hitung.</td>
+                                    <td class="p-3 border border-slate-200 dark:border-slate-600 bg-emerald-50/40 dark:bg-emerald-950/20">Numerasi mencakup membaca data, estimasi, analisis grafik, penalaran spasial, dan pengambilan keputusan berbasis statistik.</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 border border-slate-200 dark:border-slate-600 font-bold">Numerasi 3</td>
+                                    <td class="p-3 border border-slate-200 dark:border-slate-600 bg-rose-50/40 dark:bg-rose-950/20">Numerasi hanya tanggung jawab Guru Matematika.</td>
+                                    <td class="p-3 border border-slate-200 dark:border-slate-600 bg-emerald-50/40 dark:bg-emerald-950/20"><strong>Setiap guru adalah guru numerasi.</strong> Terintegrasi di IPA (data eksperimen), IPS (piramida penduduk), Geografi (skala), PJOK (denyut nadi/waktu).</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Reflection Activity Card -->
+                <div class="p-6 rounded-3xl bg-emerald-50/50 dark:bg-slate-800 border border-emerald-200 dark:border-slate-700 space-y-4">
+                    <h4 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-comments text-emerald-600"></i> Aktivitas Refleksi Pendidik
+                    </h4>
+                    <p class="text-xs text-slate-600 dark:text-slate-300">
+                        Coba renungkan: Selama ini, apakah Anda masih menganggap kegiatan literasi di sekolah cukup dengan membaca buku 15 menit sebelum pelajaran tanpa ada diskusi dan refleksi? Tuliskan ide perbaikan Anda.
+                    </p>
+                    <textarea placeholder="Tuliskan catatan refleksi mandiri Anda di sini..." class="w-full p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-300 dark:border-slate-700 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none" rows="3"></textarea>
+                </div>
+            </section>
+
+            <!-- SECTION 4: SUB MATERI 3 -->
+            <section id="materi-3" class="content-section hidden space-y-8">
+                <div class="bg-gradient-to-r from-blue-800 to-cyan-800 text-white p-6 sm:p-8 rounded-3xl shadow-lg">
+                    <div class="flex items-center gap-3 text-blue-200 text-xs font-bold uppercase tracking-wider mb-2">
+                        <i class="fa-solid fa-book-open"></i> Bab 3 Modul Bimtek
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold leading-tight">
+                        Strategi Penguatan Literasi Satuan Pendidikan
+                    </h2>
+                    <p class="text-blue-100 text-sm mt-2">
+                        Implementasi terintegrasi pada Lingkungan Fisik, Sosio-Afektif, dan Akademik berdasarkan penjenjangan sekolah.
+                    </p>
+                </div>
+
+                <!-- 3 Dimension Cards -->
+                <div class="grid md:grid-cols-3 gap-6">
+                    <!-- Physical -->
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-200 dark:border-slate-700 space-y-4 shadow-sm">
+                        <div class="w-12 h-12 rounded-2xl bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-300 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-shapes"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-slate-900 dark:text-white">1. Lingkungan Fisik</h3>
+                        <ul class="text-xs text-slate-600 dark:text-slate-300 space-y-2 list-disc pl-4">
+                            <li><strong>SD:</strong> Sudut baca berlabel warna (TaRL), Active Word Wall, mural berlabel.</li>
+                            <li><strong>SMP:</strong> Mading kaya data, Graphic Organizers (Diagram Venn, Peta Konsep).</li>
+                            <li><strong>SMA:</strong> Papan isu global kontradiktif, Pustaka digital & Makerspace.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Socio-Affective -->
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-200 dark:border-slate-700 space-y-4 shadow-sm">
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-300 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-users-line"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-slate-900 dark:text-white">2. Lingkungan Sosio-Afektif</h3>
+                        <ul class="text-xs text-slate-600 dark:text-slate-300 space-y-2 list-disc pl-4">
+                            <li>Komunikasi kolegial antarguru & kemitraan dengan orang tua.</li>
+                            <li>Menghilangkan kecemasan membaca (*reading anxiety*).</li>
+                            <li>Pajangan terbitan karya siswa (*Student Author Corner*).</li>
+                        </ul>
+                    </div>
+
+                    <!-- Academic -->
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-200 dark:border-slate-700 space-y-4 shadow-sm">
+                        <div class="w-12 h-12 rounded-2xl bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-300 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-slate-900 dark:text-white">3. Lingkungan Akademik</h3>
+                        <ul class="text-xs text-slate-600 dark:text-slate-300 space-y-2 list-disc pl-4">
+                            <li>Strategi Membaca Terbimbing (*Guided Reading*).</li>
+                            <li>Pemodelan berpikir (*Think Aloud*).</li>
+                            <li>Pembelajaran berbasis masalah (PBL) & Teks Jamak.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Checklist Implementation Table -->
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+                    <h3 class="font-bold text-lg text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-blue-600"></i> Checklist Penerapan Literasi Sekolah
+                    </h3>
+                    <div class="space-y-2 text-xs">
+                        <label class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-700/40 rounded-xl cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 text-blue-600 rounded">
+                            <span class="text-slate-700 dark:text-slate-200">Tersedia sudut baca kelas dengan penjenjangan buku berbasis warna stiker.</span>
+                        </label>
+                        <label class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-700/40 rounded-xl cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 text-blue-600 rounded">
+                            <span class="text-slate-700 dark:text-slate-200">Setiap mata pelajaran menyajikan minimal 1 wacana berbasis Teks Informasi / Multimodal per bulan.</span>
+                        </label>
+                        <label class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-700/40 rounded-xl cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 text-blue-600 rounded">
+                            <span class="text-slate-700 dark:text-slate-200">Guru menggunakan strategi Membaca Nyaring Interaktif atau Think Aloud di kelas.</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 5: SUB MATERI 4 -->
+            <section id="materi-4" class="content-section hidden space-y-8">
+                <div class="bg-gradient-to-r from-orange-700 to-amber-800 text-white p-6 sm:p-8 rounded-3xl shadow-lg">
+                    <div class="flex items-center gap-3 text-orange-200 text-xs font-bold uppercase tracking-wider mb-2">
+                        <i class="fa-solid fa-calculator"></i> Bab 4 Modul Bimtek
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold leading-tight">
+                        Strategi Penguatan Numerasi Satuan Pendidikan
+                    </h2>
+                    <p class="text-orange-100 text-sm mt-2">
+                        Mengikis Math Anxiety, metode CPA (Concrete-Pictorial-Abstract), dan numerasi lintas mata pelajaran.
+                    </p>
+                </div>
+
+                <!-- CPA Method Diagram -->
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+                    <h3 class="font-bold text-xl text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-cubes text-orange-600"></i> Pendekatan CPA (Concrete - Pictorial - Abstract)
+                    </h3>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="p-4 rounded-2xl bg-orange-50 dark:bg-slate-700/50 border border-orange-200 dark:border-slate-600 text-center space-y-2">
+                            <div class="w-10 h-10 rounded-full bg-orange-600 text-white flex items-center justify-center font-bold mx-auto">1</div>
+                            <h4 class="font-bold text-sm text-slate-900 dark:text-white">Konkret (Concrete)</h4>
+                            <p class="text-xs text-slate-600 dark:text-slate-300">Menggunakan benda nyata seperti biji-bijian, kelereng, atau balok kayu untuk memahami jumlah.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-amber-50 dark:bg-slate-700/50 border border-amber-200 dark:border-slate-600 text-center space-y-2">
+                            <div class="w-10 h-10 rounded-full bg-amber-600 text-white flex items-center justify-center font-bold mx-auto">2</div>
+                            <h4 class="font-bold text-sm text-slate-900 dark:text-white">Piktorial (Pictorial)</h4>
+                            <p class="text-xs text-slate-600 dark:text-slate-300">Menggambar bentuk visual, diagram lingkaran, atau model garis untuk mewakili benda nyata.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-yellow-50 dark:bg-slate-700/50 border border-yellow-200 dark:border-slate-600 text-center space-y-2">
+                            <div class="w-10 h-10 rounded-full bg-yellow-600 text-white flex items-center justify-center font-bold mx-auto">3</div>
+                            <h4 class="font-bold text-sm text-slate-900 dark:text-white">Abstrak (Abstract)</h4>
+                            <p class="text-xs text-slate-600 dark:text-slate-300">Menggunakan simbol angka dan operasi matematika resmi seperti $5 + 3 = 8$.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Numerasi Lintas Mapel Grid -->
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+                    <h3 class="font-bold text-lg text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-border-all text-orange-600"></i> Numerasi Lintas Mata Pelajaran (Non-Matematika)
+                    </h3>
+                    <div class="grid md:grid-cols-2 gap-4 text-xs">
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-700/40 border border-slate-200 dark:border-slate-600 space-y-1">
+                            <h5 class="font-bold text-slate-900 dark:text-white">IPA / Sains</h5>
+                            <p class="text-slate-600 dark:text-slate-300">Mengukur pertumbuhan tanaman harian, mengolah tabel variabel percobaan, serta menyajikan grafik garis.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-700/40 border border-slate-200 dark:border-slate-600 space-y-1">
+                            <h5 class="font-bold text-slate-900 dark:text-white">IPS / Geografi</h5>
+                            <p class="text-slate-600 dark:text-slate-300">Menganalisis piramida penduduk, membaca skala peta, menghitung kepadatan penduduk & data ekonomi.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-700/40 border border-slate-200 dark:border-slate-600 space-y-1">
+                            <h5 class="font-bold text-slate-900 dark:text-white">PJOK / Olahraga</h5>
+                            <p class="text-slate-600 dark:text-slate-300">Menghitung denyut nadi optimum, mengukur jarak tempuh lari, serta menghitung Indeks Massa Tubuh (IMT).</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-700/40 border border-slate-200 dark:border-slate-600 space-y-1">
+                            <h5 class="font-bold text-slate-900 dark:text-white">Seni Budaya</h5>
+                            <p class="text-slate-600 dark:text-slate-300">Mengenali pola simetri pada batik, proporsi gambar, serta skala pembuatan maket pertunjukan.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 6: SUB MATERI 5 -->
+            <section id="materi-5" class="content-section hidden space-y-8">
+                <div class="bg-gradient-to-r from-purple-800 to-indigo-900 text-white p-6 sm:p-8 rounded-3xl shadow-lg">
+                    <div class="flex items-center gap-3 text-purple-200 text-xs font-bold uppercase tracking-wider mb-2">
+                        <i class="fa-solid fa-brain"></i> Bab 5 Modul Bimtek
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold leading-tight">
+                        Analisis Capaian & Kerangka Asesmen Tes Kemampuan Akademik (TKA)
+                    </h2>
+                    <p class="text-purple-100 text-sm mt-2">
+                        Simulasi interaktif soal TKA, pembahasan mendalam, dan pemetaan domain kognitif Knowing, Applying, Reasoning.
+                    </p>
+                </div>
+
+                <!-- Simulation Interactive Card -->
+                <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-6">
+                    <div class="border-b border-slate-200 dark:border-slate-700 pb-4 flex justify-between items-center">
+                        <h3 class="font-bold text-xl text-slate-900 dark:text-white flex items-center gap-2">
+                            <i class="fa-solid fa-laptop-code text-purple-600"></i> Simulasi Interaktif Soal TKA
+                        </h3>
+                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-300">TKA Literasi & Numerasi</span>
+                    </div>
+
+                    <!-- Wacana Stimulus -->
+                    <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                        <span class="px-2.5 py-1 rounded text-xs font-bold bg-purple-600 text-white">Stimulus Teks Informasi & Data</span>
+                        <h4 class="font-bold text-slate-900 dark:text-white text-sm">Topik: Efisiensi Penggunaan Air Sekolah</h4>
+                        <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Sebuah SMA memiliki 600 siswa. Berdasarkan data pemantauan, rata-rata satu keran bocor meneteskan air sebanyak $0{,}5\text{ liter}$ per jam. Di sekolah terdapat 4 titik keran yang bocor halus dan dibiarkan selama 24 jam penuh tanpa diperbaiki.
+                        </p>
+                    </div>
+
+                    <!-- Question -->
+                    <div class="space-y-4">
+                        <p class="text-sm font-semibold text-slate-800 dark:text-slate-100">
+                            Soal: Berapa total volume air yang terbuang sia-sia selama 1 minggu (7 hari) akibat kebocoran 4 keran tersebut?
+                        </p>
+                        <div class="grid sm:grid-cols-2 gap-3 text-xs">
+                            <button onclick="checkTKASimulation('A', false)" class="p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 text-left hover:bg-slate-50 dark:hover:bg-slate-700 transition btn-tka">A. 48 Liter</button>
+                            <button onclick="checkTKASimulation('B', false)" class="p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 text-left hover:bg-slate-50 dark:hover:bg-slate-700 transition btn-tka">B. 168 Liter</button>
+                            <button onclick="checkTKASimulation('C', true)" class="p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 text-left hover:bg-slate-50 dark:hover:bg-slate-700 transition btn-tka">C. 336 Liter</button>
+                            <button onclick="checkTKASimulation('D', false)" class="p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 text-left hover:bg-slate-50 dark:hover:bg-slate-700 transition btn-tka">D. 672 Liter</button>
+                        </div>
+                        <div id="tka-feedback" class="hidden p-4 rounded-2xl text-xs space-y-2"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 7: SUB MATERI 6 -->
+            <section id="materi-6" class="content-section hidden space-y-8">
+                <div class="bg-gradient-to-r from-indigo-800 to-blue-900 text-white p-6 sm:p-8 rounded-3xl shadow-lg">
+                    <div class="flex items-center gap-3 text-indigo-200 text-xs font-bold uppercase tracking-wider mb-2">
+                        <i class="fa-solid fa-diagram-project"></i> Bab 6 Modul Bimtek
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold leading-tight">
+                        Perencanaan Pembelajaran: Tindak Lanjut Hasil Analisis Capaian TKA
+                    </h2>
+                    <p class="text-indigo-100 text-sm mt-2">
+                        Menyusun RPP/Modul Ajar interaktif, template tindak lanjut, dan alur integrasi asesmen diagnostik.
+                    </p>
+                </div>
+
+                <!-- Template Download / Flowchart -->
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-6">
+                    <h3 class="font-bold text-xl text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-route text-indigo-600"></i> Alur Perencanaan Pembelajaran Berbasis Data TKA
+                    </h3>
+
+                    <div class="grid md:grid-cols-4 gap-4 text-center text-xs">
+                        <div class="p-4 rounded-2xl bg-indigo-50 dark:bg-slate-700/50 border border-indigo-200 dark:border-slate-600 space-y-2">
+                            <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold mx-auto">1</div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">Analisis Rapor / TKA</h4>
+                            <p class="text-slate-500">Mendiagnosis indikator terlemah (misal: Penalaran Data).</p>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-blue-50 dark:bg-slate-700/50 border border-blue-200 dark:border-slate-600 space-y-2">
+                            <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold mx-auto">2</div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">Asesmen Diagnostik</h4>
+                            <p class="text-slate-500">Memetakan kemampuan awal murid di kelas (*TaRL*).</p>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-emerald-50 dark:bg-slate-700/50 border border-emerald-200 dark:border-slate-600 space-y-2">
+                            <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold mx-auto">3</div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">Desain Modul Ajar</h4>
+                            <p class="text-slate-500">Mengintegrasikan stimulus wacana & tabel masalah nyata.</p>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-orange-50 dark:bg-slate-700/50 border border-orange-200 dark:border-slate-600 space-y-2">
+                            <div class="w-8 h-8 rounded-full bg-orange-600 text-white flex items-center justify-center font-bold mx-auto">4</div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">Refleksi & RTL</h4>
+                            <p class="text-slate-500">Evaluasi perbaikan berkala bersama komite pembelajaran.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 8: LATIHAN PER BAB -->
+            <section id="latihan" class="content-section hidden space-y-8">
+                <div class="bg-gradient-to-r from-emerald-800 to-green-800 text-white p-6 sm:p-8 rounded-3xl shadow-lg">
+                    <div class="flex items-center gap-3 text-emerald-200 text-xs font-bold uppercase tracking-wider mb-2">
+                        <i class="fa-solid fa-pen-to-square"></i> Latihan Interaktif Per Bab
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold leading-tight">
+                        Bank Soal Latihan & Pembahasan Langsung
+                    </h2>
+                    <p class="text-emerald-100 text-sm mt-2">
+                        Uji pemahaman Anda pada setiap bab dengan umpan balik dan kunci jawaban instan.
+                    </p>
+                </div>
+
+                <!-- Interactive Quiz Container -->
+                <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-6">
+                    <div class="flex flex-wrap gap-2 border-b border-slate-200 dark:border-slate-700 pb-4">
+                        <button onclick="loadPracticeBab(1)" class="px-4 py-2 rounded-xl font-bold text-xs bg-emerald-600 text-white tab-practice" id="tab-pract-1">Bab 1</button>
+                        <button onclick="loadPracticeBab(2)" class="px-4 py-2 rounded-xl font-bold text-xs bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 tab-practice" id="tab-pract-2">Bab 2</button>
+                        <button onclick="loadPracticeBab(3)" class="px-4 py-2 rounded-xl font-bold text-xs bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 tab-practice" id="tab-pract-3">Bab 3</button>
+                        <button onclick="loadPracticeBab(4)" class="px-4 py-2 rounded-xl font-bold text-xs bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 tab-practice" id="tab-pract-4">Bab 4</button>
+                        <button onclick="loadPracticeBab(5)" class="px-4 py-2 rounded-xl font-bold text-xs bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 tab-practice" id="tab-pract-5">Bab 5</button>
+                        <button onclick="loadPracticeBab(6)" class="px-4 py-2 rounded-xl font-bold text-xs bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 tab-practice" id="tab-pract-6">Bab 6</button>
+                    </div>
+
+                    <div id="practice-container" class="space-y-6">
+                        <!-- Questions dynamically loaded via JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 9: EVALUASI FORMATIF (30 SOAL) -->
+            <section id="evaluasi" class="content-section hidden space-y-8">
+                <div class="bg-gradient-to-r from-orange-800 via-amber-800 to-red-800 text-white p-6 sm:p-8 rounded-3xl shadow-lg">
+                    <div class="flex items-center gap-3 text-orange-200 text-xs font-bold uppercase tracking-wider mb-2">
+                        <i class="fa-solid fa-clipboard-check"></i> Asesmen Akhir Modul
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold leading-tight">
+                        Evaluasi Formatif Komprehensif (30 Soal)
+                    </h2>
+                    <p class="text-orange-100 text-sm mt-2">
+                        Menguji pemahaman menyeluruh Bab 1 hingga Bab 6. Dilengkapi timer pengerjaan, skor otomatis, serta rekomendasi tindak lanjut.
+                    </p>
+                </div>
+
+                <!-- Exam Screen Container -->
+                <div id="eval-start-card" class="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 text-center space-y-6 shadow-sm">
+                    <div class="w-20 h-20 rounded-full bg-orange-100 dark:bg-orange-900/50 text-orange-600 dark:text-orange-300 flex items-center justify-center text-3xl mx-auto">
+                        <i class="fa-solid fa-stopwatch"></i>
+                    </div>
+                    <div class="max-w-md mx-auto space-y-2">
+                        <h3 class="font-bold text-xl text-slate-900 dark:text-white">Petunjuk Pengerjaan Evaluasi</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            Soal terdiri dari <strong>30 pilihan ganda</strong> yang diacak secara sistematis. Waktu pengerjaan dialokasikan <strong>45 Menit</strong>. Pastikan Anda menyelesaikan seluruh pertanyaan sebelum mengirimkan jawaban.
+                        </p>
+                    </div>
+                    <button onclick="startEvaluation()" class="px-8 py-3.5 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white font-bold rounded-2xl shadow-xl transition transform hover:scale-105">
+                        <i class="fa-solid fa-play mr-2"></i> Mulai Ujian Evaluasi Sekarang
+                    </button>
+                </div>
+
+                <!-- Exam Playing Box (Hidden Initially) -->
+                <div id="eval-exam-box" class="hidden space-y-6">
+                    <!-- Top Timer & Tracker Bar -->
+                    <div class="sticky top-16 z-20 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md p-4 rounded-2xl border border-slate-200 dark:border-slate-700 flex items-center justify-between shadow-md">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-clock text-orange-600"></i>
+                            <span class="text-xs font-bold">Sisa Waktu: <span id="exam-timer" class="text-orange-600 font-mono text-sm">45:00</span></span>
+                        </div>
+                        <div class="text-xs font-bold text-slate-600 dark:text-slate-300">
+                            Soal <span id="current-q-num">1</span> dari 30
+                        </div>
+                        <button onclick="submitEvaluation()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow transition">
+                            Kirim Jawaban
+                        </button>
+                    </div>
+
+                    <!-- Question Content Card -->
+                    <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-6">
+                        <div id="eval-question-text" class="text-sm font-semibold text-slate-900 dark:text-white leading-relaxed"></div>
+                        <div id="eval-options-grid" class="grid gap-3 text-xs"></div>
+
+                        <div class="flex justify-between items-center pt-4 border-t border-slate-200 dark:border-slate-700">
+                            <button onclick="prevQuestion()" id="btn-prev-q" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl text-xs font-bold hover:bg-slate-200 transition">
+                                <i class="fa-solid fa-arrow-left mr-1"></i> Sebelumnya
+                            </button>
+                            <button onclick="nextQuestion()" id="btn-next-q" class="px-4 py-2 bg-blue-600 text-white rounded-xl text-xs font-bold hover:bg-blue-700 transition">
+                                Selanjutnya <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exam Result Screen (Hidden Initially) -->
+                <div id="eval-result-box" class="hidden space-y-6">
+                    <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 text-center space-y-6 shadow-sm">
+                        <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-blue-600 to-emerald-600 text-white flex items-center justify-center text-4xl mx-auto shadow-xl">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                        <div class="space-y-2">
+                            <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">Hasil Evaluasi Formatif</h3>
+                            <p class="text-xs text-slate-500">Penguatan Literasi dan Numerasi Satuan Pendidikan</p>
+                        </div>
+
+                        <div class="max-w-md mx-auto p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                            <p class="text-xs text-slate-500 uppercase tracking-widest font-bold">Skor Akhir Anda</p>
+                            <p id="eval-final-score" class="text-5xl font-black text-blue-600 dark:text-blue-400">0</p>
+                            <div id="eval-category-badge" class="inline-block px-4 py-1.5 rounded-full text-xs font-bold"></div>
+                        </div>
+
+                        <div id="eval-recommendation-box" class="max-w-xl mx-auto p-5 rounded-2xl text-left text-xs space-y-2 border"></div>
+
+                        <button onclick="startEvaluation()" class="px-6 py-2.5 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-800 dark:text-slate-100 font-bold text-xs rounded-xl transition">
+                            <i class="fa-solid fa-rotate-right mr-1"></i> Ulangi Evaluasi
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 10: FASILITATOR PROFILE -->
+            <section id="fasilitator" class="content-section hidden space-y-8">
+                <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-lg">
+                    <div class="flex items-center gap-3 text-blue-200 text-xs font-bold uppercase tracking-wider mb-2">
+                        <i class="fa-solid fa-user-tie"></i> Profil Pengembang & Fasilitator
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold leading-tight">
+                        Tim Fasilitator Daerah Bimtek
+                    </h2>
+                    <p class="text-blue-100 text-sm mt-2">
+                        Pengampu Penguatan Literasi dan Numerasi BBPMP Provinsi Jawa Tengah.
+                    </p>
+                </div>
+
+                <!-- Profile Card -->
+                <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-sm max-w-2xl mx-auto space-y-6">
+                    <div class="flex flex-col sm:flex-row items-center gap-6">
+                        <!-- Profile Photo Placeholder -->
+                        <div class="w-32 h-32 rounded-3xl bg-gradient-to-tr from-blue-600 via-emerald-600 to-orange-500 p-1 shadow-xl shrink-0">
+                            <div class="w-full h-full bg-slate-200 dark:bg-slate-700 rounded-[22px] flex items-center justify-center text-slate-400 text-4xl overflow-hidden relative">
+                                <i class="fa-solid fa-user-tie"></i>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2 text-center sm:text-left">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-300">Fasilitator Daerah</span>
+                            <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">M. FAISAL ABDUH, M.Pd.</h3>
+                            <p class="text-xs text-slate-500 font-medium">NIP. 199206142022212009</p>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 pt-1">
+                                Guru Matematika SMA Negeri 1 Kersana<br>
+                                Fasilitator Daerah BBPMP Jawa Tengah Kemendikdasmen
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-200 dark:border-slate-700 flex flex-wrap gap-4 justify-center sm:justify-start">
+                        <a href="https://gurufa119.github.io/cv" target="_blank" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center gap-2">
+                            <i class="fa-solid fa-file-invoice"></i> Lihat Curriculum Vitae (CV)
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 py-6 px-4 sm:px-6 no-print">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-book-open-reader text-blue-600"></i>
+                <span class="font-bold text-slate-700 dark:text-slate-200">Website Pembelajaran Literasi & Numerasi</span>
+                <span>&copy; <span class="current-year"></span></span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span>Fasilitator: <strong>M. FAISAL ABDUH, M.Pd.</strong></span>
+                <a href="https://gurufa119.github.io/cv" target="_blank" class="text-blue-600 hover:underline">CV</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BACK TO TOP BUTTON -->
+    <button id="back-to-top" onclick="scrollToTop()" class="fixed bottom-6 right-6 z-50 p-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl shadow-xl opacity-0 pointer-events-none transition-all duration-300 no-print" aria-label="Naik ke atas">
+        <i class="fa-solid fa-arrow-up text-lg"></i>
+    </button>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Set dynamic current year
+        document.querySelectorAll('.current-year').forEach(el => el.textContent = new Date().getFullYear());
+
+        // Global State
+        let currentSection = 'beranda';
+        let isDarkMode = false;
+        let progressState = JSON.parse(localStorage.getItem('litnum_progress')) || {
+            visitedSections: ['beranda'],
+            quizScores: {}
+        };
+
+        // Navigation Handler
+        function navigateTo(sectionId) {
+            document.querySelectorAll('.content-section').forEach(sec => sec.classList.add('hidden'));
+            const target = document.getElementById(sectionId);
+            if (target) {
+                target.classList.remove('hidden');
+                currentSection = sectionId;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                // Update Progress
+                if (!progressState.visitedSections.includes(sectionId)) {
+                    progressState.visitedSections.push(sectionId);
+                    saveProgress();
+                }
+
+                // Update Active Nav Link
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.classList.remove('bg-blue-50', 'dark:bg-slate-700/60', 'text-blue-600', 'font-bold');
+                });
+                const activeNav = document.getElementById(`nav-${sectionId}`);
+                if (activeNav) {
+                    activeNav.classList.add('bg-blue-50', 'dark:bg-slate-700/60', 'text-blue-600', 'font-bold');
+                }
+
+                // Close mobile sidebar
+                if (window.innerWidth < 1024) {
+                    document.getElementById('sidebar').classList.add('-translate-x-full');
+                }
+            }
+        }
+
+        // Sidebar Toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('-translate-x-full');
+        }
+
+        // Dark Mode Toggle
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (isDarkMode) {
+                html.classList.add('dark');
+                icon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                html.classList.remove('dark');
+                icon.classList.replace('fa-sun', 'fa-moon');
+            }
+        }
+
+        // Fullscreen Toggle
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => console.log(err));
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // Back to top scroll listener
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('back-to-top');
+            if (window.scrollY > 300) {
+                btn.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                btn.classList.add('opacity-0', 'pointer-events-none');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Accordion Toggle Function
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById(`icon-${id}`);
+            if (content) {
+                content.classList.toggle('hidden');
+                if (icon) icon.classList.toggle('rotate-180');
+            }
+        }
+
+        // Progress Calculation
+        function saveProgress() {
+            localStorage.setItem('litnum_progress', JSON.stringify(progressState));
+            const totalSections = 10;
+            const percentage = Math.round((progressState.visitedSections.length / totalSections) * 100);
+            document.getElementById('global-progress-text').textContent = `${percentage}%`;
+            document.getElementById('global-progress-bar').style.width = `${percentage}%`;
+        }
+        saveProgress();
+
+        // Kuis Bab 1 Checker
+        function checkBabQuiz(babNum, option, isCorrect) {
+            const feedback = document.getElementById(`feedback-quiz-${babNum}`);
+            feedback.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'bg-rose-100', 'text-rose-800');
+            if (isCorrect) {
+                feedback.classList.add('bg-emerald-100', 'text-emerald-800');
+                feedback.innerHTML = '<i class="fa-solid fa-circle-check"></i> Jawaban Benar! Kefasihan membaca (Read Fluently) adalah pintu gerbang kognitif utama.';
+                confetti({ particleCount: 50, spread: 60 });
+            } else {
+                feedback.classList.add('bg-rose-100', 'text-rose-800');
+                feedback.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Jawaban kurang tepat. Sesuai PISA 2018, membaca fasih adalah fondasi utama.';
+            }
+        }
+
+        // TKA Simulation Checker
+        function checkTKASimulation(opt, isCorrect) {
+            const feedback = document.getElementById('tka-feedback');
+            feedback.classList.remove('hidden', 'bg-emerald-50', 'border-emerald-200', 'text-emerald-900', 'bg-rose-50', 'border-rose-200', 'text-rose-900');
+            feedback.classList.add('border');
+            if (isCorrect) {
+                feedback.classList.add('bg-emerald-50', 'border-emerald-200', 'text-emerald-900');
+                feedback.innerHTML = `
+                    <p class="font-bold text-emerald-700"><i class="fa-solid fa-circle-check"></i> Tepat Sekali! Jawaban C (336 Liter)</p>
+                    <p class="mt-1"><strong>Pembahasan:</strong><br>
+                    • Air terbuang per keran/hari = $0{,}5 \times 24 = 12\text{ liter/hari}$.<br>
+                    • Total 4 keran/hari = $4 \times 12 = 48\text{ liter/hari}$.<br>
+                    • Total 1 minggu (7 hari) = $48 \times 7 = 336\text{ Liter}$.
+                    </p>
+                `;
+                confetti({ particleCount: 80, spread: 70 });
+            } else {
+                feedback.classList.add('bg-rose-50', 'border-rose-200', 'text-rose-900');
+                feedback.innerHTML = `<p class="font-bold text-rose-700"><i class="fa-solid fa-circle-xmark"></i> Jawaban Kurang Tepat</p><p class="mt-1">Coba hitung total jam dalam seminggu ($24 \times 7 = 168\text{ jam}$) dikali kebocoran 4 keran ($4 \times 0{,}5 = 2\text{ liter/jam}$). Hasilnya $168 \times 2 = 336\text{ Liter}$.</p>`;
+            }
+        }
+
+        // Practice Questions Database (Bab 1-6)
+        const practiceData = {
+            1: [
+                { q: "Indikator utama mutu pendidikan dalam Rapor Pendidikan diukur melalui...", opts: ["A. Nilai Ujian Sekolah", "B. Asesmen Nasional (AN/AKM)", "C. Kehadiran siswa", "D. Jumlah buku perpustakaan"], ans: 1, exp: "Rapor Pendidikan mengambil data kognitif dasar dari Asesmen Nasional." },
+                { q: "Target kecepatan membaca ideal untuk jenjang SMP/MTs adalah...", opts: ["A. 60-120 KPM", "B. 150-180 KPM", "C. 200-250 KPM", "D. 300+ KPM"], ans: 1, exp: "Jenjang SMP menargetkan 150-180 Kata Per Menit (KPM)." }
+            ],
+            2: [
+                { q: "Jenis teks yang mengintegrasikan kata, gambar, suara, dan grafik disebut...", opts: ["A. Teks Naratif", "B. Teks Eksposisi", "C. Teks Multimodal", "D. Teks Deskriptif"], ans: 2, exp: "Teks multimodal mengombinasikan dua atau lebih sistem semiotik." }
+            ],
+            3: [
+                { q: "Pengelompokan buku sudut baca berdasarkan stiker warna sesuai kemampuan membaca menerapkan prinsip...", opts: ["A. Teaching at the Right Level (TaRL)", "B. Drilling Soal", "C. Rote Learning", "D. Hafalan"], ans: 0, exp: "TaRL menyesuaikan bahan ajar dengan tingkat kemampuan siswa, bukan usia kelas." }
+            ],
+            4: [
+                { q: "Metode pengajaran matematika konkret ke abstrak yang terstruktur adalah...", opts: ["A. CPA (Concrete-Pictorial-Abstract)", "B. PBL", "C. STEM", "D. Discovery"], ans: 0, exp: "Metode CPA membimbing murid dari manipulatif konkret hingga bentuk abstrak." }
+            ],
+            5: [
+                { q: "Domain kognitif tertinggi dalam Kerangka Asesmen TKA Numerasi adalah...", opts: ["A. Knowing", "B. Applying", "C. Reasoning (Penalaran)", "D. Remembering"], ans: 2, exp: "Reasoning menuntut pemikiran kritis dan pemecahan masalah kompleks." }
+            ],
+            6: [
+                { q: "Langkah pertama penyusunan perencanaan pembelajaran berbasis data Rapor Pendidikan adalah...", opts: ["A. Membeli buku baru", "B. Mendiagnosis akar masalah terlemah di Rapor Pendidikan", "C. Membuat soal ujian", "D. Mengubah kurikulum"], ans: 1, exp: "Perencanaan Berbasis Data (PBD) dimulai dengan identifikasi dan refleksi akar masalah." }
+            ]
+        };
+
+        function loadPracticeBab(babNum) {
+            document.querySelectorAll('.tab-practice').forEach(btn => {
+                btn.classList.replace('bg-emerald-600', 'bg-slate-100');
+                btn.classList.replace('text-white', 'text-slate-600');
+            });
+            const activeBtn = document.getElementById(`tab-pract-${babNum}`);
+            if (activeBtn) {
+                activeBtn.classList.replace('bg-slate-100', 'bg-emerald-600');
+                activeBtn.classList.replace('text-slate-600', 'text-white');
+            }
+
+            const container = document.getElementById('practice-container');
+            const questions = practiceData[babNum] || [];
+            container.innerHTML = questions.map((item, idx) => `
+                <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-700/40 border border-slate-200 dark:border-slate-600 space-y-3">
+                    <p class="font-bold text-sm text-slate-900 dark:text-white">${idx + 1}. ${item.q}</p>
+                    <div class="grid sm:grid-cols-2 gap-2 text-xs">
+                        ${item.opts.map((opt, oIdx) => `
+                            <button onclick="checkPracticeAnswer(${babNum}, ${idx}, ${oIdx}, ${item.ans})" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-600 text-left hover:bg-white dark:hover:bg-slate-800 transition pract-opt-${idx}">
+                                ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div id="pract-exp-${idx}" class="hidden p-3 rounded-xl text-xs font-medium"></div>
+                </div>
+            `).join('');
+        }
+
+        function checkPracticeAnswer(bab, qIdx, selected, correct) {
+            const expBox = document.getElementById(`pract-exp-${qIdx}`);
+            expBox.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'bg-rose-100', 'text-rose-800');
+            const qData = practiceData[bab][qIdx];
+            if (selected === correct) {
+                expBox.classList.add('bg-emerald-100', 'text-emerald-800');
+                expBox.innerHTML = `<i class="fa-solid fa-circle-check"></i> <strong>Benar!</strong> ${qData.exp}`;
+            } else {
+                expBox.classList.add('bg-rose-100', 'text-rose-800');
+                expBox.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> <strong>Salah!</strong> ${qData.exp}`;
+            }
+        }
+        loadPracticeBab(1);
+
+        // 30 Formative Evaluation Question Bank
+        const evalQuestions = [
+            { q: "Definisi literasi membaca dalam Asesmen Nasional mengacu pada...", opts: ["A. Menghafal teks pelajaran", "B. Memahami, menggunakan, mengevaluasi, dan merefleksikan teks", "C. Menulis karya sastra", "D. Membaca nyaring tanpa salah"], ans: 1 },
+            { q: "Numerasi didefinisikan sebagai kemampuan...", opts: ["A. Menghafal rumus aljabar", "B. Berpikir menggunakan konsep, prosedur, fakta, dan alat matematika pada konteks nyata", "C. Menghitung tanpa alat bantu", "D. Mengikuti olimpiade sains"], ans: 1 },
+            { q: "Komponen utama PISA Reading Framework 2018 pada pilar kognitif pertama adalah...", opts: ["A. Evaluasi bias", "B. Kefasihan Membaca (Read Fluently)", "C. Tugas metakognitif", "D. Pembelajaran berbasis proyek"], ans: 1 },
+            { q: "Target kecepatan membaca untuk siswa SMA/MA/SMK idealnya adalah...", opts: ["A. 60-120 KPM", "B. 150-180 KPM", "C. 200-250 KPM", "D. 350+ KPM"], ans: 2 },
+            { q: "Siswa yang kapasitas otaknya tersita hanya untuk mengeja kata dikategorikan berada pada label Rapor Pendidikan...", opts: ["A. Hijau (Baik)", "B. Kuning (Sedang)", "C. Merah (Kurang)", "D. Biru (Sangat Baik)"], ans: 2 },
+            { q: "Sub-indikator literasi dalam Rapor Pendidikan terbagi menjadi...", opts: ["A. Teks Berita dan Cerpen", "B. Teks Informasi dan Teks Sastra", "C. Teks Fiksi dan Non-Fiksi", "D. Teks Digital dan Cetak"], ans: 1 },
+            { q: "Domain konten numerasi yang menguji pemahaman grafik dan probabilitas adalah...", opts: ["A. Bilangan", "B. Geometri", "C. Data dan Ketidakpastian", "D. Aljabar"], ans: 2 },
+            { q: "Miskonsepsi utama terkait tanggung jawab literasi di sekolah adalah...", opts: ["A. Tanggung jawab semua guru", "B. Hanya tanggung jawab Guru Bahasa Indonesia", "C. Tanggung jawab Kepala Sekolah", "D. Tanggung jawab pustakawan"], ans: 1 },
+            { q: "Teks yang menggabungkan tulisan, ilustrasi gambar, dan audio dipahami sebagai...", opts: ["A. Teks Tunggal", "B. Teks Multimodal", "C. Teks Sederhana", "D. Teks Akademik"], ans: 1 },
+            { q: "Prinsip utama numerasi lintas kurikulum menegaskan bahwa...", opts: ["A. Semua guru mengajarkan rumus matematika", "B. Setiap guru adalah guru numerasi sesuai bidang ilmunya", "C. Matematika dihilangkan dari kurikulum", "D. Numerasi hanya diajarkan di kelas XI"], ans: 1 },
+            { q: "Penyediaan Sudut Baca Berlabel Warna di kelas SD bertujuan mendukung strategi...", opts: ["A. Mastery Learning", "B. Teaching at the Right Level (TaRL)", "C. Project Based Learning", "D. Peer Tutoring"], ans: 1 },
+            { q: "Dinding kata aktif (Active Word Wall) di kelas awal berfungsi untuk mempercepat...", opts: ["A. Menghafal puisi", "B. Otomatisasi dekode & kecepatan kata per menit (KPM)", "C. Menulis halus", "D. Menggambar"], ans: 1 },
+            { q: "Ciri ekosistem sosio-afektif yang mendukung literasi-numerasi adalah...", opts: ["A. Memberi hukuman bagi siswa salah hitung", "B. Menumbuhkan Growth Mindset dan ruang belajar aman", "C. Membatasi diskusi antar siswa", "D. Melarang siswa bertanya"], ans: 1 },
+            { q: "Istilah 'Math Anxiety' merujuk pada kondisi...", opts: ["A. Semangat belajar matematika", "B. Kecemasan berlebih saat menghadapi matematika", "C. Keahlian berhitung cepat", "D. Bakat alamiah angka"], ans: 1 },
+            { q: "Metode CPA dalam penguatan numerasi diawali dari tahap...", opts: ["A. Abstrak", "B. Piktorial", "C. Konkret", "D. Evaluasi"], ans: 2 },
+            { q: "Contoh penerapan numerasi pada mata pelajaran PJOK adalah...", opts: ["A. Menulis esai olahraga", "B. Menghitung denyut nadi dan Indeks Massa Tubuh (IMT)", "C. Menghafal nama atlet", "D. Menggambar lapangan"], ans: 1 },
+            { q: "Fasilitas sekolah yang digunakan untuk ruang berkarya numerasi disebut...", opts: ["A. Laboratorium Komputer", "B. Makerspace Numerasi", "C. Ruang BK", "D. Aula"], ans: 1 },
+            { q: "Level kognitif TKA yang menuntut siswa menguji validitas dan bias teks adalah...", opts: ["A. Locate Information", "B. Understand Literal", "C. Evaluate and Reflect", "D. Remembering"], ans: 2 },
+            { q: "Tiga level kognitif pada Kerangka Asesmen TKA Numerasi adalah...", opts: ["A. Knowing, Applying, Reasoning", "B. C1, C2, C3", "C. Input, Process, Output", "D. Read, Write, Count"], ans: 0 },
+            { q: "Langkah awal sekolah berlabel Merah pada Rapor Pendidikan adalah...", opts: ["A. Membeli komputer baru", "B. Pemulihan membaca fasih & KPM di kelas awal", "C. Menambah jam les sore", "D. Mengganti buku cetak"], ans: 1 },
+            { q: "Strategi membaca di mana guru menyuarakan proses berpikirnya saat membaca disebut...", opts: ["A. Silent Reading", "B. Think Aloud", "C. Speed Reading", "D. Scanning"], ans: 1 },
+            { q: "Pajangan karya tulis siswa di koridor sekolah (*Student Author Corner*) memperkuat lingkungan...", opts: ["A. Fisik semata", "B. Sosio-Afektif dan Apresiasi", "C. Keuangan", "D. Kebersihan"], ans: 1 },
+            { q: "Grafik yang menunjukkan tren perkembangan capaian tahunan pada Rapor Pendidikan disebut nilai...", opts: ["A. Alpha", "B. Delta", "C. Beta", "D. Gamma"], ans: 1 },
+            { q: "Karakteristik soal TKA yang berstandar HOTS umumnya menyajikan...", opts: ["A. Pertanyaan hafalan definisi", "B. Stimulus kontekstual, tabel data, atau teks jamak", "C. Isian singkat rumus", "D. Pilihan benar/salah sederhana"], ans: 1 },
+            { q: "Penyusunan RPP/Modul Ajar berbasis literasi-numerasi bertujuan untuk...", opts: ["A. Memenuhi syarat administratif guru", "B. Memastikan intervensi pembelajaran terintegrasi di ruang kelas", "C. Menambah beban mengajar", "D. Menggantikan peran kepala sekolah"], ans: 1 },
+            { q: "Miskonsepsi numerasi di masyarakat beranggapan bahwa numerasi adalah...", opts: ["A. Kemampuan bernalar kuantitatif", "B. Sekadar berhitung cepat tanpa kalkulator", "C. Alat mengambil keputusan", "D. Pemahaman statistik"], ans: 1 },
+            { q: "Untuk jenjang SMP, strategi fisik literasi yang disarankan adalah...", opts: ["A. Mural huruf alfabet", "B. Mading kaya data & Graphic Organizers", "C. Sudut main balok", "D. Buku bergambar tanpa teks"], ans: 1 },
+            { q: "Sikap guru yang paling merusak Growth Mindset siswa dalam numerasi adalah...", opts: ["A. Memuji strategi pemecahan masalah", "B. Mengatakan 'kamu memang tidak berbakat matematika'", "C. Mengajak diskusi kelompok", "D. Memberikan latihan bertahap"], ans: 1 },
+            { q: "Asesmen diagnostik nonkognitif berfungsi untuk mengetahui...", opts: ["A. Kemampuan matematika siswa", "B. Kesejahteraan psikologis dan gaya belajar murid", "C. Kecepatan KPM", "D. Nilai rapor"], ans: 1 },
+            { q: "Tujuan akhir dari seluruh rangkaian penguatan literasi dan numerasi adalah...", opts: ["A. Memenangi lomba sekolah", "B. Membentuk murid yang kompeten dan siap menghadapi tantangan abad ke-21", "C. Menaikkan peringkat akreditasi saja", "D. Mengisi waktu luang"], ans: 1 }
+        ];
+
+        let evalState = {
+            currentIndex: 0,
+            answers: {},
+            timerSeconds: 2700,
+            timerInterval: null
+        };
+
+        function startEvaluation() {
+            document.getElementById('eval-start-card').classList.add('hidden');
+            document.getElementById('eval-result-box').classList.add('hidden');
+            document.getElementById('eval-exam-box').classList.remove('hidden');
+
+            evalState.currentIndex = 0;
+            evalState.answers = {};
+            evalState.timerSeconds = 2700; // 45 mins
+
+            renderEvaluationQuestion();
+            startTimer();
+        }
+
+        function startTimer() {
+            clearInterval(evalState.timerInterval);
+            evalState.timerInterval = setInterval(() => {
+                evalState.timerSeconds--;
+                const mins = Math.floor(evalState.timerSeconds / 60);
+                const secs = evalState.timerSeconds % 60;
+                document.getElementById('exam-timer').textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+                if (evalState.timerSeconds <= 0) {
+                    clearInterval(evalState.timerInterval);
+                    submitEvaluation();
+                }
+            }, 1000);
+        }
+
+        function renderEvaluationQuestion() {
+            const q = evalQuestions[evalState.currentIndex];
+            document.getElementById('current-q-num').textContent = evalState.currentIndex + 1;
+            document.getElementById('eval-question-text').textContent = `${evalState.currentIndex + 1}. ${q.q}`;
+
+            const grid = document.getElementById('eval-options-grid');
+            grid.innerHTML = q.opts.map((opt, idx) => {
+                const isSelected = evalState.answers[evalState.currentIndex] === idx;
+                return `
+                    <button onclick="selectEvalOption(${idx})" class="p-3.5 rounded-2xl border text-left font-medium transition ${isSelected ? 'border-orange-500 bg-orange-50 dark:bg-orange-950/40 text-orange-900 dark:text-orange-200 font-bold' : 'border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50'}">
+                        ${opt}
+                    </button>
+                `;
+            }).join('');
+
+            document.getElementById('btn-prev-q').style.visibility = evalState.currentIndex === 0 ? 'hidden' : 'visible';
+            document.getElementById('btn-next-q').textContent = evalState.currentIndex === evalQuestions.length - 1 ? 'Selesai' : 'Selanjutnya';
+        }
+
+        function selectEvalOption(idx) {
+            evalState.answers[evalState.currentIndex] = idx;
+            renderEvaluationQuestion();
+        }
+
+        function prevQuestion() {
+            if (evalState.currentIndex > 0) {
+                evalState.currentIndex--;
+                renderEvaluationQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (evalState.currentIndex < evalQuestions.length - 1) {
+                evalState.currentIndex++;
+                renderEvaluationQuestion();
+            } else {
+                submitEvaluation();
+            }
+        }
+
+        function submitEvaluation() {
+            clearInterval(evalState.timerInterval);
+            let scoreCount = 0;
+            evalQuestions.forEach((q, idx) => {
+                if (evalState.answers[idx] === q.ans) {
+                    scoreCount++;
+                }
+            });
+
+            const finalScore = Math.round((scoreCount / evalQuestions.length) * 100);
+
+            document.getElementById('eval-exam-box').classList.add('hidden');
+            document.getElementById('eval-result-box').classList.remove('hidden');
+
+            document.getElementById('eval-final-score').textContent = finalScore;
+
+            const badge = document.getElementById('eval-category-badge');
+            const recBox = document.getElementById('eval-recommendation-box');
+
+            badge.className = 'inline-block px-4 py-1.5 rounded-full text-xs font-bold ';
+            recBox.className = 'max-w-xl mx-auto p-5 rounded-2xl text-left text-xs space-y-2 border ';
+
+            if (finalScore >= 85) {
+                badge.classList.add('bg-emerald-100', 'text-emerald-800');
+                badge.textContent = 'Kategori: Sangat Baik (Mahir)';
+                recBox.classList.add('bg-emerald-50', 'border-emerald-200', 'text-emerald-900');
+                recBox.innerHTML = '<strong>Rekomendasi Tindak Lanjut:</strong> Selamat! Pemahaman Anda sangat komprehensif. Anda direkomendasikan menjadi Fasilitator Komunitas Belajar Guru di sekolah untuk mendampingi rekan sejawat.';
+                confetti({ particleCount: 100, spread: 80 });
+            } else if (finalScore >= 70) {
+                badge.classList.add('bg-blue-100', 'text-blue-800');
+                badge.textContent = 'Kategori: Baik';
+                recBox.classList.add('bg-blue-50', 'border-blue-200', 'text-blue-900');
+                recBox.innerHTML = '<strong>Rekomendasi Tindak Lanjut:</strong> Pemahaman Anda sudah baik. Fokuskan pada penguatan pemodelan strategi membaca (Think Aloud) dan pengembangan instrumen asesmen HOTS berstandar TKA.';
+            } else if (finalScore >= 55) {
+                badge.classList.add('bg-amber-100', 'text-amber-800');
+                badge.textContent = 'Kategori: Cukup';
+                recBox.classList.add('bg-amber-50', 'border-amber-200', 'text-amber-900');
+                recBox.innerHTML = '<strong>Rekomendasi Tindak Lanjut:</strong> Perlu pendalaman pada Bab 2 (Miskonsepsi & Fakta) serta Bab 4 (Strategi Numerasi CPA). Pelajari kembali rangkuman modul.';
+            } else {
+                badge.classList.add('bg-rose-100', 'text-rose-800');
+                badge.textContent = 'Kategori: Perlu Pendampingan';
+                recBox.classList.add('bg-rose-50', 'border-rose-200', 'text-rose-900');
+                recBox.innerHTML = '<strong>Rekomendasi Tindak Lanjut:</strong> Direkomendasikan mempelajari ulang seluruh materi modul dari Bab 1 hingga Bab 6 secara berurutan dan berdiskusi dengan Fasilitator.';
+            }
+        }
+
+        // Global Search Logic
+        function handleSearch(query) {
+            const resultsBox = document.getElementById('search-results');
+            if (!query.trim()) {
+                resultsBox.classList.add('hidden');
+                return;
+            }
+
+            const searchIndex = [
+                { title: 'Bab 1: Profil Mutu & Rapor Pendidikan', sec: 'materi-1', text: 'PISA Framework, KPM, membaca fasih, AKM, Rapor Pendidikan, label hijau kuning merah' },
+                { title: 'Bab 1: Identifikasi Akar Masalah', sec: 'materi-1', text: 'Sub-indikator literasi informasi sastra, numerasi bilangan aljabar geometri' },
+                { title: 'Bab 2: Miskonsepsi vs Fakta Literasi Numerasi', sec: 'materi-2', text: 'Teks multimodal, paradigma baru lintas kurikulum, tanggung jawab semua guru' },
+                { title: 'Bab 3: Strategi Penguatan Literasi', sec: 'materi-3', text: 'Sudut baca, active word wall, mading data, makerspace, guided reading, think aloud' },
+                { title: 'Bab 4: Strategi Penguatan Numerasi', sec: 'materi-4', text: 'Metode CPA concrete pictorial abstract, math anxiety, numerasi non-matematika' },
+                { title: 'Bab 5: Kerangka Asesmen TKA', sec: 'materi-5', text: 'Simulasi soal TKA, domain kognitif knowing applying reasoning' },
+                { title: 'Bab 6: Perencanaan Pembelajaran & Asesmen', sec: 'materi-6', text: 'RPP modul ajar, template tindak lanjut, asesmen diagnostik' },
+                { title: 'Profil Fasilitator M. Faisal Abduh', sec: 'fasilitator', text: 'Guru matematika SMAN 1 Kersana, Fasilitator BBPMP Jawa Tengah' }
+            ];
+
+            const matches = searchIndex.filter(item => 
+                item.title.toLowerCase().includes(query.toLowerCase()) || 
+                item.text.toLowerCase().includes(query.toLowerCase())
+            );
+
+            if (matches.length > 0) {
+                resultsBox.innerHTML = matches.map(m => `
+                    <div onclick="navigateTo('${m.sec}'); document.getElementById('search-results').classList.add('hidden');" class="p-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg cursor-pointer transition">
+                        <p class="font-bold text-xs text-blue-600 dark:text-blue-400">${m.title}</p>
+                        <p class="text-[11px] text-slate-500 truncate">${m.text}</p>
+                    </div>
+                `).join('');
+                resultsBox.classList.remove('hidden');
+            } else {
+                resultsBox.innerHTML = `<div class="p-3 text-xs text-slate-500 text-center">Tidak ada hasil ditemukan.</div>`;
+                resultsBox.classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
