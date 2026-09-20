@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul Edukasi Penguatan Literasi & Numerasi</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        literacy: {
+                            navy: '#0f172a',
+                            blue: '#1e3a8a',
+                            gold: '#d97706',
+                            lightGold: '#fef3c7'
+                        },
+                        numeracy: {
+                            green: '#047857',
+                            emerald: '#10b981',
+                            orange: '#ea580c',
+                            lightOrange: '#ffedd5'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- MathJax for rendering math expressions if needed -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease-in-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .tab-btn.active {
+            border-bottom: 3px solid #d97706;
+            color: #d97706;
+            font-weight: 600;
+        }
+        .dark .tab-btn.active {
+            border-bottom: 3px solid #f59e0b;
+            color: #f59e0b;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+
+    <!-- STICKY NAVBAR -->
+    <header class="sticky top-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo / Title -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('beranda')">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-blue-900 to-amber-500 flex items-center justify-center text-white font-bold text-lg shadow-md">
+                        <i class="fa-solid fa-book-open-reader"></i>
+                    </div>
+                    <div>
+                        <span class="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-900 via-amber-600 to-emerald-600 dark:from-blue-400 dark:via-amber-400 dark:to-emerald-400">
+                            LitNum Edu
+                        </span>
+                        <span class="block text-xs text-slate-500 dark:text-slate-400 font-medium">Bimtek Literasi & Numerasi</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden lg:flex items-center space-x-1 text-sm font-medium">
+                    <button onclick="navigateTo('beranda')" class="nav-link px-3 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition">Beranda</button>
+                    
+                    <!-- Dropdown Sub Materi -->
+                    <div class="relative group">
+                        <button class="px-3 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center space-x-1">
+                            <span>Materi Modul</span>
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </button>
+                        <div class="absolute left-0 w-80 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl py-2 hidden group-hover:block transition-all z-50">
+                            <a href="#materi1" onclick="navigateTo('materi1')" class="block px-4 py-2 hover:bg-amber-50 dark:hover:bg-slate-700 text-xs"><strong>Sub 1:</strong> Rapor Pendidikan & TKA</a>
+                            <a href="#materi2" onclick="navigateTo('materi2')" class="block px-4 py-2 hover:bg-amber-50 dark:hover:bg-slate-700 text-xs"><strong>Sub 2:</strong> Miskonsepsi & Facts</a>
+                            <a href="#materi3" onclick="navigateTo('materi3')" class="block px-4 py-2 hover:bg-amber-50 dark:hover:bg-slate-700 text-xs"><strong>Sub 3:</strong> Strategi Literasi</a>
+                            <a href="#materi4" onclick="navigateTo('materi4')" class="block px-4 py-2 hover:bg-amber-50 dark:hover:bg-slate-700 text-xs"><strong>Sub 4:</strong> Strategi Numerasi</a>
+                            <a href="#materi5" onclick="navigateTo('materi5')" class="block px-4 py-2 hover:bg-amber-50 dark:hover:bg-slate-700 text-xs"><strong>Sub 5:</strong> Kerangka Asesmen TKA</a>
+                            <a href="#materi6" onclick="navigateTo('materi6')" class="block px-4 py-2 hover:bg-amber-50 dark:hover:bg-slate-700 text-xs"><strong>Sub 6:</strong> Perencanaan Pembelajaran</a>
+                        </div>
+                    </div>
+
+                    <button onclick="navigateTo('latihan')" class="nav-link px-3 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition">Latihan</button>
+                    <button onclick="navigateTo('evaluasi')" class="nav-link px-3 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition">Evaluasi Kuis</button>
+                    <button onclick="navigateTo('fasilitator')" class="nav-link px-3 py-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition">Fasilitator</button>
+                </nav>
+
+                <!-- Actions Right: Dark Mode Toggle & Mobile Menu Btn -->
+                <div class="flex items-center space-x-3">
+                    <button id="themeToggle" onclick="toggleDarkMode()" class="p-2.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:ring-2 hover:ring-amber-500 transition">
+                        <i class="fa-solid fa-moon dark:hidden"></i>
+                        <i class="fa-solid fa-sun hidden dark:inline"></i>
+                    </button>
+                    <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Navigation -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 pt-2 pb-4 space-y-1">
+            <button onclick="navigateTo('beranda')" class="block w-full text-left px-3 py-2 rounded-md text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Beranda</button>
+            <div class="pl-3 border-l-2 border-amber-500 my-1 space-y-1">
+                <button onclick="navigateTo('materi1')" class="block w-full text-left px-2 py-1.5 text-xs text-slate-600 dark:text-slate-300 hover:text-amber-600">Sub 1: Rapor Pendidikan & TKA</button>
+                <button onclick="navigateTo('materi2')" class="block w-full text-left px-2 py-1.5 text-xs text-slate-600 dark:text-slate-300 hover:text-amber-600">Sub 2: Miskonsepsi & Fakta</button>
+                <button onclick="navigateTo('materi3')" class="block w-full text-left px-2 py-1.5 text-xs text-slate-600 dark:text-slate-300 hover:text-amber-600">Sub 3: Strategi Literasi</button>
+                <button onclick="navigateTo('materi4')" class="block w-full text-left px-2 py-1.5 text-xs text-slate-600 dark:text-slate-300 hover:text-amber-600">Sub 4: Strategi Numerasi</button>
+                <button onclick="navigateTo('materi5')" class="block w-full text-left px-2 py-1.5 text-xs text-slate-600 dark:text-slate-300 hover:text-amber-600">Sub 5: Kerangka Asesmen TKA</button>
+                <button onclick="navigateTo('materi6')" class="block w-full text-left px-2 py-1.5 text-xs text-slate-600 dark:text-slate-300 hover:text-amber-600">Sub 6: Perencanaan Pembelajaran</button>
+            </div>
+            <button onclick="navigateTo('latihan')" class="block w-full text-left px-3 py-2 rounded-md text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Latihan Soal</button>
+            <button onclick="navigateTo('evaluasi')" class="block w-full text-left px-3 py-2 rounded-md text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Evaluasi Formatif</button>
+            <button onclick="navigateTo('fasilitator')" class="block w-full text-left px-3 py-2 rounded-md text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Profil Fasilitator</button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER FOR SPA PAGES -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- 1. BERANDA -->
+        <section id="page-beranda" class="page-content fade-in space-y-12">
+            <!-- Hero Banner -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-900 via-indigo-900 to-emerald-900 text-white p-8 md:p-12 shadow-2xl">
+                <div class="absolute -right-10 -bottom-10 opacity-15 text-9xl">
+                    <i class="fa-solid fa-calculator"></i>
+                </div>
+                <div class="absolute right-32 -top-10 opacity-15 text-9xl">
+                    <i class="fa-solid fa-book"></i>
+                </div>
+                <div class="relative z-10 max-w-3xl space-y-4">
+                    <div class="inline-flex items-center space-x-2 bg-amber-500/20 text-amber-300 border border-amber-500/30 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">
+                        <i class="fa-solid fa-graduation-cap"></i> Modul Bahan Ajar Bimtek
+                    </div>
+                    <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
+                        Penguatan Literasi & Numerasi
+                    </h1>
+                    <p class="text-slate-200 text-sm md:text-base leading-relaxed">
+                        Aplikasi Interaktif Modul Bimbingan Teknis untuk analisis capaian Rapor Pendidikan, strategi penguatan lingkungan sekolah, dan penyusunan pembelajaran berbasis Kerangka Tes Kemampuan Akademik (TKA).
+                    </p>
+                    <div class="pt-4 flex flex-wrap gap-4">
+                        <button onclick="navigateTo('materi1')" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-semibold rounded-xl shadow-lg transition flex items-center space-x-2">
+                            <span>Mulai Belajar</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <button onclick="navigateTo('evaluasi')" class="px-6 py-3 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-semibold rounded-xl transition flex items-center space-x-2">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                            <span>Uji Evaluasi</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ringkasan Core Concept -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="p-6 bg-white dark:bg-slate-800 rounded-2xl border border-blue-100 dark:border-slate-700 shadow-sm flex items-start space-x-4">
+                    <div class="p-4 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-xl text-2xl">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">Literasi Membaca</h3>
+                        <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
+                            Kemampuan memahami, menggunakan, mengevaluasi, dan merefleksikan berbagai jenis teks (Informasi & Sastra) berbasis fondasi Kefasihan Membaca (Read Fluently).
+                        </p>
+                    </div>
+                </div>
+                <div class="p-6 bg-white dark:bg-slate-800 rounded-2xl border border-emerald-100 dark:border-slate-700 shadow-sm flex items-start space-x-4">
+                    <div class="p-4 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 rounded-xl text-2xl">
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">Numerasi Lintas Kurikulum</h3>
+                        <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
+                            Kemampuan bernalar menggunakan konsep, prosedur, dan alat matematika untuk memecahkan masalah kehidupan nyata di seluruh mata pelajaran.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preview 6 Sub Materi (Cards) -->
+            <div>
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+                        <i class="fa-solid fa-layer-group text-amber-500"></i>
+                        <span>Enam Sub Materi Pokok</span>
+                    </h2>
+                    <span class="text-xs text-slate-500 dark:text-slate-400">Pilih kartu untuk membaca selengkapnya</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Card 1 -->
+                    <div onclick="navigateTo('materi1')" class="group p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-amber-500 dark:hover:border-amber-500 shadow-sm hover:shadow-xl transition-all cursor-pointer flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-slate-700 text-blue-700 dark:text-blue-400 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-chart-line"></i>
+                            </div>
+                            <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Sub Materi 1</span>
+                            <h3 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition">
+                                Analisis Rapor Pendidikan & Relevansi TKA
+                            </h3>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
+                                Membedah profil mutu, label warna (Hijau/Kuning/Merah), membaca fasih (KPM), sub-indikator teks & numerasi, serta faktor pendukung.
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between text-xs font-semibold text-blue-600 dark:text-blue-400">
+                            <span>Pelajari Selengkapnya</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div onclick="navigateTo('materi2')" class="group p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-amber-500 dark:hover:border-amber-500 shadow-sm hover:shadow-xl transition-all cursor-pointer flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-slate-700 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-lightbulb"></i>
+                            </div>
+                            <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Sub Materi 2</span>
+                            <h3 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition">
+                                Miskonsepsi & Fakta Esensial Literasi-Numerasi
+                            </h3>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
+                                Mengklarifikasi miskonsepsi umum, memahami paradigma baru literasi & numerasi lintas kurikulum serta karakteristik pembelajarannya.
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between text-xs font-semibold text-blue-600 dark:text-blue-400">
+                            <span>Pelajari Selengkapnya</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div onclick="navigateTo('materi3')" class="group p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-amber-500 dark:hover:border-amber-500 shadow-sm hover:shadow-xl transition-all cursor-pointer flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-book-bookmark"></i>
+                            </div>
+                            <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Sub Materi 3</span>
+                            <h3 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition">
+                                Strategi Penguatan Literasi Sekolah
+                            </h3>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
+                                Tiga ekosistem: Fisik (kaya teks), Sosio-Afektif, dan Akademik berjenjang (SD, SMP, SMA) beserta diferensiasi Merah/Kuning/Hijau.
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between text-xs font-semibold text-blue-600 dark:text-blue-400">
+                            <span>Pelajari Selengkapnya</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div onclick="navigateTo('materi4')" class="group p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-amber-500 dark:hover:border-amber-500 shadow-sm hover:shadow-xl transition-all cursor-pointer flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-calculator"></i>
+                            </div>
+                            <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Sub Materi 4</span>
+                            <h3 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition">
+                                Strategi Penguatan Numerasi Sekolah
+                            </h3>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
+                                Penguatan lingkungan fisik (makerspace), sosio-afektif (growth mindset), dan akademik (5 prinsip Matematika & lintas mapel SD/SMP/SMA).
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between text-xs font-semibold text-blue-600 dark:text-blue-400">
+                            <span>Pelajari Selengkapnya</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div onclick="navigateTo('materi5')" class="group p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-amber-500 dark:hover:border-amber-500 shadow-sm hover:shadow-xl transition-all cursor-pointer flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="w-12 h-12 rounded-xl bg-purple-50 dark:bg-slate-700 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-file-signature"></i>
+                            </div>
+                            <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Sub Materi 5</span>
+                            <h3 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition">
+                                Analisis Capaian & Kerangka Asesmen TKA
+                            </h3>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
+                                Simulasi TKA resmi Pusmendik, 3 kompetensi utama TKA, matriks asesmen, bentuk soal PG/MCMA/Uraian, dan rubrik refleksi.
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between text-xs font-semibold text-blue-600 dark:text-blue-400">
+                            <span>Pelajari Selengkapnya</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div onclick="navigateTo('materi6')" class="group p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 hover:border-amber-500 dark:hover:border-amber-500 shadow-sm hover:shadow-xl transition-all cursor-pointer flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="w-12 h-12 rounded-xl bg-rose-50 dark:bg-slate-700 text-rose-600 dark:text-rose-400 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-pen-ruler"></i>
+                            </div>
+                            <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Sub Materi 6</span>
+                            <h3 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition">
+                                Perencanaan Pembelajaran Tindak Lanjut TKA
+                            </h3>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
+                                Desain pembelajaran high-order, asesmen awal, integrasi teknologi digital, serta materi pengayaan penyusunan stimulus soal TKA.
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between text-xs font-semibold text-blue-600 dark:text-blue-400">
+                            <span>Pelajari Selengkapnya</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. SUB MATERI 1 -->
+        <section id="page-materi1" class="page-content hidden fade-in space-y-8">
+            <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Sub Materi 1</span>
+                <h1 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-1">
+                    Menganalisis Capaian Literasi Numerasi Berdasarkan Rapor Pendidikan dan Relevansinya dengan Hasil TKA
+                </h1>
+            </div>
+
+            <!-- (a) Profil Mutu -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 space-y-6">
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-chart-column text-blue-600"></i>
+                    <span>(a) Profil Mutu Literasi dan Numerasi dalam Rapor Pendidikan</span>
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-4 bg-blue-50 dark:bg-slate-700/50 rounded-xl">
+                        <h3 class="font-bold text-blue-900 dark:text-blue-300 text-sm mb-1"><i class="fa-solid fa-book-open mr-1"></i> Definisi Literasi (AN)</h3>
+                        <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                            Kemampuan murid untuk memahami, menggunakan, mengevaluasi, dan merefleksikan berbagai jenis teks untuk mencapai tujuan tertentu, mengembangkan pengetahuan, dan berpartisipasi dalam kehidupan sosial.
+                        </p>
+                    </div>
+                    <div class="p-4 bg-emerald-50 dark:bg-slate-700/50 rounded-xl">
+                        <h3 class="font-bold text-emerald-900 dark:text-emerald-300 text-sm mb-1"><i class="fa-solid fa-calculator mr-1"></i> Definisi Numerasi (AN)</h3>
+                        <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                            Kemampuan berpikir menggunakan konsep, prosedur, fakta, dan alat matematika untuk menyelesaikan masalah dalam berbagai konteks kehidupan sehari-hari.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Indikator Rapor & Nilai Delta -->
+                <div class="space-y-3 text-xs leading-relaxed text-slate-700 dark:text-slate-300">
+                    <p><strong>Persentase Capaian:</strong> Menampilkan proporsi murid yang telah mencapai batas kompetensi minimum yang diharapkan.</p>
+                    <p><strong>Nilai Delta:</strong> Mengukur perubahan hasil capaian dibandingkan tahun sebelumnya untuk melihat tren perkembangan (meningkat atau menurun).</p>
+                    <p><strong>Peringkat Sekolah:</strong> Perbandingan posisi relatif sekolah dengan sekolah setara pada tingkat Kabupaten/Kota/Provinsi dan Nasional.</p>
+                </div>
+
+                <!-- Fondasi Utama: Kefasihan Membaca (KPM) -->
+                <div class="p-5 bg-amber-50 dark:bg-slate-900/60 border border-amber-200 dark:border-amber-900/50 rounded-xl space-y-3">
+                    <h3 class="font-bold text-amber-900 dark:text-amber-400 text-sm flex items-center space-x-2">
+                        <i class="fa-solid fa-gauge-high"></i>
+                        <span>Fondasi Utama: Kefasihan Membaca (Read Fluently)</span>
+                    </h3>
+                    <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                        Kefasihan membaca adalah gerbang kognitif (Akurasi, Otomatisasi, dan Prosodi). Tanpa membaca fasih, energi mental murid habis hanya untuk mengeja sehingga tidak tersisa untuk berpikir tingkat tinggi (HOTS).
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                        <div class="bg-white dark:bg-slate-800 p-3 rounded-lg border text-center">
+                            <span class="block text-xs font-bold text-slate-500">Jenjang SD/MI</span>
+                            <span class="text-base font-extrabold text-blue-600">60 - 120 KPM</span>
+                            <span class="block text-[10px] text-slate-400">(Kata Per Menit)</span>
+                        </div>
+                        <div class="bg-white dark:bg-slate-800 p-3 rounded-lg border text-center">
+                            <span class="block text-xs font-bold text-slate-500">Jenjang SMP/MTs</span>
+                            <span class="text-base font-extrabold text-indigo-600">150 - 180 KPM</span>
+                            <span class="block text-[10px] text-slate-400">(Kata Per Menit)</span>
+                        </div>
+                        <div class="bg-white dark:bg-slate-800 p-3 rounded-lg border text-center">
+                            <span class="block text-xs font-bold text-slate-500">Jenjang SMA/SMK</span>
+                            <span class="text-base font-extrabold text-emerald-600">200 - 250 KPM</span>
+                            <span class="block text-[10px] text-slate-400">(Kata Per Menit)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabel Label Warna -->
+                <div class="space-y-2">
+                    <h3 class="font-bold text-slate-900 dark:text-white text-sm">Tabel Label Warna Capaian Rapor Pendidikan</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-xs text-left border-collapse border border-slate-200 dark:border-slate-700">
+                            <thead>
+                                <tr class="bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-200">
+                                    <th class="p-3 border">Warna Label</th>
+                                    <th class="p-3 border">Capaian</th>
+                                    <th class="p-3 border">Interpretasi Profil Mutu</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-emerald-50/50 dark:bg-emerald-950/20">
+                                    <td class="p-3 border font-bold text-emerald-700 dark:text-emerald-400 flex items-center space-x-2">
+                                        <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
+                                        <span>Hijau</span>
+                                    </td>
+                                    <td class="p-3 border font-semibold">Baik</td>
+                                    <td class="p-3 border">Capaian indikator sudah tinggi yaitu mencapai atau di atas kompetensi minimum yang ditetapkan. Murid mampu mengaktifkan berpikir kritis tingkat tinggi (HOTS).</td>
+                                </tr>
+                                <tr class="bg-amber-50/50 dark:bg-amber-950/20">
+                                    <td class="p-3 border font-bold text-amber-700 dark:text-amber-400 flex items-center space-x-2">
+                                        <span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
+                                        <span>Kuning</span>
+                                    </td>
+                                    <td class="p-3 border font-semibold">Sedang</td>
+                                    <td class="p-3 border">Capaian indikator berada pada tingkat menengah dan memerlukan peningkatan. Murid mapan di level menemukan informasi tersurat, namun kesulitan inferensi implisit.</td>
+                                </tr>
+                                <tr class="bg-rose-50/50 dark:bg-rose-950/20">
+                                    <td class="p-3 border font-bold text-rose-700 dark:text-rose-400 flex items-center space-x-2">
+                                        <span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
+                                        <span>Merah</span>
+                                    </td>
+                                    <td class="p-3 border font-semibold">Kurang</td>
+                                    <td class="p-3 border">Alarm darurat! Capaian indikator masih rendah dan memerlukan intervensi intensif. Mayoritas murid belum fasih membaca atau belum menguasai konsep dasar matematika.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- (b) Identifikasi Akar Masalah -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 space-y-6">
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-magnifying-glass-chart text-amber-500"></i>
+                    <span>(b) Identifikasi Akar Masalah Rendahnya Kompetensi Literasi & Numerasi</span>
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Sub Indikator Literasi -->
+                    <div class="p-4 border border-slate-200 dark:border-slate-700 rounded-xl space-y-3">
+                        <h3 class="font-bold text-blue-900 dark:text-blue-300 text-sm border-b pb-2">
+                            <i class="fa-solid fa-file-lines mr-1"></i> Sub-Indikator Literasi
+                        </h3>
+                        <ul class="text-xs space-y-2 text-slate-700 dark:text-slate-300">
+                            <li><strong>1. Teks Informasi:</strong> Mengukur kemampuan memahami teks faktual, artikel ilmiah, laporan, infografis, dan tabel/grafik objektif.</li>
+                            <li><strong>2. Teks Sastra:</strong> Mengukur kemampuan memahami cerita pendek, puisi, novel, drama, menginterpretasi makna alegoris/metafora dan nilai moral.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Sub Indikator Numerasi -->
+                    <div class="p-4 border border-slate-200 dark:border-slate-700 rounded-xl space-y-3">
+                        <h3 class="font-bold text-emerald-900 dark:text-emerald-300 text-sm border-b pb-2">
+                            <i class="fa-solid fa-arrow-trend-up mr-1"></i> Sub-Indikator Numerasi
+                        </h3>
+                        <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                            Mencakup domain konten (Bilangan, Aljabar, Geometri & Pengukuran, Data & Ketidakpastian) melalui tingkat kognitif: <i>Knowing</i> (Pemahaman), <i>Applying</i> (Penerapan), dan <i>Reasoning</i> (Penalaran).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Faktor Pendukung -->
+                <div class="space-y-3">
+                    <h3 class="font-bold text-slate-900 dark:text-white text-sm">Faktor Pendukung Tata Kelola Pembelajaran (Di Balik Layar)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="p-4 bg-slate-50 dark:bg-slate-700/40 rounded-xl text-xs space-y-1">
+                            <h4 class="font-bold text-amber-600 dark:text-amber-400">Kualitas Pembelajaran</h4>
+                            <p class="text-slate-600 dark:text-slate-300">Efektifitas proses belajar di kelas, termasuk penerapan pembelajaran diferensiasi.</p>
+                        </div>
+                        <div class="p-4 bg-slate-50 dark:bg-slate-700/40 rounded-xl text-xs space-y-1">
+                            <h4 class="font-bold text-amber-600 dark:text-amber-400">Refleksi & Perbaikan Guru</h4>
+                            <p class="text-slate-600 dark:text-slate-300">Kemampuan guru mengevaluasi dan merancang ulang strategi pengajaran berdasarkan kebutuhan siswa.</p>
+                        </div>
+                        <div class="p-4 bg-slate-50 dark:bg-slate-700/40 rounded-xl text-xs space-y-1">
+                            <h4 class="font-bold text-amber-600 dark:text-amber-400">Kepemimpinan Instruksional</h4>
+                            <p class="text-slate-600 dark:text-slate-300">Kebijakan kepala sekolah dan anggaran yang terarah untuk pengembangan kapasitas ekosistem.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. SUB MATERI 2 -->
+        <section id="page-materi2" class="page-content hidden fade-in space-y-8">
+            <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Sub Materi 2</span>
+                <h1 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-1">
+                    Mengenal Miskonsepsi dan Fakta Esensial Seputar Literasi & Numerasi
+                </h1>
+            </div>
+
+            <!-- (a) Literasi Lintas Kurikulum -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 space-y-6">
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-book text-blue-600"></i>
+                    <span>(a) Paradigma Baru Literasi Lintas Kurikulum</span>
+                </h2>
+
+                <!-- Miskonsepsi Literasi -->
+                <div class="space-y-4">
+                    <div class="p-4 bg-rose-50 dark:bg-rose-950/20 border-l-4 border-rose-500 rounded-r-xl space-y-1">
+                        <span class="text-xs font-bold text-rose-700 dark:text-rose-400">Miskonsepsi 1: Literasi hanya kemampuan membaca dan menulis kata/ejaan.</span>
+                        <p class="text-xs text-slate-700 dark:text-slate-300"><strong>FAKTA:</strong> Literasi jauh lebih luas, mencakup kemampuan memahami, menginterpretasi, mengevaluasi kredibilitas, dan menggunakan informasi untuk memecahkan masalah.</p>
+                    </div>
+                    <div class="p-4 bg-rose-50 dark:bg-rose-950/20 border-l-4 border-rose-500 rounded-r-xl space-y-1">
+                        <span class="text-xs font-bold text-rose-700 dark:text-rose-400">Miskonsepsi 2: Literasi hanya tanggung jawab guru Bahasa Indonesia.</span>
+                        <p class="text-xs text-slate-700 dark:text-slate-300"><strong>FAKTA:</strong> Setiap mata pelajaran memiliki jenis teks unik. Prinsip dasarnya: <i>"Setiap guru adalah guru literasi."</i></p>
+                    </div>
+                    <div class="p-4 bg-rose-50 dark:bg-rose-950/20 border-l-4 border-rose-500 rounded-r-xl space-y-1">
+                        <span class="text-xs font-bold text-rose-700 dark:text-rose-400">Miskonsepsi 3: Literasi hanya berkaitan dengan buku cetak.</span>
+                        <p class="text-xs text-slate-700 dark:text-slate-300"><strong>FAKTA:</strong> Literasi modern mencakup <i>teks multimodal</i> (menggabungkan tulisan, gambar, grafik, video, dan media digital).</p>
+                    </div>
+                </div>
+
+                <!-- 4 Karakteristik Literasi -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+                    <div class="p-3 bg-blue-50 dark:bg-slate-700/50 rounded-xl">
+                        <i class="fa-solid fa-file-text text-blue-600 text-lg mb-1"></i>
+                        <h4 class="font-bold text-xs">Berbasis Teks</h4>
+                    </div>
+                    <div class="p-3 bg-blue-50 dark:bg-slate-700/50 rounded-xl">
+                        <i class="fa-solid fa-circle-question text-blue-600 text-lg mb-1"></i>
+                        <h4 class="font-bold text-xs">Berbasis Pertanyaan</h4>
+                    </div>
+                    <div class="p-3 bg-blue-50 dark:bg-slate-700/50 rounded-xl">
+                        <i class="fa-solid fa-certificate text-blue-600 text-lg mb-1"></i>
+                        <h4 class="font-bold text-xs">Berbasis Bukti</h4>
+                    </div>
+                    <div class="p-3 bg-blue-50 dark:bg-slate-700/50 rounded-xl">
+                        <i class="fa-solid fa-brain text-blue-600 text-lg mb-1"></i>
+                        <h4 class="font-bold text-xs">Berbasis Refleksi</h4>
+                    </div>
+                </div>
+
+                <!-- Tabel Contoh Literasi Per Mapel -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs text-left border border-slate-200 dark:border-slate-700">
+                        <thead class="bg-slate-100 dark:bg-slate-700">
+                            <tr>
+                                <th class="p-2.5 border">Mata Pelajaran</th>
+                                <th class="p-2.5 border">Bentuk Literasi yang Dikembangkan</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+                            <tr><td class="p-2.5 border font-semibold">Bahasa Indonesia</td><td class="p-2.5 border">Memahami teks naratif, eksposisi, sastra, dan evaluasi opini.</td></tr>
+                            <tr><td class="p-2.5 border font-semibold">IPA</td><td class="p-2.5 border">Membaca laporan eksperimen, diagram proses, dan artikel ilmiah populer.</td></tr>
+                            <tr><td class="p-2.5 border font-semibold">IPS / Geografi</td><td class="p-2.5 border">Menafsirkan peta, data sosial, infografis kependudukan, dan teks sejarah.</td></tr>
+                            <tr><td class="p-2.5 border font-semibold">Ekonomi</td><td class="p-2.5 border">Membaca data statistik, tren inflasi, dan berita pasar digital.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- (b) Numerasi Lintas Kurikulum -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 space-y-6">
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-calculator text-emerald-600"></i>
+                    <span>(b) Paradigma Baru Numerasi Lintas Kurikulum</span>
+                </h2>
+
+                <!-- Miskonsepsi Numerasi -->
+                <div class="space-y-4">
+                    <div class="p-4 bg-orange-50 dark:bg-orange-950/20 border-l-4 border-orange-500 rounded-r-xl space-y-1">
+                        <span class="text-xs font-bold text-orange-700 dark:text-orange-400">Miskonsepsi 1: Numerasi sama persis dengan Matematika.</span>
+                        <p class="text-xs text-slate-700 dark:text-slate-300"><strong>FAKTA:</strong> Matematika adalah disiplin ilmu abstrak. Numerasi adalah kemampuan mengaplikasikan konsep matematika dalam kehidupan nyata.</p>
+                    </div>
+                    <div class="p-4 bg-orange-50 dark:bg-orange-950/20 border-l-4 border-orange-500 rounded-r-xl space-y-1">
+                        <span class="text-xs font-bold text-orange-700 dark:text-orange-400">Miskonsepsi 2: Numerasi hanya kemampuan berhitung cepat.</span>
+                        <p class="text-xs text-slate-700 dark:text-slate-300"><strong>FAKTA:</strong> Berhitung hanya bagian kecil. Numerasi mencakup estimasi, membaca grafik, analisis data, dan penalaran kuantitatif.</p>
+                    </div>
+                    <div class="p-4 bg-orange-50 dark:bg-orange-950/20 border-l-4 border-orange-500 rounded-r-xl space-y-1">
+                        <span class="text-xs font-bold text-orange-700 dark:text-orange-400">Miskonsepsi 3: Numerasi hanya tugas guru Matematika.</span>
+                        <p class="text-xs text-slate-700 dark:text-slate-300"><strong>FAKTA:</strong> Penggunaan data terjadi di semua disiplin ilmu. <i>"Setiap guru adalah guru numerasi."</i></p>
+                    </div>
+                </div>
+
+                <!-- 5 Karakteristik Numerasi Lintas Kurikulum -->
+                <div class="space-y-2">
+                    <h3 class="font-bold text-slate-900 dark:text-white text-sm">5 Karakteristik Pembelajaran Numerasi Lintas Kurikulum</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-5 gap-3 text-xs">
+                        <div class="p-3 bg-emerald-50 dark:bg-slate-700/50 rounded-xl text-center">
+                            <span class="font-bold text-emerald-700 dark:text-emerald-400 block mb-1">1. Konteks Nyata</span>
+                            <span class="text-[11px]">Menggunakan fenomena kehidupan harian.</span>
+                        </div>
+                        <div class="p-3 bg-emerald-50 dark:bg-slate-700/50 rounded-xl text-center">
+                            <span class="font-bold text-emerald-700 dark:text-emerald-400 block mb-1">2. Data & Visual</span>
+                            <span class="text-[11px]">Membaca tabel, grafik, diagram, dan peta.</span>
+                        </div>
+                        <div class="p-3 bg-emerald-50 dark:bg-slate-700/50 rounded-xl text-center">
+                            <span class="font-bold text-emerald-700 dark:text-emerald-400 block mb-1">3. Penalaran</span>
+                            <span class="text-[11px]">Menjelaskan proses berpikir logis.</span>
+                        </div>
+                        <div class="p-3 bg-emerald-50 dark:bg-slate-700/50 rounded-xl text-center">
+                            <span class="font-bold text-emerald-700 dark:text-emerald-400 block mb-1">4. Keputusan</span>
+                            <span class="text-[11px]">Memilih keputusan terbaik berbasis bukti.</span>
+                        </div>
+                        <div class="p-3 bg-emerald-50 dark:bg-slate-700/50 rounded-xl text-center">
+                            <span class="font-bold text-emerald-700 dark:text-emerald-400 block mb-1">5. Multi-Representasi</span>
+                            <span class="text-[11px]">Berpindah antar tabel, grafik, & narasi.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabel Contoh Numerasi Per Mapel -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs text-left border border-slate-200 dark:border-slate-700">
+                        <thead class="bg-slate-100 dark:bg-slate-700">
+                            <tr>
+                                <th class="p-2.5 border">Mata Pelajaran</th>
+                                <th class="p-2.5 border">Contoh Aktivitas Numerasi Kontekstual</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+                            <tr><td class="p-2.5 border font-semibold">IPA</td><td class="p-2.5 border">Mengukur, mengolah data eksperimen harian, dan membuat grafik pertumbuhan.</td></tr>
+                            <tr><td class="p-2.5 border font-semibold">IPS / Geografi</td><td class="p-2.5 border">Menganalisis data piramida penduduk, menghitung skala peta, dan curah hujan.</td></tr>
+                            <tr><td class="p-2.5 border font-semibold">PJOK</td><td class="p-2.5 border">Mengukur waktu tempuh, jarak, statistik skor pertandingan, dan denyut nadi.</td></tr>
+                            <tr><td class="p-2.5 border font-semibold">Seni Budaya</td><td class="p-2.5 border">Menggunakan prinsip pola simetri, proporsi, rasio, dan skala gambar.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. SUB MATERI 3 -->
+        <section id="page-materi3" class="page-content hidden fade-in space-y-8">
+            <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Sub Materi 3</span>
+                <h1 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-1">
+                    Strategi Penguatan Literasi
+                </h1>
+            </div>
+
+            <!-- (a) Lingkungan Fisik -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-school text-blue-600"></i>
+                    <span>(a) Penguatan Literasi melalui Lingkungan Fisik</span>
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                    <div class="p-4 border border-blue-200 dark:border-slate-700 rounded-xl space-y-2">
+                        <span class="font-bold text-blue-700 dark:text-blue-400 block">Jenjang SD</span>
+                        <p class="text-slate-600 dark:text-slate-300">Focus: <i>Learning to Read</i>. Dinding Kata Aktif (Active Word Wall), Sudut Baca Kelas berlabel warna visual (Red/Yellow/Green), Mural Berlabel Konkret.</p>
+                    </div>
+                    <div class="p-4 border border-indigo-200 dark:border-slate-700 rounded-xl space-y-2">
+                        <span class="font-bold text-indigo-700 dark:text-indigo-400 block">Jenjang SMP</span>
+                        <p class="text-slate-600 dark:text-slate-300">Focus: <i>Reading to Learn</i>. Papan buletin mading kaya data, Pengatur Grafis (Graphic Organizers) di dinding, dan labelisasi data fisik sekolah.</p>
+                    </div>
+                    <div class="p-4 border border-purple-200 dark:border-slate-700 rounded-xl space-y-2">
+                        <span class="font-bold text-purple-700 dark:text-purple-400 block">Jenjang SMA</span>
+                        <p class="text-slate-600 dark:text-slate-300">Focus: <i>HOTS & TKA</i>. Papan isu global kontradiktif (teks jamak), Pustaka Digital & Makerspace, Pajangan Karya Reflektif Siswa (Student Author Corner).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- (b) Lingkungan Sosio-Afektif -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-people-roof text-amber-500"></i>
+                    <span>(b) Penguatan Literasi melalui Lingkungan Sosio-Afektif</span>
+                </h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs text-left border border-slate-200 dark:border-slate-700">
+                        <thead class="bg-slate-100 dark:bg-slate-700">
+                            <tr>
+                                <th class="p-3 border">Dimensi</th>
+                                <th class="p-3 border">Ciri Lingkungan Sosio-Afektif yang Positif</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+                            <tr>
+                                <td class="p-3 border font-bold text-amber-600">Dimensi Sosial</td>
+                                <td class="p-3 border">Guru menjadi kolega yang terbuka; Orang tua & guru bekerja sebagai mitra; Staf & murid dilibatkan dalam keputusan; Resolusi konflik secara suportif.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border font-bold text-emerald-600">Dimensi Afektif</td>
+                                <td class="p-3 border">Seluruh warga merasa dihargai; Tingkat kepercayaan antar-staf tinggi; Masukan ditanggapi serius; Atmosfer sekolah ramah dan kondusif.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- (c) Lingkungan Akademik & Diferensiasi Rapor -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-graduation-cap text-emerald-600"></i>
+                    <span>(c) Lingkungan Akademik & Strategi Operasional Diferensiasi Rapor Pendidikan</span>
+                </h2>
+                <div class="space-y-3 text-xs">
+                    <div class="p-4 bg-rose-50 dark:bg-slate-900/80 border border-rose-300 dark:border-rose-900 rounded-xl">
+                        <h4 class="font-bold text-rose-700 dark:text-rose-400 text-sm mb-1">KATEGORI MERAH (Capaian Kurang: Pemulihan KPM & Dekode)</h4>
+                        <p class="text-slate-700 dark:text-slate-300">Fokus utama: Menuntaskan membaca fasih (KPM) & menghilangkan kecemasan membaca (<i>reading anxiety</i>). Terapkan "Membaca Tanpa Tagihan" 15 menit, Sudut baca berlabel warna (TaRL), dan Interactive Read Aloud.</p>
+                    </div>
+                    <div class="p-4 bg-amber-50 dark:bg-slate-900/80 border border-amber-300 dark:border-amber-900 rounded-xl">
+                        <h4 class="font-bold text-amber-700 dark:text-amber-400 text-sm mb-1">KATEGORI KUNING (Capaian Sedang: Transisi Inferences & Teks Jamak)</h4>
+                        <p class="text-slate-700 dark:text-slate-300">Fokus utama: Melatih membuat kesimpulan implisit dan mengolah teks multimodal. Terapkan strategi Membaca Terbimbing (Guided Reading), Pengatur Grafis (Graphic Organizers), dan Pajangan Karya Siswa.</p>
+                    </div>
+                    <div class="p-4 bg-emerald-50 dark:bg-slate-900/80 border border-emerald-300 dark:border-emerald-900 rounded-xl">
+                        <h4 class="font-bold text-emerald-700 dark:text-emerald-400 text-sm mb-1">KATEGORI HIJAU (Capaian Baik: Evaluate, Reflect & HOTS TKA)</h4>
+                        <p class="text-slate-700 dark:text-slate-300">Fokus utama: Pengayaan pemikiran kritis, analisis validitas teks jamak kontradiktif, deteksi bias/hoaks, Klub Debat / Forum Buku, serta asesmen berbasis stimulus kompleks standar TKA.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. SUB MATERI 4 -->
+        <section id="page-materi4" class="page-content hidden fade-in space-y-8">
+            <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Sub Materi 4</span>
+                <h1 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-1">
+                    Strategi Penguatan Numerasi
+                </h1>
+            </div>
+
+            <!-- (a) Lingkungan Fisik -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-cubes text-emerald-600"></i>
+                    <span>(a) Penguatan Numerasi melalui Lingkungan Fisik & Makerspace</span>
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                    <div class="p-4 border border-emerald-200 dark:border-slate-700 rounded-xl space-y-1">
+                        <span class="font-bold text-emerald-700 dark:text-emerald-400">Jenjang SD</span>
+                        <p class="text-slate-600 dark:text-slate-300">Garis bilangan/engklek angka di lantai koridor, stiker 20 detik cuci tangan di wastafel, dan sudut Makerspace alat manipulatif (sempoa/papan angka).</p>
+                    </div>
+                    <div class="p-4 border border-teal-200 dark:border-slate-700 rounded-xl space-y-1">
+                        <span class="font-bold text-teal-700 dark:text-teal-400">Jenjang SMP</span>
+                        <p class="text-slate-600 dark:text-slate-300">Mading statistik peminjaman buku perpustakaan, busur derajat ukuran besar pada ayunan pintu kelas, dan stiker hemat energi (Watt/Emisi CO2).</p>
+                    </div>
+                    <div class="p-4 border border-blue-200 dark:border-slate-700 rounded-xl space-y-1">
+                        <span class="font-bold text-blue-700 dark:text-blue-400">Jenjang SMA</span>
+                        <p class="text-slate-600 dark:text-slate-300">Papan tren grafik timbulan sampah harian sekolah, Makerspace Digital (kalkulator ilmiah & spreadsheet), serta papan kalkulasi finansial kantin.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- (b) Lingkungan Sosio-Afektif -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-brain text-amber-500"></i>
+                    <span>(b) Penguatan Numerasi melalui Lingkungan Sosio-Afektif (Growth Mindset)</span>
+                </h2>
+                <div class="p-4 bg-amber-50 dark:bg-slate-900/80 border border-amber-200 dark:border-amber-900 rounded-xl text-xs space-y-2">
+                    <p class="font-bold text-amber-800 dark:text-amber-300">
+                        <i class="fa-solid fa-triangle-exclamation mr-1"></i> Hindari kalimat pelemah: <i>"Kamu memang tidak berbakat Matematika."</i>
+                    </p>
+                    <p class="text-slate-700 dark:text-slate-300">
+                        Gantilah dengan umpan balik berbasis proses & usaha: <i>"Kamu belum menemukan caranya, mari kita coba strategi lain."</i> Mengikis kecemasan matematika (<i>math anxiety</i>) adalah kunci utama membangun keyakinan bahwa semua siswa bisa numerat.
+                    </p>
+                </div>
+            </div>
+
+            <!-- (c) Lingkungan Akademik & 5 Prinsip -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 space-y-6">
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-list-check text-blue-600"></i>
+                    <span>(c) Penguatan Numerasi di Lingkungan Akademik</span>
+                </h2>
+
+                <div class="space-y-2">
+                    <h3 class="font-bold text-xs text-slate-800 dark:text-slate-200 uppercase tracking-wider">5 Prinsip Penguatan Numerasi pada Mata Pelajaran Matematika:</h3>
+                    <ul class="text-xs list-disc list-inside space-y-1 text-slate-700 dark:text-slate-300">
+                        <li>Memberikan perhatian pada konteks kehidupan nyata.</li>
+                        <li>Menekankan penerapan pengetahuan matematika, bukan sekadar menghafal rumus.</li>
+                        <li>Meningkatkan sikap positif terhadap penggunaan matematika sehari-hari.</li>
+                        <li>Menggunakan alat fisik, representasi, dan digital secara bervariasi.</li>
+                        <li>Membangun orientasi kritis untuk menginterpretasi hasil matematika.</li>
+                    </ul>
+                </div>
+
+                <!-- Diferensiasi Numerasi Rapor Pendidikan -->
+                <div class="space-y-3 text-xs">
+                    <div class="p-4 bg-rose-50 dark:bg-slate-900/80 border border-rose-300 dark:border-rose-900 rounded-xl">
+                        <h4 class="font-bold text-rose-700 dark:text-rose-400 text-sm mb-1">Diferensiasi MERAH (Pemulihan Konsep Dasar & Estimasi)</h4>
+                        <p class="text-slate-700 dark:text-slate-300">Gunakan pendekatan CPA (Concrete - Pictorial - Abstract). Fokus pada operasi hitung dasar harian dan kepekaan bilangan (number sense).</p>
+                    </div>
+                    <div class="p-4 bg-amber-50 dark:bg-slate-900/80 border border-amber-300 dark:border-amber-900 rounded-xl">
+                        <h4 class="font-bold text-amber-700 dark:text-amber-400 text-sm mb-1">Diferensiasi KUNING (Penguatan Penerapan / Applying)</h4>
+                        <p class="text-slate-700 dark:text-slate-300">Fokus pada penyelesaian masalah kontekstual semi-rutin, mengolah data tabel/grafik dari lingkungan sekolah (misal: penimbangan sampah harian).</p>
+                    </div>
+                    <div class="p-4 bg-emerald-50 dark:bg-slate-900/80 border border-emerald-300 dark:border-emerald-900 rounded-xl">
+                        <h4 class="font-bold text-emerald-700 dark:text-emerald-400 text-sm mb-1">Diferensiasi HIJAU (Pengayaan Penalaran / Reasoning & TKA)</h4>
+                        <p class="text-slate-700 dark:text-slate-300">Fokus pada pemodelan matematika kompleks, optimasi program linear, serta analisis data kritis terhadap klaim kuantitatif di media massa.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. SUB MATERI 5 -->
+        <section id="page-materi5" class="page-content hidden fade-in space-y-8">
+            <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Sub Materi 5</span>
+                <h1 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-1">
+                    Analisis Capaian dan Kerangka Asesmen TKA
+                </h1>
+            </div>
+
+            <!-- (a) Ayo Coba TKA -->
+            <div class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white rounded-2xl p-6 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="space-y-1 text-center sm:text-left">
+                    <h2 class="text-xl font-bold"><i class="fa-solid fa-laptop-code text-amber-400 mr-2"></i>Ayo Coba Simulasi TKA Resmi</h2>
+                    <p class="text-xs text-blue-100">Akses platform simulasi ujian Tes Kemampuan Akademik (TKA) resmi Kemendikdasmen Pusmendik.</p>
+                </div>
+                <a href="https://pusmendik.kemendikdasmen.go.id/tka/simulasi_tka" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl text-xs shadow-lg transition flex items-center space-x-2 whitespace-nowrap">
+                    <span>Buka Simulasi TKA</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+            </div>
+
+            <!-- (b) Analisis Kerangka Asesmen -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 space-y-6">
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-sitemap text-purple-600"></i>
+                    <span>(b) Kerangka Asesmen: 3 Kompetensi Utama TKA</span>
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                    <div class="p-4 bg-purple-50 dark:bg-slate-700/50 rounded-xl space-y-1">
+                        <span class="font-bold text-purple-700 dark:text-purple-300">1. Menemukan Informasi (Locate)</span>
+                        <p class="text-slate-600 dark:text-slate-300">Kemampuan mencari, mengakses, dan menyaring data eksplisit/tersurat dalam teks atau tabel.</p>
+                    </div>
+                    <div class="p-4 bg-purple-50 dark:bg-slate-700/50 rounded-xl space-y-1">
+                        <span class="font-bold text-purple-700 dark:text-purple-300">2. Memahami (Understand)</span>
+                        <p class="text-slate-600 dark:text-slate-300">Memahami makna harfiah, menyusun inferensi implisit, dan menghubungkan pesan antar paragraf.</p>
+                    </div>
+                    <div class="p-4 bg-purple-50 dark:bg-slate-700/50 rounded-xl space-y-1">
+                        <span class="font-bold text-purple-700 dark:text-purple-300">3. Mengevaluasi & Merefleksi</span>
+                        <p class="text-slate-600 dark:text-slate-300">Menilai kredibilitas, mendeteksi bias/kontradiksi informasi, serta merefleksikan isi ke kehidupan nyata.</p>
+                    </div>
+                </div>
+
+                <!-- Bentuk Soal TKA -->
+                <div class="space-y-2">
+                    <h3 class="font-bold text-slate-900 dark:text-white text-sm">Bentuk Soal Asesmen TKA</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                        <div class="p-3 border rounded-lg">
+                            <span class="font-bold text-blue-600 block">PG (Pilihan Ganda)</span>
+                            <span class="text-slate-500">Satu jawaban benar dari opsi yang disediakan.</span>
+                        </div>
+                        <div class="p-3 border rounded-lg">
+                            <span class="font-bold text-indigo-600 block">MCMA (Pilihan Ganda Kompleks)</span>
+                            <span class="text-slate-500">Memilih beberapa jawaban benar atau centang pernyataan Benar/Salah.</span>
+                        </div>
+                        <div class="p-3 border rounded-lg">
+                            <span class="font-bold text-emerald-600 block">Uraian / Isian Singkat</span>
+                            <span class="text-slate-500">Menuliskan jawaban argumentatif singkat atau langkah hitung.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. SUB MATERI 6 -->
+        <section id="page-materi6" class="page-content hidden fade-in space-y-8">
+            <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Sub Materi 6</span>
+                <h1 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-1">
+                    Perencanaan Pembelajaran: Tindak Lanjut Hasil Analisis Capaian TKA
+                </h1>
+            </div>
+
+            <!-- (a) Perencanaan Pembelajaran -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 space-y-6">
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-pen-ruler text-rose-600"></i>
+                    <span>(a) Langkah Menyusun Perencanaan Pembelajaran & Asesmen</span>
+                </h2>
+
+                <div class="space-y-4 text-xs">
+                    <div class="p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl space-y-1">
+                        <h3 class="font-bold text-slate-900 dark:text-white text-sm">1. Asesmen Awal & Penetapan Tujuan</h3>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">Melakukan diagnostic assessment untuk mengetahui baseline tingkat membaca fasih (KPM) atau pemahaman konsep matematika awal murid sebelum menentukan Tujuan Pembelajaran.</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl space-y-1">
+                        <h3 class="font-bold text-slate-900 dark:text-white text-sm">2. Desain Langkah Pembelajaran Tingkat Tinggi (High-Order)</h3>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">Menggunakan model Problem-Based Learning (PBL) atau Project-Based Learning (PjBL) yang mewajibkan murid membaca stimulus kontekstual dan menalar data secara kritis.</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl space-y-1">
+                        <h3 class="font-bold text-slate-900 dark:text-white text-sm">3. Pemanfaatan Teknologi Digital</h3>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">Mengintegrasikan platform asesmen digital interaktif, e-book pustaka digital, dan kalkulasi spreadsheet untuk mendukung kegiatan riset murid.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- (b) Materi Pengayaan -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-file-pen text-amber-500"></i>
+                    <span>(b) Materi Pengayaan: Asesmen Pembelajaran Berbasis Kerangka TKA</span>
+                </h2>
+                <div class="text-xs space-y-2 text-slate-700 dark:text-slate-300">
+                    <p><strong>Penyusunan Stimulus:</strong> Menggunakan wacana nyata yang menarik, edukatif, dan bernilai kebaruan (infografis/artikel/grafik).</p>
+                    <p><strong>Penyusunan Butir Soal:</strong> Mengacu pada matriks kompetensi (Locate, Understand, Evaluate/Reflect).</p>
+                    <p><strong>Telaah Sejawat (Peer Review):</strong> Menguji validitas butir soal bersama rekan sejawat sebelum diujikan ke siswa.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. LATIHAN -->
+        <section id="page-latihan" class="page-content hidden fade-in space-y-8">
+            <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Aktivitas Mandiri</span>
+                <h1 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-1">
+                    Soal-Soal Latihan Modul (Bab 1 s.d. Bab 6)
+                </h1>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Gunakan accordion di bawah ini untuk melihat pertanyaan latihan dan petunjuk jawaban pembahasan.</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Latihan Bab 1 -->
+                <div class="border border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden bg-white dark:bg-slate-800 shadow-sm">
+                    <button onclick="toggleAccordion('lat-1')" class="w-full px-6 py-4 text-left font-bold text-slate-900 dark:text-white flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 transition">
+                        <span class="flex items-center space-x-2">
+                            <i class="fa-solid fa-folder-open text-amber-500"></i>
+                            <span>Latihan Sub Materi 1: Analisis Rapor Pendidikan & TKA</span>
+                        </span>
+                        <i id="icon-lat-1" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="content-lat-1" class="hidden px-6 pb-6 pt-2 space-y-4 border-t border-slate-100 dark:border-slate-700 text-xs">
+                        <ol class="list-decimal list-inside space-y-2 text-slate-700 dark:text-slate-300">
+                            <li>Bagaimana kategori dan posisi capaian literasi dan numerasi satuan pendidikan Anda?</li>
+                            <li>Indikator mana yang menunjukkan kondisi paling memerlukan perhatian (label Merah/Kuning)?</li>
+                            <li>Apa dugaan faktor pendukung di balik layar yang menyebabkan capaian tersebut?</li>
+                            <li>Mengapa kefasihan membaca (KPM) menjadi fondasi utama sebelum siswa menghadapi TKA?</li>
+                        </ol>
+                        <button onclick="toggleAnswer('ans-1')" class="px-4 py-2 bg-blue-50 dark:bg-slate-700 text-blue-600 dark:text-blue-300 font-semibold rounded-lg hover:bg-blue-100 transition">
+                            <i class="fa-solid fa-eye mr-1"></i> Lihat Pembahasan
+                        </button>
+                        <div id="ans-1" class="hidden p-4 bg-slate-50 dark:bg-slate-900/60 rounded-xl text-slate-600 dark:text-slate-300 border">
+                            <strong>Pembahasan:</strong> Capaian dianalisis melalui Rapor Pendidikan. Jika KPM siswa rendah, energi mental siswa habis untuk mengeja sehingga gagal menjawab soal TKA yang panjang dan kontekstual.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Latihan Bab 2 -->
+                <div class="border border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden bg-white dark:bg-slate-800 shadow-sm">
+                    <button onclick="toggleAccordion('lat-2')" class="w-full px-6 py-4 text-left font-bold text-slate-900 dark:text-white flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 transition">
+                        <span class="flex items-center space-x-2">
+                            <i class="fa-solid fa-folder-open text-amber-500"></i>
+                            <span>Latihan Sub Materi 2: Miskonsepsi & Fakta Esensial</span>
+                        </span>
+                        <i id="icon-lat-2" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="content-lat-2" class="hidden px-6 pb-6 pt-2 space-y-4 border-t border-slate-100 dark:border-slate-700 text-xs">
+                        <ol class="list-decimal list-inside space-y-2 text-slate-700 dark:text-slate-300">
+                            <li>Sebutkan 3 miskonsepsi literasi beserta fakta esensialnya!</li>
+                            <li>Jelaskan perbedaan mendasar antara Matematika dan Numerasi!</li>
+                            <li>Jelaskan makna prinsip <i>"Setiap guru adalah guru numerasi"</i>!</li>
+                        </ol>
+                        <button onclick="toggleAnswer('ans-2')" class="px-4 py-2 bg-blue-50 dark:bg-slate-700 text-blue-600 dark:text-blue-300 font-semibold rounded-lg hover:bg-blue-100 transition">
+                            <i class="fa-solid fa-eye mr-1"></i> Lihat Pembahasan
+                        </button>
+                        <div id="ans-2" class="hidden p-4 bg-slate-50 dark:bg-slate-900/60 rounded-xl text-slate-600 dark:text-slate-300 border">
+                            <strong>Pembahasan:</strong> Matematika adalah ilmu abstrak; numerasi adalah penggunaan konsep matematika dalam kehidupan nyata. Semua guru memfasilitasi penggunaan data/teks sesuai bidang keilmuannya.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Latihan Bab 3 & 4 -->
+                <div class="border border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden bg-white dark:bg-slate-800 shadow-sm">
+                    <button onclick="toggleAccordion('lat-3')" class="w-full px-6 py-4 text-left font-bold text-slate-900 dark:text-white flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 transition">
+                        <span class="flex items-center space-x-2">
+                            <i class="fa-solid fa-folder-open text-amber-500"></i>
+                            <span>Latihan Sub Materi 3 & 4: Strategi Penguatan Lingkungan Sekolah</span>
+                        </span>
+                        <i id="icon-lat-3" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="content-lat-3" class="hidden px-6 pb-6 pt-2 space-y-4 border-t border-slate-100 dark:border-slate-700 text-xs">
+                        <ol class="list-decimal list-inside space-y-2 text-slate-700 dark:text-slate-300">
+                            <li>Bagaimana peran Makerspace dalam mendukung numerasi fisik di sekolah?</li>
+                            <li>Bagaimana ucapan guru dapat memengaruhi Growth Mindset siswa terhadap numerasi?</li>
+                            <li>Jelaskan strategi intervensi untuk sekolah yang Rapor Pendidikannya berlabel Merah!</li>
+                        </ol>
+                        <button onclick="toggleAnswer('ans-3')" class="px-4 py-2 bg-blue-50 dark:bg-slate-700 text-blue-600 dark:text-blue-300 font-semibold rounded-lg hover:bg-blue-100 transition">
+                            <i class="fa-solid fa-eye mr-1"></i> Lihat Pembahasan
+                        </button>
+                        <div id="ans-3" class="hidden p-4 bg-slate-50 dark:bg-slate-900/60 rounded-xl text-slate-600 dark:text-slate-300 border">
+                            <strong>Pembahasan:</strong> Sekolah kategori Merah harus berfokus pada pemulihan fondasi membaca fasih dan konsep dasar hitung tanpa membebankan tagihan berat terlebih dahulu.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. EVALUASI FORMATIF KUIS INTERAKTIF -->
+        <section id="page-evaluasi" class="page-content hidden fade-in space-y-8">
+            <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Uji Kompetensi</span>
+                <h1 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-1">
+                    Evaluasi Formatif Interaktif
+                </h1>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Jawab seluruh pertanyaan di bawah ini untuk mengukur pemahaman Anda terhadap seluruh materi modul.</p>
+            </div>
+
+            <!-- Quiz Container -->
+            <form id="quizForm" onsubmit="submitQuiz(event)" class="space-y-6">
+                <!-- Question 1 -->
+                <div class="p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
+                    <span class="text-xs font-bold text-amber-600 dark:text-amber-400">Soal 1 (Bab 1)</span>
+                    <p class="text-xs md:text-sm font-semibold text-slate-900 dark:text-white">
+                        Apa yang dimaksud dengan literasi dalam Asesmen Nasional?
+                    </p>
+                    <div class="space-y-2 text-xs">
+                        <label class="flex items-center space-x-2 p-2.5 rounded-lg border hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer">
+                            <input type="radio" name="q1" value="A" required class="text-amber-600 focus:ring-amber-500">
+                            <span>A. Kemampuan menghafal isi buku pelajaran dengan cepat</span>
+                        </label>
+                        <label class="flex items-center space-x-2 p-2.5 rounded-lg border hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer">
+                            <input type="radio" name="q1" value="B" class="text-amber-600 focus:ring-amber-500">
+                            <span>B. Kemampuan memahami, menggunakan, mengevaluasi, dan merefleksikan teks untuk berbagai tujuan</span>
+                        </label>
+                        <label class="flex items-center space-x-2 p-2.5 rounded-lg border hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer">
+                            <input type="radio" name="q1" value="C" class="text-amber-600 focus:ring-amber-500">
+                            <span>C. Kemampuan membaca tulisan tanpa henti</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
+                    <span class="text-xs font-bold text-amber-600 dark:text-amber-400">Soal 2 (Bab 1)</span>
+                    <p class="text-xs md:text-sm font-semibold text-slate-900 dark:text-white">
+                        Kefasihan membaca (Read Fluently) menjadi fondasi utama karena...
+                    </p>
+                    <div class="space-y-2 text-xs">
+                        <label class="flex items-center space-x-2 p-2.5 rounded-lg border hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer">
+                            <input type="radio" name="q2" value="A" required class="text-amber-600 focus:ring-amber-500">
+                            <span>A. Membebaskan energi kognitif di otak murid untuk berpikir tingkat tinggi (HOTS) saat membaca</span>
+                        </label>
+                        <label class="flex items-center space-x-2 p-2.5 rounded-lg border hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer">
+                            <input type="radio" name="q2" value="B" class="text-amber-600 focus:ring-amber-500">
+                            <span>B. Merupakan syarat utama untuk mendapatkan nilai ujian tertinggi</span>
+                        </label>
+                        <label class="flex items-center space-x-2 p-2.5 rounded-lg border hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer">
+                            <input type="radio" name="q2" value="C" class="text-amber-600 focus:ring-amber-500">
+                            <span>C. Memudahkan murid menghafal seluruh istilah ilmiah</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
+                    <span class="text-xs font-bold text-amber-600 dark:text-amber-400">Soal 3 (Bab 2)</span>
+                    <p class="text-xs md:text-sm font-semibold text-slate-900 dark:text-white">
+                        Pernyataan yang BENAR mengenai perbedaan Matematika dan Numerasi adalah...
+                    </p>
+                    <div class="space-y-2 text-xs">
+                        <label class="flex items-center space-x-2 p-2.5 rounded-lg border hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer">
+                            <input type="radio" name="q3" value="A" required class="text-amber-600 focus:ring-amber-500">
+                            <span>A. Matematika sama dengan berhitung; numerasi sama dengan aljabar</span>
+                        </label>
+                        <label class="flex items-center space-x-2 p-2.5 rounded-lg border hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer">
+                            <input type="radio" name="q3" value="B" class="text-amber-600 focus:ring-amber-500">
+                            <span>B. Matematika mempelajari disiplin ilmu/rumus abstrak, sedangkan numerasi adalah kemampuan mengaplikasikannya dalam kehidupan nyata</span>
+                        </label>
+                        <label class="flex items-center space-x-2 p-2.5 rounded-lg border hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer">
+                            <input type="radio" name="q3" value="C" class="text-amber-600 focus:ring-amber-500">
+                            <span>C. Numerasi hanya dipelajari di pelajaran matematika</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
+                    <span class="text-xs font-bold text-amber-600 dark:text-amber-400">Soal 4 (Bab 3)</span>
+                    <p class="text-xs md:text-sm font-semibold text-slate-900 dark:text-white">
+                        Rekomendasi utama bagi sekolah dengan Rapor Pendidikan kategori MERAH pada literasi adalah...
+                    </p>
+                    <div class="space-y-2 text-xs">
+                        <label class="flex items-center space-x-2 p-2.5 rounded-lg border hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer">
+                            <input type="radio" name="q4" value="A" required class="text-amber-600 focus:ring-amber-500">
+                            <span>A. Fokus pada pemulihan fondasi membaca fasih (KPM) & program "Membaca Tanpa Tagihan"</span>
+                        </label>
+                        <label class="flex items-center space-x-2 p-2.5 rounded-lg border hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer">
+                            <input type="radio" name="q4" value="B" class="text-amber-600 focus:ring-amber-500">
+                            <span>B. Memberikan latihan soal HOTS TKA setiap hari secara intensif</span>
+                        </label>
+                        <label class="flex items-center space-x-2 p-2.5 rounded-lg border hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer">
+                            <input type="radio" name="q4" value="C" class="text-amber-600 focus:ring-amber-500">
+                            <span>C. Mengganti semua buku perpustakaan secara serentak</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="p-6 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
+                    <span class="text-xs font-bold text-amber-600 dark:text-amber-400">Soal 5 (Bab 5)</span>
+                    <p class="text-xs md:text-sm font-semibold text-slate-900 dark:text-white">
+                        Tiga kompetensi kognitif utama yang diuji dalam Kerangka Asesmen TKA adalah...
+                    </p>
+                    <div class="space-y-2 text-xs">
+                        <label class="flex items-center space-x-2 p-2.5 rounded-lg border hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer">
+                            <input type="radio" name="q5" value="A" required class="text-amber-600 focus:ring-amber-500">
+                            <span>A. Menghafal, Menulis, Menggambar</span>
+                        </label>
+                        <label class="flex items-center space-x-2 p-2.5 rounded-lg border hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer">
+                            <input type="radio" name="q5" value="B" class="text-amber-600 focus:ring-amber-500">
+                            <span>B. Menemukan Informasi (Locate), Memahami (Understand), Mengevaluasi & Merefleksi (Evaluate/Reflect)</span>
+                        </label>
+                        <label class="flex items-center space-x-2 p-2.5 rounded-lg border hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer">
+                            <input type="radio" name="q5" value="C" class="text-amber-600 focus:ring-amber-500">
+                            <span>C. Menghitung, Mengukur, Melukis</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" class="w-full sm:w-auto px-8 py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl shadow-lg transition">
+                        <i class="fa-solid fa-calculator mr-2"></i> Hitung Skor Evaluasi
+                    </button>
+                </div>
+            </form>
+
+            <!-- Quiz Result Card -->
+            <div id="quizResult" class="hidden p-6 bg-white dark:bg-slate-800 rounded-2xl border-2 border-amber-500 shadow-xl space-y-4">
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-trophy text-amber-500"></i>
+                    <span>Hasil Evaluasi Kuis</span>
+                </h2>
+                <div class="flex items-center space-x-4">
+                    <div id="scoreDisplay" class="text-4xl font-extrabold text-amber-600">0</div>
+                    <div>
+                        <div id="feedbackTitle" class="font-bold text-sm text-slate-900 dark:text-white">Status</div>
+                        <p id="feedbackDesc" class="text-xs text-slate-600 dark:text-slate-400">Deskripsi umpan balik akan muncul di sini.</p>
+                    </div>
+                </div>
+
+                <!-- Answer Key & Discussion -->
+                <div class="pt-4 border-t border-slate-200 dark:border-slate-700 space-y-2 text-xs">
+                    <h3 class="font-bold text-slate-900 dark:text-white">Kunci Jawaban & Pembahasan Singkat:</h3>
+                    <ul class="list-disc list-inside space-y-1 text-slate-600 dark:text-slate-300">
+                        <li><strong>Soal 1: B</strong> — Literasi AN mencakup pemahaman, evaluasi, dan refleksi teks.</li>
+                        <li><strong>Soal 2: A</strong> — Reading fluently membebaskan energi mental untuk penalaran HOTS.</li>
+                        <li><strong>Soal 3: B</strong> — Matematika disiplin ilmu; numerasi penerapan nyata.</li>
+                        <li><strong>Soal 4: A</strong> — Kategori Merah membutuhkan pemulihan membaca fasih.</li>
+                        <li><strong>Soal 5: B</strong> — 3 level kognitif TKA: Locate, Understand, Evaluate/Reflect.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. FASILITATOR -->
+        <section id="page-fasilitator" class="page-content hidden fade-in space-y-8">
+            <div class="border-b border-slate-200 dark:border-slate-700 pb-4">
+                <span class="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Pengembang Modul & Narsum</span>
+                <h1 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mt-1">
+                    Profil Fasilitator
+                </h1>
+            </div>
+
+            <div class="max-w-2xl mx-auto bg-white dark:bg-slate-800 rounded-3xl p-8 border border-slate-200 dark:border-slate-700 shadow-xl text-center space-y-6">
+                <!-- Avatar / Inisial -->
+                <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-tr from-blue-900 via-amber-500 to-emerald-600 flex items-center justify-center text-white text-3xl font-extrabold shadow-lg">
+                    FA
+                </div>
+
+                <div class="space-y-2">
+                    <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white">
+                        M. FAISAL ABDUH, M.Pd.
+                    </h2>
+                    <span class="inline-block px-3 py-1 bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 rounded-full text-xs font-semibold">
+                        Guru Matematika SMAN 1 Kersana
+                    </span>
+                </div>
+
+                <!-- Info Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left text-xs bg-slate-50 dark:bg-slate-700/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-600">
+                    <div>
+                        <span class="text-slate-400 block font-medium">NIP</span>
+                        <span class="font-bold text-slate-800 dark:text-slate-200">199206142022212009</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block font-medium">Peran Penugasan</span>
+                        <span class="font-bold text-slate-800 dark:text-slate-200">Fasilitator Daerah BBPMP Jawa Tengah Kemendikdasmen</span>
+                    </div>
+                </div>
+
+                <!-- CV Button -->
+                <div class="pt-2">
+                    <a href="https://gurufa119.github.io/cv" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-900 to-indigo-900 hover:from-blue-800 hover:to-indigo-800 text-white font-semibold rounded-xl text-xs shadow-lg transition">
+                        <i class="fa-solid fa-address-card"></i>
+                        <span>Lihat Curriculum Vitae (CV)</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-6 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 dark:text-slate-400 space-y-2">
+            <p>© 2026 Modul Penguatan Literasi & Numerasi — BBPMP Jawa Tengah Kemendikdasmen</p>
+            <p>Didesain secara profesional sebagai Aplikasi Edukasi Interaktif SPA (Single Page Application).</p>
+        </div>
+    </footer>
+
+    <!-- BACK TO TOP BUTTON -->
+    <button id="backToTop" onclick="scrollToTop()" class="fixed bottom-6 right-6 z-50 p-3 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-full shadow-2xl transition-all opacity-0 pointer-events-none transform translate-y-4">
+        <i class="fa-solid fa-arrow-up text-lg"></i>
+    </button>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Dark Mode Toggle Logic
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Initialize Theme from localStorage
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        // Navigation / SPA Routing Logic
+        function navigateTo(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach(p => p.classList.add('hidden'));
+
+            // Show selected page
+            const targetPage = document.getElementById('page-' + pageId);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Close mobile menu if open
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenu) mobileMenu.classList.add('hidden');
+
+            // Update URL Hash without reload
+            window.location.hash = pageId;
+        }
+
+        // Handle Hash change / Initial Load
+        window.addEventListener('load', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash) {
+                navigateTo(hash);
+            } else {
+                navigateTo('beranda');
+            }
+        });
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Back to Top Button Logic
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+                backToTopBtn.classList.add('opacity-100', 'translate-y-0');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+                backToTopBtn.classList.remove('opacity-100', 'translate-y-0');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Accordion Toggle Logic
+        function toggleAccordion(id) {
+            const content = document.getElementById('content-' + id);
+            const icon = document.getElementById('icon-' + id);
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                content.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+
+        // Toggle Answer Logic in Accordion
+        function toggleAnswer(id) {
+            const ans = document.getElementById(id);
+            ans.classList.toggle('hidden');
+        }
+
+        // Kuis Evaluasi Formative Interactive Logic
+        function submitQuiz(event) {
+            event.preventDefault();
+            
+            const correctAnswers = {
+                q1: 'B',
+                q2: 'A',
+                q3: 'B',
+                q4: 'A',
+                q5: 'B'
+            };
+
+            let score = 0;
+            const total = 5;
+            const form = event.target;
+
+            for (let q in correctAnswers) {
+                const selected = form.elements[q].value;
+                if (selected === correctAnswers[q]) {
+                    score++;
+                }
+            }
+
+            const percentage = (score / total) * 100;
+
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const feedbackTitle = document.getElementById('feedbackTitle');
+            const feedbackDesc = document.getElementById('feedbackDesc');
+            const quizResult = document.getElementById('quizResult');
+
+            scoreDisplay.textContent = percentage + ' / 100';
+
+            if (percentage >= 80) {
+                feedbackTitle.textContent = 'Sangat Baik!';
+                feedbackTitle.className = 'font-bold text-sm text-emerald-600';
+                feedbackDesc.textContent = 'Selamat! Anda telah menguasai konsep esensial penguatan literasi dan numerasi dengan sangat baik.';
+            } else if (percentage >= 60) {
+                feedbackTitle.textContent = 'Baik';
+                feedbackTitle.className = 'font-bold text-sm text-amber-600';
+                feedbackDesc.textContent = 'Bagus! Pemahaman Anda sudah cukup baik, silakan pelajari kembali beberapa bagian untuk penyempurnaan.';
+            } else {
+                feedbackTitle.textContent = 'Perlu Belajar Lagi';
+                feedbackTitle.className = 'font-bold text-sm text-rose-600';
+                feedbackDesc.textContent = 'Mari tinjau ulang materi modul pada Sub Materi 1 s.d. 6 untuk memperkuat fondasi Anda.';
+            }
+
+            quizResult.classList.remove('hidden');
+            quizResult.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
